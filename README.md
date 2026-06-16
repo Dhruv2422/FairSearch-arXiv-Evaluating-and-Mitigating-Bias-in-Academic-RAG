@@ -6,8 +6,7 @@ FairSearch-arXiv is a retrieval-augmented search system built over a sample of t
 arXiv computer science (`cs.*`) corpus. It preprocesses raw arXiv metadata, embeds
 papers with a sentence-transformer model, indexes them in a local
 [Qdrant](https://qdrant.tech/) vector database, retrieves semantically similar papers
-for a given query, and synthesizes answers using the Gemini API — forming the basis
-for studying and mitigating bias in academic search.
+for a given query, and synthesizes answers using Google's Gemini model.
 
 ## Project structure
 
