@@ -4,3 +4,5 @@ torch
 sentence-transformers
 qdrant-client
 pyarrow
+google-genai
+python-dotenv
