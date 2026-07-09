@@ -2,4 +2,6 @@
 .venv/
 __pycache__/
 *.pyc
-data/
+data/raw/
+data/indices/
+data/results/
