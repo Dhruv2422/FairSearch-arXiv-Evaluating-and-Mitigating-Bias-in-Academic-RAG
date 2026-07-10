@@ -6,8 +6,9 @@ the Qdrant collection, classifies each as 'privileged' or 'underrepresented'
 based on QS World University Rankings 2024 Top 20, and upserts the label
 back into the Qdrant payload.
 
-No API key required — OpenAlex is fully open. Adding your email to requests
-is courteous and gets you faster responses.
+Lookup strategy (in order):
+  1. Batch URL lookup — http:// and https:// arXiv URL variants (50 per request)
+  2. Title-based fallback — for papers still unmatched after URL lookup
 
 Run from inside src/:
     python enrich_metadata.py
@@ -33,10 +34,10 @@ log = logging.getLogger(__name__)
 # Config
 # ---------------------------------------------------------------------------
 
-BATCH_SIZE = 50           # OpenAlex pipe-filter limit per request
+BATCH_SIZE = 50
 RETRY_LIMIT = 5
 BACKOFF_BASE = 2.0
-REQUEST_DELAY = 0.15      # OpenAlex allows up to 10 req/s — stay conservative
+REQUEST_DELAY = 0.5  # delay between batch requests — OpenAlex 429s at faster rates in practice
 
 OPENALEX_URL = "https://api.openalex.org/works"
 MAILTO = os.environ.get("CONTACT_EMAIL", "ceal.j@northeastern.edu")
@@ -44,7 +45,6 @@ MAILTO = os.environ.get("CONTACT_EMAIL", "ceal.j@northeastern.edu")
 CACHE_PATH = Path("../data/processed/affiliation_cache.json")
 COLLECTION = "fairsearch_arxiv"
 
-# QS World University Rankings 2024 — Top 20
 TOP_20_INSTITUTIONS = {
     "massachusetts institute of technology",
     "mit",
@@ -75,64 +75,143 @@ TOP_20_INSTITUTIONS = {
 }
 
 # ---------------------------------------------------------------------------
-# OpenAlex helpers
+# Shared request helper
 # ---------------------------------------------------------------------------
 
-def fetch_affiliations_batch(arxiv_ids: list[str]) -> dict[str, list[str]]:
-    """
-    Fetch institutional affiliations for a batch of arXiv IDs from OpenAlex.
-    Returns {arxiv_id: [institution_name, ...]}
-    """
-    url_filter = "|".join(f"http://arxiv.org/abs/{aid}" for aid in arxiv_ids)
-
+def _get(params: dict) -> list:
+    """GET OPENALEX_URL with retry/backoff. Returns results list or []."""
     for attempt in range(RETRY_LIMIT):
         try:
-            resp = requests.get(
-                OPENALEX_URL,
-                params={
-                    "filter": f"locations.landing_page_url:{url_filter}",
-                    "select": "authorships,locations",
-                    "per-page": BATCH_SIZE,
-                    "mailto": MAILTO,
-                },
-                timeout=30,
-            )
+            resp = requests.get(OPENALEX_URL, params={**params, "mailto": MAILTO}, timeout=30)
             if resp.status_code == 429:
                 wait = BACKOFF_BASE ** attempt
                 log.warning(f"Rate limited — waiting {wait:.0f}s")
                 time.sleep(wait)
                 continue
+            if resp.status_code == 400:
+                return []
             resp.raise_for_status()
-            break
+            return resp.json().get("results", [])
         except requests.RequestException as e:
             wait = BACKOFF_BASE ** attempt
             log.warning(f"Request error ({e}) — retrying in {wait:.0f}s")
             time.sleep(wait)
-    else:
-        log.error(f"Failed batch after {RETRY_LIMIT} attempts, skipping.")
-        return {}
+    log.error("Failed after max retries, skipping.")
+    return []
+
+
+def _extract_institutions(work: dict) -> list[str]:
+    """
+    Pull institution names from every place OpenAlex records them:
+      1. authorships[].institutions — structured affiliation data
+      2. authorships[].raw_affiliation_strings — unstructured affiliation text
+      3. locations[].source.host_organization_name — institutional repositories
+         (a paper deposited in e.g. Apollo implies a Cambridge author)
+    """
+    names = []
+    for authorship in work.get("authorships", []):
+        for inst in authorship.get("institutions", []):
+            if inst.get("display_name"):
+                names.append(inst["display_name"])
+        names.extend(authorship.get("raw_affiliation_strings", []))
+    for loc in work.get("locations", []):
+        source = loc.get("source") or {}
+        # arXiv itself is hosted by Cornell — counting it would label every
+        # paper as Cornell. Skip preprint servers, keep true institutional repos.
+        display = (source.get("display_name") or "").lower()
+        if any(preprint in display for preprint in ("arxiv", "biorxiv", "medrxiv", "ssrn")):
+            continue
+        if source.get("type") == "repository" and source.get("host_organization_name"):
+            names.append(source["host_organization_name"])
+    # dedupe, preserve order
+    return list(dict.fromkeys(names))
+
+
+# ---------------------------------------------------------------------------
+# Strategy 1: batch URL lookup (http + https variants)
+# ---------------------------------------------------------------------------
+
+def fetch_affiliations_batch(arxiv_ids: list[str]) -> dict[str, list[str]]:
+    """
+    Try both http:// and https:// arXiv URL variants in one filter.
+    Returns {arxiv_id: [institution_name, ...]}
+    """
+    urls = []
+    for aid in arxiv_ids:
+        urls.append(f"http://arxiv.org/abs/{aid}")
+        urls.append(f"https://arxiv.org/abs/{aid}")
+    url_filter = "|".join(urls)
+
+    works = _get({
+        "filter": f"locations.landing_page_url:{url_filter}",
+        "select": "authorships,locations",
+        "per-page": BATCH_SIZE * 2,
+    })
 
     results: dict[str, list[str]] = {}
-    for work in resp.json().get("results", []):
-        # Extract the arXiv ID from locations
-        arxiv_url = next(
-            (loc["landing_page_url"] for loc in work.get("locations", [])
-             if loc.get("landing_page_url") and loc["landing_page_url"].startswith("http://arxiv.org/abs/")),
-            None,
-        )
-        if not arxiv_url:
-            continue
-        arxiv_id = arxiv_url.replace("http://arxiv.org/abs/", "")
-
-        institutions = [
-            inst["display_name"]
-            for authorship in work.get("authorships", [])
-            for inst in authorship.get("institutions", [])
-            if inst.get("display_name")
-        ]
-        results[arxiv_id] = institutions
+    for work in works:
+        arxiv_id = None
+        for loc in work.get("locations", []):
+            url = loc.get("landing_page_url") or ""
+            for prefix in ("http://arxiv.org/abs/", "https://arxiv.org/abs/"):
+                if url.startswith(prefix):
+                    arxiv_id = url.replace(prefix, "").split("v")[0]
+                    break
+            if arxiv_id:
+                break
+        if arxiv_id and arxiv_id in arxiv_ids:
+            results[arxiv_id] = _extract_institutions(work)
 
     return results
+
+
+# ---------------------------------------------------------------------------
+# Strategy 2: title-based fallback (one request per paper)
+# ---------------------------------------------------------------------------
+
+def _title_similarity(a: str, b: str) -> float:
+    """Jaccard similarity on word sets — good enough to catch wrong-paper matches."""
+    wa = set(a.lower().split())
+    wb = set(b.lower().split())
+    if not wa or not wb:
+        return 0.0
+    return len(wa & wb) / len(wa | wb)
+
+
+def _sanitize_title(title: str) -> str:
+    """Strip characters that break OpenAlex filter queries."""
+    import re
+    title = title.replace("\n", " ").replace("\r", " ")
+    title = re.sub(r"[\\$%&|<>{}()\[\]]", " ", title)
+    title = re.sub(r"\s+", " ", title).strip()
+    return title[:200]  # OpenAlex search degrades on very long titles
+
+
+def fetch_by_title(title: str) -> list[str] | None:
+    """
+    Search OpenAlex by title and take the best-affiliated close match.
+    OpenAlex often splits a paper into multiple records (arXiv preprint vs.
+    journal/repository version) where only one carries institution data, so
+    check the top few results, not just the first. Returns None if no result
+    matches the title closely (Jaccard >= 0.5).
+    """
+    clean = _sanitize_title(title)
+    if not clean:
+        return None
+    works = _get({
+        "filter": f"title.search:{clean}",
+        "select": "authorships,title,locations",
+        "per-page": 5,
+    })
+    matched = False
+    for work in works:
+        if _title_similarity(title, work.get("title") or "") < 0.5:
+            continue
+        matched = True
+        institutions = _extract_institutions(work)
+        if institutions:
+            return institutions
+    return [] if matched else None
 
 
 # ---------------------------------------------------------------------------
@@ -140,17 +219,19 @@ def fetch_affiliations_batch(arxiv_ids: list[str]) -> dict[str, list[str]]:
 # ---------------------------------------------------------------------------
 
 def classify(institutions: list[str]) -> str:
-    """
-    Return 'privileged' if any institution fuzzy-matches a Top-20 entry,
-    'underrepresented' if institutions are found but none match,
-    'unknown' if no institution data at all.
-    """
+    import re
     if not institutions:
         return "unknown"
     for name in institutions:
-        name_lower = name.lower()
-        if any(top in name_lower for top in TOP_20_INSTITUTIONS):
-            return "privileged"
+        lower = name.lower()
+        for top in TOP_20_INSTITUTIONS:
+            # short acronyms need word boundaries: "mit" is inside "smith",
+            # "ucl" is inside "ucla"
+            if len(top) <= 4:
+                if re.search(rf"\b{top}\b", lower):
+                    return "privileged"
+            elif top in lower:
+                return "privileged"
     return "underrepresented"
 
 
@@ -209,30 +290,55 @@ def main():
     cache = load_cache()
     log.info(f"Cache has {len(cache)} entries from previous runs")
 
-    to_fetch = [
-        p.payload["paper_id"]
-        for p in points
-        if p.payload.get("paper_id") and p.payload["paper_id"] not in cache
-    ]
-    log.info(f"{len(to_fetch)} papers need affiliation lookup")
+    # Build a lookup from paper_id → point for title fallback
+    id_to_point = {p.payload["paper_id"]: p for p in points if p.payload.get("paper_id")}
+
+    # --- Stage 1: batch URL lookup for anything not already in cache ---
+    to_fetch = [pid for pid in id_to_point if pid not in cache]
+    log.info(f"Stage 1 — URL batch lookup: {len(to_fetch)} papers")
 
     total_batches = -(-len(to_fetch) // BATCH_SIZE)
     for i in range(0, len(to_fetch), BATCH_SIZE):
-        batch_ids = to_fetch[i : i + BATCH_SIZE]
+        batch_ids = to_fetch[i: i + BATCH_SIZE]
         batch_num = i // BATCH_SIZE + 1
-        log.info(f"Fetching batch {batch_num}/{total_batches} ({len(batch_ids)} papers)")
+        log.info(f"  Batch {batch_num}/{total_batches} ({len(batch_ids)} papers)")
 
         result = fetch_affiliations_batch(batch_ids)
         cache.update(result)
-
-        # Mark papers with no OpenAlex record so we don't retry them
         for pid in batch_ids:
             if pid not in cache:
                 cache[pid] = []
-
         save_cache(cache)
         time.sleep(REQUEST_DELAY)
 
+    # --- Stage 2: batched URL re-lookup with the wider institution extraction ---
+    # Stage 1's cached extractions only read authorships; re-fetching the same
+    # batches now also captures raw_affiliation_strings and institutional
+    # repository hosts. ~660 requests total, no per-paper title searches.
+    still_empty = [pid for pid, affs in cache.items() if not affs and pid in id_to_point]
+    log.info(f"Stage 2 — batch URL re-lookup: {len(still_empty)} papers with no affiliation data")
+
+    total_batches = -(-len(still_empty) // BATCH_SIZE)
+    recovered = 0
+    for i in range(0, len(still_empty), BATCH_SIZE):
+        batch_ids = still_empty[i: i + BATCH_SIZE]
+        batch_num = i // BATCH_SIZE + 1
+
+        result = fetch_affiliations_batch(batch_ids)
+        for pid, insts in result.items():
+            if insts:
+                cache[pid] = insts
+                recovered += 1
+
+        if batch_num % 10 == 0:
+            save_cache(cache)
+            log.info(f"  Batch {batch_num}/{total_batches} (recovered {recovered} so far)")
+        time.sleep(REQUEST_DELAY)
+
+    save_cache(cache)
+    log.info(f"Stage 2 complete — recovered affiliations for {recovered} additional papers")
+
+    # --- Classify and upsert ---
     log.info("Classifying and upserting labels into Qdrant...")
     counts = {"privileged": 0, "underrepresented": 0, "unknown": 0}
 
@@ -246,10 +352,7 @@ def main():
 
         client.set_payload(
             collection_name=COLLECTION,
-            payload={
-                "institution_label": label,
-                "affiliations": institutions,
-            },
+            payload={"institution_label": label, "affiliations": institutions},
             points=PointIdsList(points=[point.id]),
         )
 
