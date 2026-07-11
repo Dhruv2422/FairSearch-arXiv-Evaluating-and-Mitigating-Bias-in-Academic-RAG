@@ -5,7 +5,7 @@ from google.genai import types
 
 load_dotenv()
 
-_MODEL_NAME = "gemini-2.5-flash-lite"
+_MODEL_NAME = "gemini-3.1-flash-lite"
 
 SYSTEM_PROMPT = (
     "You are a research assistant synthesizing findings from retrieved academic papers. "

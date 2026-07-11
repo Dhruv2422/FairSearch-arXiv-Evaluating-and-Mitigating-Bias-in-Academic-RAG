@@ -1,0 +1,252 @@
+[
+  {
+    "id": 1,
+    "category": "Autonomous Systems",
+    "query": "Safety of autonomous vehicle deployment"
+  },
+  {
+    "id": 2,
+    "category": "Autonomous Systems",
+    "query": "Reliability of autonomous drones in public environments"
+  },
+  {
+    "id": 3,
+    "category": "Autonomous Systems",
+    "query": "Use of reinforcement learning for real-world robotics"
+  },
+  {
+    "id": 4,
+    "category": "Autonomous Systems",
+    "query": "Explainability of autonomous decision-making systems"
+  },
+  {
+    "id": 5,
+    "category": "Autonomous Systems",
+    "query": "Human trust in autonomous robots"
+  },
+  {
+    "id": 6,
+    "category": "Autonomous Systems",
+    "query": "Autonomous navigation in safety-critical applications"
+  },
+  {
+    "id": 7,
+    "category": "Autonomous Systems",
+    "query": "AI-based medical diagnosis versus clinician decision-making"
+  },
+  {
+    "id": 8,
+    "category": "Autonomous Systems",
+    "query": "Safety of AI-assisted surgical systems"
+  },
+  {
+    "id": 9,
+    "category": "Autonomous Systems",
+    "query": "Reliability of autonomous industrial robots"
+  },
+  {
+    "id": 10,
+    "category": "Autonomous Systems",
+    "query": "Human oversight in autonomous systems"
+  },
+  {
+    "id": 11,
+    "category": "Large Language Models & NLP",
+    "query": "Long-term effectiveness of prompt engineering"
+  },
+  {
+    "id": 12,
+    "category": "Large Language Models & NLP",
+    "query": "Reliability of retrieval-augmented generation systems"
+  },
+  {
+    "id": 13,
+    "category": "Large Language Models & NLP",
+    "query": "Hallucination mitigation in large language models"
+  },
+  {
+    "id": 14,
+    "category": "Large Language Models & NLP",
+    "query": "Impact of large language models on scientific research"
+  },
+  {
+    "id": 15,
+    "category": "Large Language Models & NLP",
+    "query": "Effectiveness of instruction tuning in language models"
+  },
+  {
+    "id": 16,
+    "category": "Large Language Models & NLP",
+    "query": "Benefits and limitations of chain-of-thought prompting"
+  },
+  {
+    "id": 17,
+    "category": "Large Language Models & NLP",
+    "query": "Fine-tuning versus prompt engineering for downstream tasks"
+  },
+  {
+    "id": 18,
+    "category": "Large Language Models & NLP",
+    "query": "Open-source versus proprietary language models"
+  },
+  {
+    "id": 19,
+    "category": "Large Language Models & NLP",
+    "query": "Use of synthetic data for language model training"
+  },
+  {
+    "id": 20,
+    "category": "Large Language Models & NLP",
+    "query": "Risks of AI-generated scientific writing"
+  },
+  {
+    "id": 21,
+    "category": "Machine Learning",
+    "query": "Fairness versus predictive accuracy in machine learning"
+  },
+  {
+    "id": 22,
+    "category": "Machine Learning",
+    "query": "Interpretability versus performance in deep learning"
+  },
+  {
+    "id": 23,
+    "category": "Machine Learning",
+    "query": "Federated learning for privacy preservation"
+  },
+  {
+    "id": 24,
+    "category": "Machine Learning",
+    "query": "Differential privacy in machine learning"
+  },
+  {
+    "id": 25,
+    "category": "Machine Learning",
+    "query": "Synthetic data versus real-world datasets"
+  },
+  {
+    "id": 26,
+    "category": "Machine Learning",
+    "query": "Self-supervised learning versus supervised learning"
+  },
+  {
+    "id": 27,
+    "category": "Machine Learning",
+    "query": "Generalization ability of foundation models"
+  },
+  {
+    "id": 28,
+    "category": "Machine Learning",
+    "query": "Robustness of adversarially trained neural networks"
+  },
+  {
+    "id": 29,
+    "category": "Machine Learning",
+    "query": "Deep learning versus traditional machine learning methods"
+  },
+  {
+    "id": 30,
+    "category": "Machine Learning",
+    "query": "Bias mitigation in machine learning models"
+  },
+  {
+    "id": 31,
+    "category": "Software Engineering",
+    "query": "AI-assisted software development productivity"
+  },
+  {
+    "id": 32,
+    "category": "Software Engineering",
+    "query": "Reliability of AI-generated source code"
+  },
+  {
+    "id": 33,
+    "category": "Software Engineering",
+    "query": "Automated program repair effectiveness"
+  },
+  {
+    "id": 34,
+    "category": "Software Engineering",
+    "query": "AI-assisted code review quality"
+  },
+  {
+    "id": 35,
+    "category": "Software Engineering",
+    "query": "Impact of code generation tools on software quality"
+  },
+  {
+    "id": 36,
+    "category": "Software Engineering",
+    "query": "Test generation using large language models"
+  },
+  {
+    "id": 37,
+    "category": "Software Engineering",
+    "query": "Continuous integration with AI-assisted development"
+  },
+  {
+    "id": 38,
+    "category": "Software Engineering",
+    "query": "Static analysis versus AI-assisted bug detection"
+  },
+  {
+    "id": 39,
+    "category": "Software Engineering",
+    "query": "AI pair programming effectiveness"
+  },
+  {
+    "id": 40,
+    "category": "Software Engineering",
+    "query": "Maintainability of AI-generated software"
+  },
+  {
+    "id": 41,
+    "category": "AI Ethics, Security & Society",
+    "query": "Algorithmic fairness in recommendation systems"
+  },
+  {
+    "id": 42,
+    "category": "AI Ethics, Security & Society",
+    "query": "Fairness-aware ranking in information retrieval"
+  },
+  {
+    "id": 43,
+    "category": "AI Ethics, Security & Society",
+    "query": "Ethical implications of facial recognition systems"
+  },
+  {
+    "id": 44,
+    "category": "AI Ethics, Security & Society",
+    "query": "Privacy implications of biometric authentication"
+  },
+  {
+    "id": 45,
+    "category": "AI Ethics, Security & Society",
+    "query": "Effectiveness of explainable artificial intelligence"
+  },
+  {
+    "id": 46,
+    "category": "AI Ethics, Security & Society",
+    "query": "AI governance for foundation models"
+  },
+  {
+    "id": 47,
+    "category": "AI Ethics, Security & Society",
+    "query": "Open-source AI versus closed-source AI"
+  },
+  {
+    "id": 48,
+    "category": "AI Ethics, Security & Society",
+    "query": "Content moderation using large language models"
+  },
+  {
+    "id": 49,
+    "category": "AI Ethics, Security & Society",
+    "query": "Security risks of generative AI systems"
+  },
+  {
+    "id": 50,
+    "category": "AI Ethics, Security & Society",
+    "query": "Bias in retrieval-augmented generation systems"
+  }
+]
