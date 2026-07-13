@@ -1,7 +1,9 @@
+from pathlib import Path
+
 from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
 
-QDRANT_PATH = "/Users/dhruvdolas/Information Retrival project/FairSearch-arXiv-Evaluating-and-Mitigating-Bias-in-Academic-RAG-master/data/indices/qdrant"
+QDRANT_PATH = str(Path(__file__).resolve().parent.parent / "data" / "indices" / "qdrant")
 COLLECTION_NAME = "fairsearch_arxiv"
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
