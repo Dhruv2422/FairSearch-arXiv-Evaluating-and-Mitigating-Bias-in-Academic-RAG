@@ -4,8 +4,26 @@ import time
 from dotenv import load_dotenv
 from google import genai
 
-INPUT_FILE = "../data/results/experiment_b_raw_results.json"
-OUTPUT_FILE = "../data/results/experiment_b_analysis_results.json"
+# Change these paths depending on the experiment being analyzed.
+#
+# Baseline retriever + regular prompt:
+#
+# INPUT_FILE = "../data/results/experiment_b_raw_results.json"
+# OUTPUT_FILE = "../data/results/experiment_b_analysis_results.json"
+#
+# MMR retriever + regular prompt:
+#
+# INPUT_FILE = "../data/results/experiment_b_raw_mmr_results.json"
+# OUTPUT_FILE = "../data/results/experiment_b_mmr_analysis_results.json"
+#
+# MMR retriever + balanced/perspective-aware prompt:
+#
+# INPUT_FILE = "../data/results/experiment_b_raw_mmr_prompt_results.json"
+# OUTPUT_FILE = "../data/results/experiment_b_mmr_prompt_analysis_results.json"
+
+INPUT_FILE = "../data/results/experiment_b_raw_mmr_prompt_results.json"
+OUTPUT_FILE = "../data/results/experiment_b_mmr_prompt_analysis_results.json"
+
 MODEL = "gemini-3.1-flash-lite"
 
 load_dotenv()
@@ -22,14 +40,32 @@ def call_gemini(prompt):
         except Exception as e:
             print(f"Gemini error: {e}")
             time.sleep(30 * (attempt + 1))
+
     raise Exception("Gemini failed after retries")
 
 
 def parse_json(text):
-    text = text.replace("```json", "").replace("```", "").strip()
-    start = min([x for x in [text.find("["), text.find("{")] if x != -1])
-    end = text.rfind("]") + 1 if text[start] == "[" else text.rfind("}") + 1
-    return json.loads(text[start:end])
+    text = text.replace("`json", "").replace("`", "").strip()
+
+    start_candidates = [text.find("["), text.find("{")]
+    start_candidates = [x for x in start_candidates if x != -1]
+
+    if not start_candidates:
+        raise ValueError("No JSON found")
+
+    start = min(start_candidates)
+
+    if text[start] == "[":
+        end = text.rfind("]") + 1
+    else:
+        end = text.rfind("}") + 1
+
+    json_text = text[start:end]
+
+    # Fix Gemini Python-style escaping
+    json_text = json_text.replace("\\'", "'")
+
+    return json.loads(json_text)
 
 
 def classify_documents(query, docs):
@@ -46,7 +82,6 @@ Return JSON only:
 [
 {{"title":"...", "stance":"PRO-CONSENSUS"}}
 ]
-
 """
 
     for i, d in enumerate(docs, 1):
@@ -85,12 +120,10 @@ def distribution(docs):
             counts[d["stance"]] += 1
 
     total = len(docs)
-
     return {k: v / total for k, v in counts.items()}
 
 
 def main():
-
     with open(INPUT_FILE, encoding="utf-8") as f:
         results = json.load(f)
 
@@ -106,7 +139,6 @@ def main():
     print(f"Completed: {len(completed)}")
 
     for i, r in enumerate(results, 1):
-
         if r["query"] in completed:
             print(f"Skipping {i}")
             continue
@@ -115,10 +147,7 @@ def main():
 
         docs = r["retrieved_documents"]
 
-        labels = classify_documents(
-            r["query"],
-            docs
-        )
+        labels = classify_documents(r["query"], docs)
 
         for d, label in zip(docs, labels):
             d["stance"] = label["stance"]
@@ -135,23 +164,17 @@ def main():
 
         r["absolute_gap"] = abs(
             summary["pro_consensus_ratio"]
-            -
-            retrieved["PRO-CONSENSUS"]
+            - retrieved["PRO-CONSENSUS"]
         )
 
         r["consensus_amplification"] = (
             summary["pro_consensus_ratio"]
-            -
-            retrieved["PRO-CONSENSUS"]
+            - retrieved["PRO-CONSENSUS"]
         )
 
         analyzed.append(r)
 
-        with open(
-            OUTPUT_FILE,
-            "w",
-            encoding="utf-8"
-        ) as f:
+        with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
             json.dump(analyzed, f, indent=4)
 
         time.sleep(15)

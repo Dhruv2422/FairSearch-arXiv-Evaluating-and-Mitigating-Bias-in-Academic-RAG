@@ -1,3 +1,5 @@
+import numpy as np
+import numpy as np
 from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
 
@@ -31,6 +33,55 @@ def search(query, model, client, k=10):
     )
 
     return results.points
+
+
+def search_mmr(query, model, client, k=10, fetch_k=50, lambda_mult=0.5):
+    """
+    Diversity-aware retrieval via MMR.
+
+    Over retrieves fetch_k candidates by cosine similarity, then uses greedy approach to 
+    re rank them
+
+    MMR = lambda_mult * sim(query, doc) - (1 - lambda_mult) * max_{s in selected} sim(doc, s)
+
+    Returns the top-k points in MMR order with same shape as search()
+    """
+    query_vector = model.encode(query, normalize_embeddings=True)
+
+    candidates = client.query_points(
+        collection_name="fairsearch_arxiv",
+        query=query_vector.tolist(),
+        limit=fetch_k,
+        with_vectors=True,
+    ).points
+
+    if not candidates:
+        return []
+
+    # embeddings are L2-normalized, so cosine similarity is just the dot product
+    doc_vectors = np.array([hit.vector for hit in candidates])
+    query_sims = doc_vectors @ query_vector
+    doc_sims = doc_vectors @ doc_vectors.T
+
+    selected: list[int] = []
+    remaining = list(range(len(candidates)))
+    k = min(k, len(candidates))
+
+    while len(selected) < k:
+        if not selected:
+            # first pick is the most query-relevant candidate
+            best_idx = int(remaining[int(np.argmax(query_sims[remaining]))])
+        else:
+            best_idx, best_score = None, None
+            for idx in remaining:
+                redundancy = max(doc_sims[idx][j] for j in selected)
+                score = lambda_mult * query_sims[idx] - (1 - lambda_mult) * redundancy
+                if best_score is None or score > best_score:
+                    best_score, best_idx = score, idx
+        selected.append(best_idx)
+        remaining.remove(best_idx)
+
+    return [candidates[i] for i in selected]
 
 
 if __name__ == "__main__":
