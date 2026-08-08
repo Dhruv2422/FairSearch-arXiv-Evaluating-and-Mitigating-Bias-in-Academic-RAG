@@ -1,21 +1,16 @@
 """
-experiment_a.py — Retrieval Bias Audit (Experiment A)
+experiment_a_mmr.py — Retrieval Bias Audit with MMR
 
-Runs all standardized queries through the baseline cosine similarity retriever
+Runs all standardized queries through the MMR retriever
 and measures the institutional distribution of top-10 results.
 Papers with unknown institution labels are excluded from all calculations.
 
-Uses Fairlearn to compute:
-- Selection Rate per group (privileged / underrepresented)
-- Selection Rate Ratio
-- Statistical Parity Difference (SPD)
-
 Output:
 - Console table
-- data/results/experiment_a_results.json
+- data/results/experiment_a_mmr_results.json
 
 Run from inside src/:
-python experiment_a.py
+python experiment_a_mmr.py
 """
 
 import json
@@ -25,17 +20,18 @@ from statistics import mean
 import numpy as np
 from fairlearn.metrics import MetricFrame, selection_rate
 
-from retriever import load_model, connect_qdrant, search
+from retriever_mmr import load_model, connect_qdrant, search_mmr
 
 
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent
 EVAL_FILE = PROJECT_ROOT / "data" / "eval" / "retrieval_eval_queries.json"
 RESULTS_DIR = PROJECT_ROOT / "data" / "results"
-OUTPUT_JSON = RESULTS_DIR / "experiment_a_results.json"
+OUTPUT_JSON = RESULTS_DIR / "experiment_a_mmr_results.json"
 
 TOP_K = 10
-OVERSAMPLE_K = 100
+FETCH_K = 100
+MMR_LAMBDA = 0.5
 
 
 def load_queries(path: Path) -> list[str]:
@@ -68,11 +64,21 @@ def hit_to_dict(hit) -> dict:
         "year": payload.get("year"),
         "institution_label": payload.get("institution_label"),
         "score": round(float(hit.score), 4),
+        "mmr_rank": payload.get("mmr_rank"),
+        "mmr_lambda": payload.get("mmr_lambda"),
+        "query_similarity": payload.get("query_similarity"),
     }
 
 
 def measure_query(query: str, model, client) -> dict | None:
-    hits = search(query, model, client, k=OVERSAMPLE_K)
+    hits = search_mmr(
+        query=query,
+        model=model,
+        client=client,
+        k=TOP_K,
+        fetch_k=FETCH_K,
+        lambda_mult=MMR_LAMBDA,
+    )
 
     labeled = [
         hit for hit in hits
@@ -94,7 +100,9 @@ def measure_query(query: str, model, client) -> dict | None:
     return {
         "query": query,
         "top_k": TOP_K,
-        "retrieval_method": "baseline",
+        "retrieval_method": "mmr",
+        "mmr_lambda": MMR_LAMBDA,
+        "fetch_k": FETCH_K,
         "labeled_results": n,
         "counts": {
             "privileged": n_priv,
@@ -115,7 +123,7 @@ def print_table(per_query: list, summary: dict):
     header = f"{'Query':45} {'Priv':>4} {'Under':>5} {'SPD':>7} {'Ratio':>6}"
     sep = "-" * len(header)
 
-    print("\nPer-query results (unknown labels excluded):")
+    print("\nPer-query MMR results (unknown labels excluded):")
     print(header)
     print(sep)
 
@@ -135,6 +143,9 @@ def print_table(per_query: list, summary: dict):
     cb = summary["corpus_base_rates"]
 
     print("\nSummary (unknown labels excluded)")
+    print(f" Retrieval method: {summary['retrieval_method']}")
+    print(f" MMR lambda: {summary['mmr_lambda']}")
+    print(f" Fetch-k: {summary['fetch_k']}")
     print(f" Queries run: {summary['num_queries']}")
     print(f" Queries with labeled hits: {summary['queries_with_labeled_hits']}")
     print(f" Queries skipped (all unknown): {summary['num_queries'] - summary['queries_with_labeled_hits']}")
@@ -154,17 +165,6 @@ def print_table(per_query: list, summary: dict):
     print(" Corpus base rates (labeled papers only):")
     print(f" Privileged: {cb['privileged_count']:,} ({cb['privileged_base_rate']:.4f})")
     print(f" Underrepresented: {cb['underrepresented_count']:,} ({cb['underrepresented_base_rate']:.4f})")
-    print()
-
-    priv_lift = round(summary["mean_privileged_rate"] - cb["privileged_base_rate"], 4)
-    under_lift = round(summary["mean_underrepresented_rate"] - cb["underrepresented_base_rate"], 4)
-
-    print(" Retrieval lift vs. corpus base rate:")
-    print(f" Privileged: {priv_lift:+.4f} ({'over' if priv_lift > 0 else 'under'}-represented in retrieval)")
-    print(f" Underrepresented:{under_lift:+.4f} ({'over' if under_lift > 0 else 'under'}-represented in retrieval)")
-    print()
-    print(" SPD > 0 → privileged over-represented vs. underrepresented")
-    print(" Lift > 0 → group retrieved more than its share of the corpus")
 
 
 def get_corpus_rates(client) -> dict:
@@ -211,7 +211,7 @@ def main():
     print()
 
     queries = load_queries(EVAL_FILE)
-    print(f"Loaded {len(queries)} queries. Running top-{TOP_K} retrieval...\n")
+    print(f"Loaded {len(queries)} queries. Running top-{TOP_K} MMR retrieval...\n")
 
     per_query = []
     for i, q in enumerate(queries, start=1):
@@ -253,9 +253,10 @@ def main():
     ratios = [r["selection_rate_ratio"] for r in per_query if r["selection_rate_ratio"] is not None]
 
     summary = {
-        "retrieval_method": "baseline",
+        "retrieval_method": "mmr",
         "top_k": TOP_K,
-        "oversample_k": OVERSAMPLE_K,
+        "fetch_k": FETCH_K,
+        "mmr_lambda": MMR_LAMBDA,
         "num_queries": len(queries),
         "queries_with_labeled_hits": len(per_query),
         "corpus_base_rates": corpus,

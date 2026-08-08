@@ -3,8 +3,9 @@ enrich_metadata.py
 
 Fetches author institutional affiliations from OpenAlex for every paper in
 the Qdrant collection, classifies each as 'privileged' or 'underrepresented'
-based on QS World University Rankings 2024 Top 20, and upserts the label
-back into the Qdrant payload.
+based on QS World University Rankings 2027 Top 20 (incl. ties), and upserts
+the label back into the Qdrant payload.
+Source: https://www.topuniversities.com/world-university-rankings
 
 Lookup strategy (in order):
   1. Batch URL lookup — http:// and https:// arXiv URL variants (50 per request)
@@ -45,33 +46,65 @@ MAILTO = os.environ.get("CONTACT_EMAIL", "ceal.j@northeastern.edu")
 CACHE_PATH = Path("../data/processed/affiliation_cache.json")
 COLLECTION = "fairsearch_arxiv"
 
+# QS World University Rankings 2027, rank <= 20 (including ties at #2, #8, #16, #20)
+# Source: https://www.topuniversities.com/world-university-rankings
+# Names are matched after normalization (see _normalize) — no need to enumerate
+# punctuation variants, just distinct name forms (full name + common acronym).
+
+# 1) MIT
+# =2) Imperial College London
+# =2) Stanford University
+# 4) Oxford University
+# 5) Harvard University
+# 6) University of Cambridge
+# 7) Caltech
+# =8) ETH Zurich
+# =8) University College London
+# 10) National University of Singapore
+# 11) The University of Hong Kong
+# 12) NTU Singapore
+# 13) Peking University
+# 14) Tsinghua University
+# 15) University of Pennsylvania
+# =16) Cornell University
+# =16) Yale University
+# 18) The Chinese University of Hong Kong
+# 19) University of New South Wales
+# =20) Johns Hopkins University
+# =20) UC Berkeley
+
 TOP_20_INSTITUTIONS = {
     "massachusetts institute of technology",
     "mit",
     "imperial college london",
+    "stanford university",
     "university of oxford",
     "harvard university",
     "university of cambridge",
-    "stanford university",
-    "eth zurich",
-    "national university of singapore",
-    "ucl",
-    "university college london",
-    "university of california berkeley",
-    "uc berkeley",
-    "university of chicago",
-    "university of pennsylvania",
-    "cornell university",
     "california institute of technology",
     "caltech",
-    "yale university",
-    "princeton university",
-    "columbia university",
-    "university of michigan",
-    "johns hopkins university",
-    "university of edinburgh",
+    "eth zurich",
+    "ucl",
+    "university college london",
+    "national university of singapore",
+    "nus",
+    "university of hong kong",
+    "hku",
+    "nanyang technological university",
+    "ntu",
     "peking university",
     "tsinghua university",
+    "university of pennsylvania",
+    "cornell university",
+    "yale university",
+    "chinese university of hong kong",
+    "cuhk",
+    "university of new south wales",
+    "unsw sydney",
+    "unsw",
+    "johns hopkins university",
+    "university of california berkeley",
+    "uc berkeley",
 }
 
 # ---------------------------------------------------------------------------
@@ -218,20 +251,70 @@ def fetch_by_title(title: str) -> list[str] | None:
 # Classification
 # ---------------------------------------------------------------------------
 
-def classify(institutions: list[str]) -> str:
+def _normalize(name: str) -> str:
+    """
+    Strip punctuation and diacritics OpenAlex names commonly include
+    ("University of California, Berkeley", "ETH Zürich") so substring
+    matching against TOP_20_INSTITUTIONS isn't broken by characters that
+    aren't in our hand-typed name variants.
+    """
     import re
+    import unicodedata
+    name = unicodedata.normalize("NFKD", name)
+    name = name.encode("ascii", "ignore").decode("ascii")
+    name = name.lower()
+    name = re.sub(r"[,.]", " ", name)
+    name = re.sub(r"\s+", " ", name).strip()
+    return name
+
+
+# Distinct institutions whose names CONTAIN a top-20 name as a substring.
+# These are blanked out of the string before matching so they can't
+# trigger a false privileged label.
+EXCLUDED_LOOKALIKES = [
+    "city university of hong kong",       # not University of Hong Kong
+    "open university of hong kong",
+    "education university of hong kong",
+    # PASSHE state schools, not UPenn
+    "california university of pennsylvania",
+    "indiana university of pennsylvania",
+    "bloomsburg university of pennsylvania",
+    "clarion university of pennsylvania",
+    "east stroudsburg university of pennsylvania",
+    "edinboro university of pennsylvania",
+    "kutztown university of pennsylvania",
+    "lock haven university of pennsylvania",
+    "mansfield university of pennsylvania",
+    "millersville university of pennsylvania",
+    "shippensburg university of pennsylvania",
+    "slippery rock university of pennsylvania",
+    "west chester university of pennsylvania",
+]
+
+
+def matched_trigger(name: str) -> str | None:
+    """Return the TOP_20_INSTITUTIONS entry this name matches, or None."""
+    import re
+    lower = _normalize(name)
+    for exc in EXCLUDED_LOOKALIKES:
+        lower = lower.replace(exc, " ")
+    for top in TOP_20_INSTITUTIONS:
+        # short acronyms need word boundaries: "mit" is inside "smith",
+        # "ucl" is inside "ucla", "nus" is inside "campus"
+        if len(top) <= 4:
+            if re.search(rf"\b{top}\b", lower):
+                return top
+        elif top in lower:
+            return top
+    return None
+
+
+def classify(institutions: list[str]) -> str:
     if not institutions:
         return "unknown"
     for name in institutions:
-        lower = name.lower()
-        for top in TOP_20_INSTITUTIONS:
-            # short acronyms need word boundaries: "mit" is inside "smith",
-            # "ucl" is inside "ucla"
-            if len(top) <= 4:
-                if re.search(rf"\b{top}\b", lower):
-                    return "privileged"
-            elif top in lower:
-                return "privileged"
+        if matched_trigger(name):
+            return "privileged"
     return "underrepresented"
 
 
