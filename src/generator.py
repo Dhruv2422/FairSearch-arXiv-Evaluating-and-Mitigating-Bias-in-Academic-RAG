@@ -16,6 +16,23 @@ SYSTEM_PROMPT = (
     "the question."
 )
 
+# Perspective-balancing variant used by Experiment B's mitigation condition.
+# Where SYSTEM_PROMPT leaves the framing of conflicting evidence to the model,
+# this instructs it to represent dissenting and minority positions in
+# proportion to the retrieved context, to test whether consensus amplification
+# can be reduced at the generation stage.
+BALANCED_SYSTEM_PROMPT = (
+    "You are a neutral research assistant synthesizing findings from retrieved academic papers. "
+    "Answer the user's question by drawing on the provided abstracts. "
+    "Cite each paper you use by its title in brackets. "
+    "If the retrieved papers contain conflicting, dissenting, or minority perspectives, "
+    "explicitly acknowledge and represent those perspectives. "
+    "Do not automatically favor the majority or consensus position. "
+    "Represent different perspectives proportionally to the evidence in the retrieved context. "
+    "Do not introduce claims that are unsupported by the abstracts. "
+    "If the evidence is incomplete or mixed, state that clearly."
+)
+
 
 def build_context(hits: list) -> str:
     """Format Qdrant result points into a numbered context block."""
@@ -29,14 +46,22 @@ def build_context(hits: list) -> str:
     return "\n\n".join(parts)
 
 
-def generate(query: str, hits: list, api_key: str | None = None) -> str:
+def generate(
+    query: str,
+    hits: list,
+    api_key: str | None = None,
+    system_prompt: str = SYSTEM_PROMPT,
+) -> str:
     """
-    Call Gemini 1.5 Flash with RAG context and return the response text.
+    Call Gemini with RAG context and return the response text.
 
     Args:
-        query:   The user's research question.
-        hits:    List of ScoredPoint objects from retriever.search().
-        api_key: Gemini API key. Falls back to GEMINI_API_KEY env var.
+        query:         The user's research question.
+        hits:          List of ScoredPoint objects from retriever.search().
+        api_key:       Gemini API key. Falls back to GEMINI_API_KEY env var.
+        system_prompt: System instruction. Defaults to SYSTEM_PROMPT; pass
+                       BALANCED_SYSTEM_PROMPT for Experiment B's
+                       perspective-balancing condition.
     """
     key = api_key or os.environ.get("GEMINI_API_KEY")
     if not key:
@@ -50,7 +75,7 @@ def generate(query: str, hits: list, api_key: str | None = None) -> str:
     response = client.models.generate_content(
         model=_MODEL_NAME,
         contents=user_message,
-        config=types.GenerateContentConfig(system_instruction=SYSTEM_PROMPT),
+        config=types.GenerateContentConfig(system_instruction=system_prompt),
     )
     return response.text
 

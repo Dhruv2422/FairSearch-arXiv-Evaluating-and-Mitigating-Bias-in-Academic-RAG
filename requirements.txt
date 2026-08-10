@@ -9,3 +9,5 @@ python-dotenv
 fairlearn
 requests
 matplotlib
+ragas
+openai
