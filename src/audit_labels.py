@@ -3,10 +3,10 @@ audit_labels.py — offline audit of institution classification quality.
 
 Reads affiliation_cache.json (no API calls, no Qdrant) and reports:
   1. Label distribution
-  2. Which TOP_20 keyword triggered each privileged classification
+  2. Which privileged-list keyword triggered each privileged classification
      (catches false positives — a bad trigger shows up immediately)
   3. Near-misses: institution names classified underrepresented that are
-     highly similar to a TOP_20 entry (catches Berkeley-comma-style bugs)
+     highly similar to a privileged-list entry (catches Berkeley-comma-style bugs)
   4. Most common institutions among underrepresented papers
      (eyeball check: nothing top-20 should appear here)
 
@@ -20,7 +20,7 @@ from collections import Counter
 from difflib import SequenceMatcher
 from pathlib import Path
 
-from enrich_metadata import TOP_20_INSTITUTIONS, _normalize, classify, matched_trigger
+from enrich_metadata import PRIVILEGED_INSTITUTIONS, _normalize, classify, matched_trigger
 
 CACHE_PATH = Path("../data/processed/affiliation_cache.json")
 
@@ -71,9 +71,9 @@ def main():
     # --- 3. Near-misses among underrepresented ---
     print()
     print("=" * 70)
-    print(f"3. NEAR-MISSES (underrepresented names >= {NEAR_MISS_THRESHOLD} similar to a TOP_20 entry)")
+    print(f"3. NEAR-MISSES (underrepresented names >= {NEAR_MISS_THRESHOLD} similar to a privileged-list entry)")
     print("=" * 70)
-    long_tops = [t for t in TOP_20_INSTITUTIONS if len(t) > 4]
+    long_tops = [t for t in PRIVILEGED_INSTITUTIONS if len(t) > 4]
     near_misses = []
     for name, count in under_names.items():
         best_ratio, best_top = 0.0, None
