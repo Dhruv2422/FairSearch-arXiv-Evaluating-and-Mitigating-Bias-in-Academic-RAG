@@ -34,7 +34,7 @@ python check_labels.py
 Expected output:
 
 ```
-Counter({'unknown': 28980, 'underrepresented': 17839, 'privileged': 3181})
+Counter({'unknown': 24181, 'underrepresented': 18447, 'privileged': 7372})
 ```
 
 ## Project structure
@@ -54,7 +54,7 @@ Counter({'unknown': 28980, 'underrepresented': 17839, 'privileged': 3181})
 │   ├── retriever.py             # Baseline semantic search against the index
 │   ├── retriever_mmr.py         # MMR (Maximal Marginal Relevance) re-ranked search
 │   ├── generator.py             # Synthesize answers from retrieved papers via Gemini
-│   ├── enrich_metadata.py       # Fetch OpenAlex affiliations, label institutions
+│   ├── enrich_metadata.py       # Fetch affiliations (OpenAlex/S2/Crossref), label institutions
 │   ├── audit_labels.py          # Offline audit of institution-label matching quality
 │   ├── check_labels.py          # Print the institution-label census for the index
 │   ├── build_eval_queries.py    # Interactive tool for hand-labeling relevant_ids
@@ -194,19 +194,78 @@ python test_pipeline.py
 
 ### Metadata enrichment
 
-`enrich_metadata.py` fetches author affiliations from the OpenAlex API and labels
-each paper `privileged` (any author affiliated with a QS World University Rankings
-2027 Top 20 institution), `underrepresented` (otherwise), or `unknown` (no
-affiliation data found). Institution names are matched after normalization
+`enrich_metadata.py` fetches author affiliations and labels each paper
+`privileged`, `underrepresented` (otherwise), or `unknown` (no affiliation data
+found). Institution names are matched on word boundaries after normalization
 (punctuation/diacritics stripped) with explicit safeguards against lookalike
 institutions (e.g. City University of Hong Kong must not match University of Hong
-Kong). All OpenAlex responses are cached in `data/processed/affiliation_cache.json`,
-so re-running the script without new papers makes no API calls.
+Kong, and "Universidade Federal do Amazonas" must not match Amazon). Responses are
+cached in `data/processed/affiliation_cache.json`, so re-running the script
+without new papers makes no API calls.
+
+**What counts as privileged.** The corpus is entirely `cs.*`, and a global
+all-disciplines university ranking is a poor instrument for prestige *within*
+computer science — under QS Top 20 alone, Carnegie Mellon, Princeton, UIUC,
+Georgia Tech and Google Research were all classified `underrepresented`. The
+privileged group is therefore the union of four tiers:
+
+| Tier | Definition | Papers |
+|------|------------|-------:|
+| 1 | QS World University Rankings 2027, Top 20 (incl. ties) | 3,775 |
+| 2 | [CSRankings](https://csrankings.org) all-areas world Top 20 ∪ US Top 20, retrieved 2026-08-09 | 2,225 |
+| 3 | Ivy League (those not already in Tier 1) | 326 |
+| 4 | Major industry research labs | 1,053 |
+
+Tier 2 takes the union of the world and US top-20 lists rather than the world
+list alone, so that strong US departments the global ranking pushes past rank 20
+(UT Austin, Wisconsin, UCLA) are still included; the cutoff is CSRankings' own
+top-20 boundary rather than an arbitrary depth. National research agencies
+(CNRS, the Chinese Academy of Sciences, INRIA) are deliberately *excluded* —
+they are umbrella organizations spanning labs of widely varying prestige, so
+labeling them uniformly elite is not defensible.
+
+Two limitations of this operationalization are worth stating explicitly.
+Including industry labs means "privileged" covers global corporate research
+(Tencent, Huawei, Alibaba and Baidu among them), not only Western academia.
+And CSRankings' "Northeastern University" is the Boston institution, while
+Northeastern University (Shenyang, China) is a distinct university whose name
+normalizes identically — both currently match this tier.
+
+**Affiliation coverage.** Lookup runs in five stages: OpenAlex batch URL lookup,
+a re-lookup with wider extraction, a free Semantic Scholar batch pass (500 arXiv
+IDs per request, ~16% recovery on what OpenAlex missed), a free Crossref pass by
+DOI (~44% recovery, but only for the papers that carry one — see
+`data/processed/arxiv_dois.json`), and an optional per-paper OpenAlex title
+search. Stages 3-5 record what they have already tried, so a re-run resumes
+rather than repeating a completed pass. The last stage is **off by default**: OpenAlex
+meters it by spend rather than request rate (~$0.001/paper, against a free daily
+budget of roughly $0.10), so a full pass over this corpus costs about $25 and
+will otherwise fail partway with HTTP 429 "Insufficient budget". Enable it
+deliberately, with funded credit:
+
+```bash
+python enrich_metadata.py --title-search
+```
+
+Coverage currently stands at 51.6% of the corpus (25,819 of 50,000 papers), and
+the free sources are effectively exhausted: 92.9% of the remaining unlabeled
+papers carry no DOI, journal reference or report number, so there is no
+identifier left to look them up by.
+
+**Missingness is not random, and this bounds the audit.** Affiliation data comes
+from *published* versions of papers, so coverage splits sharply on publication
+status: papers with a DOI or journal reference are 83.7% labeled, while
+preprint-only papers are 36.8% labeled. Among preprint-only papers, those that
+*are* labeled skew more privileged (35.5%) than published ones (26.9%),
+suggesting the unlabeled remainder skews underrepresented. All fairness metrics
+in this project are therefore computed over a subsample that over-represents
+published work and, likely, elite institutions — a limitation that no additional
+lookup source can remove, since the upstream data does not exist.
 
 `audit_labels.py` is an offline diagnostic (no API calls) that reports which
 institution triggered each `privileged` label and flags `underrepresented`
-institution names that closely resemble a Top 20 entry — useful for validating the
-matching before the labels feed into bias metrics.
+institution names that closely resemble a privileged-list entry — useful for
+validating the matching before the labels feed into bias metrics.
 
 ### Standardized query set and relevance judgments
 
