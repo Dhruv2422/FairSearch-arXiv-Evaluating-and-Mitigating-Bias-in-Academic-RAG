@@ -71,11 +71,20 @@ def hit_to_dict(hit) -> dict:
 
 
 def measure_query(query: str, model, client) -> dict | None:
+    # Rank the FULL candidate pool with MMR, then keep the top TOP_K *labeled*
+    # results. This mirrors experiment_a.py, which retrieves to depth
+    # OVERSAMPLE_K and keeps the ten highest-ranked labeled papers.
+    #
+    # Previously this selected only TOP_K by MMR and filtered to labeled
+    # afterwards, which left a mean of 5.2 labeled results per query against
+    # the baseline's 10. Every MMR metric was computed over roughly half as
+    # many results as the baseline it was being compared against, mechanically
+    # depressing NDCG@10 and both groups' true positive rates.
     hits = search_mmr(
         query=query,
         model=model,
         client=client,
-        k=TOP_K,
+        k=FETCH_K,
         fetch_k=FETCH_K,
         lambda_mult=MMR_LAMBDA,
     )
