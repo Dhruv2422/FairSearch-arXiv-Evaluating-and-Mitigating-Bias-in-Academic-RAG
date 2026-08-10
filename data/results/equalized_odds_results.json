@@ -1,0 +1,65 @@
+{
+  "relevance_threshold": 2,
+  "qrels_source": "qrels_auto.json",
+  "note": "Judged pool from build_qrels_llm.py: Gemini-judged relevance (not human labels), candidates pooled from baseline and MMR top-30. Institution labels joined live from Qdrant.",
+  "runs": {
+    "baseline": {
+      "counts": {
+        "privileged": {
+          "judged": 835,
+          "relevant": 440,
+          "retrieved": 385
+        },
+        "underrepresented": {
+          "judged": 1439,
+          "relevant": 687,
+          "retrieved": 611
+        },
+        "skipped_unlabeled_judgments": 2306,
+        "skipped_queries_missing_from_results": 0
+      },
+      "by_group": {
+        "privileged": {
+          "tpr": 0.5659,
+          "fpr": 0.3443
+        },
+        "underrepresented": {
+          "tpr": 0.508,
+          "fpr": 0.3484
+        }
+      },
+      "tpr_gap_priv_minus_under": 0.0579,
+      "fpr_gap_priv_minus_under": -0.0041,
+      "equalized_odds_difference": 0.0579
+    },
+    "mmr": {
+      "counts": {
+        "privileged": {
+          "judged": 835,
+          "relevant": 440,
+          "retrieved": 346
+        },
+        "underrepresented": {
+          "judged": 1439,
+          "relevant": 687,
+          "retrieved": 643
+        },
+        "skipped_unlabeled_judgments": 2306,
+        "skipped_queries_missing_from_results": 0
+      },
+      "by_group": {
+        "privileged": {
+          "tpr": 0.3795,
+          "fpr": 0.4532
+        },
+        "underrepresented": {
+          "tpr": 0.3959,
+          "fpr": 0.4934
+        }
+      },
+      "tpr_gap_priv_minus_under": -0.0164,
+      "fpr_gap_priv_minus_under": -0.0402,
+      "equalized_odds_difference": 0.0402
+    }
+  }
+}
