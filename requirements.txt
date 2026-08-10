@@ -6,3 +6,6 @@ qdrant-client
 pyarrow
 google-genai
 python-dotenv
+fairlearn
+requests
+matplotlib
