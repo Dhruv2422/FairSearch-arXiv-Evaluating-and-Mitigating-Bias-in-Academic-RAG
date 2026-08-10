@@ -69,7 +69,13 @@ Counter({'unknown': 24181, 'underrepresented': 18447, 'privileged': 7372})
 │   ├── evaluate_DP_ED.py        # Demographic Parity + rank-weighted Exposure Diversity
 │   └── test_pipeline.py         # End-to-end smoke test across multiple queries
 ├── app/              # (Reserved) Streamlit application
-├── experiments/      # (Reserved) Experiment outputs and evaluation results
+├── experiments/      # Experiment B — generative faithfulness / synthesis neutrality
+│   ├── experiment_b_collect.py             # Baseline RAG condition
+│   ├── experiment_b_mmr_collect.py         # MMR retrieval condition
+│   ├── experiment_b_mmr_prompt_collect.py  # MMR + perspective-balancing prompt
+│   ├── experiment_b_analyze.py             # LLM-as-judge consensus/dissent labelling
+│   ├── experiment_b_ragas.py               # RAGAS answer relevancy + faithfulness
+│   └── experiment_b_results.py             # Aggregate the three conditions
 └── requirements.txt
 ```
 
@@ -80,6 +86,9 @@ Counter({'unknown': 24181, 'underrepresented': 18447, 'privileged': 7372})
   LLM-judged relevance labeling). For `build_qrels_llm.py`, enable billing on the
   key — the free tier's daily request quota is too low for a full 100-query judging
   pass. Total cost is a few cents.
+- An [OpenAI](https://platform.openai.com/) API key, only for
+  `experiment_b_ragas.py` — RAGAS uses OpenAI's `text-embedding-3-small` for its
+  answer-relevancy metric. The rest of the project needs only the Gemini key.
 - A [Kaggle](https://www.kaggle.com/) account, only if rebuilding the corpus from
   scratch (see the reproducibility note above).
 
@@ -112,6 +121,7 @@ Counter({'unknown': 24181, 'underrepresented': 18447, 'privileged': 7372})
    ```
    GEMINI_API_KEY=your-key-here
    CONTACT_EMAIL=your-email-here   # used as OpenAlex's polite-pool "mailto" param
+   OPENAI_API_KEY=your-key-here    # only needed for experiment_b_ragas.py
    ```
 
    This file is gitignored and will never be committed.
@@ -318,6 +328,36 @@ depth 100 so `unknown`-labeled papers never occupy a scored slot), then computes
 | Equalized Odds difference | Larger of the TPR gap / FPR gap between groups, treating retrieval as a classifier over judged-relevant papers |
 | NDCG@10 / MRR | Standard ranking-quality metrics against the LLM-judged qrels |
 | Exposure Diversity | Rank-weighted (log-discounted) share of attention each group receives among retrieved results |
+
+## Experiment B: generative faithfulness and synthesis neutrality
+
+Experiment B asks whether the generator over-weights consensus evidence when
+synthesizing contradictory sources, and whether MMR retrieval or a
+perspective-balancing prompt reduces that. It uses its own 50 contradictory
+queries in `data/eval/contradictory_queries.json` — deliberately separate from
+the 100-query retrieval audit set, since the two are tuned for different
+questions — and never touches `institution_label`.
+
+Three conditions: baseline retrieval + standard prompt, MMR retrieval +
+standard prompt, and MMR retrieval + `BALANCED_SYSTEM_PROMPT` (defined in
+`generator.py`), isolating the effect of the prompt from the effect of
+retrieval.
+
+These scripts use package-style imports, so run them **from the repository
+root**, not from inside `experiments/`:
+
+```bash
+python experiments/experiment_b_collect.py             # baseline condition
+python experiments/experiment_b_mmr_collect.py         # MMR condition
+python experiments/experiment_b_mmr_prompt_collect.py  # MMR + balanced prompt
+python experiments/experiment_b_analyze.py             # consensus/dissent labelling
+python experiments/experiment_b_ragas.py               # RAGAS (needs OPENAI_API_KEY)
+python experiments/experiment_b_results.py             # aggregate
+```
+
+None of these cache their LLM calls, so an interrupted run restarts from the
+beginning — a full pass is roughly 2,400 requests. Run them detached rather
+than in a foreground shell.
 
 ## Evaluation (human-labeled)
 
