@@ -4,4 +4,6 @@ __pycache__/
 *.pyc
 data/raw/
 data/indices/
-data/results/
+data/results/sweep/
+.DS_Store
+.idea/

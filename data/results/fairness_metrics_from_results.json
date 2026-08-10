@@ -1,0 +1,2322 @@
+{
+  "input_file": "/Users/jamesceal/PycharmProjects/FairSearch-arXiv-Evaluating-and-Mitigating-Bias-in-Academic-RAG/data/results/experiment_a_results.json",
+  "summary": {
+    "num_queries_scored": 100,
+    "mean_demographic_parity": {
+      "privileged_selection_rate": 0.388,
+      "underrepresented_selection_rate": 0.612,
+      "selection_rate_ratio": 2.1281,
+      "statistical_parity_difference": -0.224
+    },
+    "mean_exposure_diversity": {
+      "privileged_exposure": 1.7549,
+      "underrepresented_exposure": 2.7887,
+      "privileged_exposure_share": 0.3862,
+      "underrepresented_exposure_share": 0.6138,
+      "exposure_ratio": 2.3932,
+      "exposure_difference": -0.2275
+    }
+  },
+  "per_query": [
+    {
+      "query": "existential risk from artificial intelligence",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 0,
+        "underrepresented": 10
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.0,
+        "underrepresented_selection_rate": 1.0,
+        "selection_rate_ratio": null,
+        "statistical_parity_difference": -1.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.0,
+        "underrepresented_exposure": 4.5436,
+        "privileged_exposure_share": 0.0,
+        "underrepresented_exposure_share": 1.0,
+        "exposure_ratio": null,
+        "exposure_difference": -1.0
+      }
+    },
+    {
+      "query": "fair RAG methods for mitigating demographic bias",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 7,
+        "underrepresented": 3
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.7,
+        "underrepresented_selection_rate": 0.3,
+        "selection_rate_ratio": 0.4286,
+        "statistical_parity_difference": 0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.6874,
+        "underrepresented_exposure": 1.8562,
+        "privileged_exposure_share": 0.5915,
+        "underrepresented_exposure_share": 0.4085,
+        "exposure_ratio": 0.6907,
+        "exposure_difference": 0.1829
+      }
+    },
+    {
+      "query": "transformative AI and catastrophic risk",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.4056,
+        "underrepresented_exposure": 3.138,
+        "privileged_exposure_share": 0.3094,
+        "underrepresented_exposure_share": 0.6906,
+        "exposure_ratio": 2.2326,
+        "exposure_difference": -0.3813
+      }
+    },
+    {
+      "query": "recent advances in graph neural networks",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.5951,
+        "underrepresented_exposure": 2.9485,
+        "privileged_exposure_share": 0.3511,
+        "underrepresented_exposure_share": 0.6489,
+        "exposure_ratio": 1.8484,
+        "exposure_difference": -0.2979
+      }
+    },
+    {
+      "query": "transformer models for natural language processing",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.1737,
+        "underrepresented_exposure": 2.3698,
+        "privileged_exposure_share": 0.4784,
+        "underrepresented_exposure_share": 0.5216,
+        "exposure_ratio": 1.0902,
+        "exposure_difference": -0.0432
+      }
+    },
+    {
+      "query": "federated learning for privacy preserving machine learning",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.2202,
+        "underrepresented_exposure": 2.3234,
+        "privileged_exposure_share": 0.4886,
+        "underrepresented_exposure_share": 0.5114,
+        "exposure_ratio": 1.0465,
+        "exposure_difference": -0.0227
+      }
+    },
+    {
+      "query": "convolutional neural networks for image classification",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.0178,
+        "underrepresented_exposure": 3.5258,
+        "privileged_exposure_share": 0.224,
+        "underrepresented_exposure_share": 0.776,
+        "exposure_ratio": 3.4642,
+        "exposure_difference": -0.552
+      }
+    },
+    {
+      "query": "reinforcement learning in robotics",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.0759,
+        "underrepresented_exposure": 2.4676,
+        "privileged_exposure_share": 0.4569,
+        "underrepresented_exposure_share": 0.5431,
+        "exposure_ratio": 1.1887,
+        "exposure_difference": -0.0862
+      }
+    },
+    {
+      "query": "generative adversarial networks for image synthesis",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 7,
+        "underrepresented": 3
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.7,
+        "underrepresented_selection_rate": 0.3,
+        "selection_rate_ratio": 0.4286,
+        "statistical_parity_difference": 0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 3.5937,
+        "underrepresented_exposure": 0.9498,
+        "privileged_exposure_share": 0.791,
+        "underrepresented_exposure_share": 0.209,
+        "exposure_ratio": 0.2643,
+        "exposure_difference": 0.5819
+      }
+    },
+    {
+      "query": "attention mechanisms in deep learning",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.5772,
+        "underrepresented_exposure": 2.9663,
+        "privileged_exposure_share": 0.3471,
+        "underrepresented_exposure_share": 0.6529,
+        "exposure_ratio": 1.8807,
+        "exposure_difference": -0.3057
+      }
+    },
+    {
+      "query": "self-supervised learning for representation learning",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.8332,
+        "underrepresented_exposure": 1.7103,
+        "privileged_exposure_share": 0.6236,
+        "underrepresented_exposure_share": 0.3764,
+        "exposure_ratio": 0.6037,
+        "exposure_difference": 0.2471
+      }
+    },
+    {
+      "query": "knowledge graph embedding methods",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.7431,
+        "underrepresented_exposure": 3.8005,
+        "privileged_exposure_share": 0.1635,
+        "underrepresented_exposure_share": 0.8365,
+        "exposure_ratio": 5.1147,
+        "exposure_difference": -0.6729
+      }
+    },
+    {
+      "query": "object detection in computer vision",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.7317,
+        "underrepresented_exposure": 2.8119,
+        "privileged_exposure_share": 0.3811,
+        "underrepresented_exposure_share": 0.6189,
+        "exposure_ratio": 1.6237,
+        "exposure_difference": -0.2377
+      }
+    },
+    {
+      "query": "neural machine translation",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.8476,
+        "underrepresented_exposure": 2.696,
+        "privileged_exposure_share": 0.4066,
+        "underrepresented_exposure_share": 0.5934,
+        "exposure_ratio": 1.4592,
+        "exposure_difference": -0.1867
+      }
+    },
+    {
+      "query": "anomaly detection in time series data",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 1,
+        "underrepresented": 9
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.1,
+        "underrepresented_selection_rate": 0.9,
+        "selection_rate_ratio": 9.0,
+        "statistical_parity_difference": -0.8
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.4307,
+        "underrepresented_exposure": 4.1129,
+        "privileged_exposure_share": 0.0948,
+        "underrepresented_exposure_share": 0.9052,
+        "exposure_ratio": 9.5498,
+        "exposure_difference": -0.8104
+      }
+    },
+    {
+      "query": "multi-task learning for natural language understanding",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.9628,
+        "underrepresented_exposure": 2.5808,
+        "privileged_exposure_share": 0.432,
+        "underrepresented_exposure_share": 0.568,
+        "exposure_ratio": 1.3148,
+        "exposure_difference": -0.136
+      }
+    },
+    {
+      "query": "contrastive learning for visual representations",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 6,
+        "underrepresented": 4
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.6,
+        "underrepresented_selection_rate": 0.4,
+        "selection_rate_ratio": 0.6667,
+        "statistical_parity_difference": 0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.7554,
+        "underrepresented_exposure": 1.7882,
+        "privileged_exposure_share": 0.6064,
+        "underrepresented_exposure_share": 0.3936,
+        "exposure_ratio": 0.649,
+        "exposure_difference": 0.2129
+      }
+    },
+    {
+      "query": "semantic segmentation with deep learning",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.0472,
+        "underrepresented_exposure": 2.4964,
+        "privileged_exposure_share": 0.4506,
+        "underrepresented_exposure_share": 0.5494,
+        "exposure_ratio": 1.2194,
+        "exposure_difference": -0.0989
+      }
+    },
+    {
+      "query": "question answering with large language models",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.7869,
+        "underrepresented_exposure": 2.7567,
+        "privileged_exposure_share": 0.3933,
+        "underrepresented_exposure_share": 0.6067,
+        "exposure_ratio": 1.5427,
+        "exposure_difference": -0.2134
+      }
+    },
+    {
+      "query": "drug discovery using machine learning",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.7818,
+        "underrepresented_exposure": 1.7618,
+        "privileged_exposure_share": 0.6122,
+        "underrepresented_exposure_share": 0.3878,
+        "exposure_ratio": 0.6333,
+        "exposure_difference": 0.2245
+      }
+    },
+    {
+      "query": "speech recognition with neural networks",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.0531,
+        "underrepresented_exposure": 3.4905,
+        "privileged_exposure_share": 0.2318,
+        "underrepresented_exposure_share": 0.7682,
+        "exposure_ratio": 3.3146,
+        "exposure_difference": -0.5365
+      }
+    },
+    {
+      "query": "meta-learning for few-shot classification",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 6,
+        "underrepresented": 4
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.6,
+        "underrepresented_selection_rate": 0.4,
+        "selection_rate_ratio": 0.6667,
+        "statistical_parity_difference": 0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 3.0937,
+        "underrepresented_exposure": 1.4498,
+        "privileged_exposure_share": 0.6809,
+        "underrepresented_exposure_share": 0.3191,
+        "exposure_ratio": 0.4686,
+        "exposure_difference": 0.3618
+      }
+    },
+    {
+      "query": "neural architecture search",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 6,
+        "underrepresented": 4
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.6,
+        "underrepresented_selection_rate": 0.4,
+        "selection_rate_ratio": 0.6667,
+        "statistical_parity_difference": 0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.354,
+        "underrepresented_exposure": 2.1895,
+        "privileged_exposure_share": 0.5181,
+        "underrepresented_exposure_share": 0.4819,
+        "exposure_ratio": 0.9301,
+        "exposure_difference": 0.0362
+      }
+    },
+    {
+      "query": "differential privacy in machine learning",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.9643,
+        "underrepresented_exposure": 3.5793,
+        "privileged_exposure_share": 0.2122,
+        "underrepresented_exposure_share": 0.7878,
+        "exposure_ratio": 3.7119,
+        "exposure_difference": -0.5755
+      }
+    },
+    {
+      "query": "causal inference in observational data",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 7,
+        "underrepresented": 3
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.7,
+        "underrepresented_selection_rate": 0.3,
+        "selection_rate_ratio": 0.4286,
+        "statistical_parity_difference": 0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 3.3081,
+        "underrepresented_exposure": 1.2355,
+        "privileged_exposure_share": 0.7281,
+        "underrepresented_exposure_share": 0.2719,
+        "exposure_ratio": 0.3735,
+        "exposure_difference": 0.4562
+      }
+    },
+    {
+      "query": "text summarization with sequence to sequence models",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 6,
+        "underrepresented": 4
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.6,
+        "underrepresented_selection_rate": 0.4,
+        "selection_rate_ratio": 0.6667,
+        "statistical_parity_difference": 0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.3005,
+        "underrepresented_exposure": 2.2431,
+        "privileged_exposure_share": 0.5063,
+        "underrepresented_exposure_share": 0.4937,
+        "exposure_ratio": 0.975,
+        "exposure_difference": 0.0126
+      }
+    },
+    {
+      "query": "recommender systems using collaborative filtering",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 0,
+        "underrepresented": 10
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.0,
+        "underrepresented_selection_rate": 1.0,
+        "selection_rate_ratio": null,
+        "statistical_parity_difference": -1.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.0,
+        "underrepresented_exposure": 4.5436,
+        "privileged_exposure_share": 0.0,
+        "underrepresented_exposure_share": 1.0,
+        "exposure_ratio": null,
+        "exposure_difference": -1.0
+      }
+    },
+    {
+      "query": "named entity recognition in clinical text",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.5,
+        "underrepresented_exposure": 3.0436,
+        "privileged_exposure_share": 0.3301,
+        "underrepresented_exposure_share": 0.6699,
+        "exposure_ratio": 2.029,
+        "exposure_difference": -0.3397
+      }
+    },
+    {
+      "query": "link prediction in social networks",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.9727,
+        "underrepresented_exposure": 3.5709,
+        "privileged_exposure_share": 0.2141,
+        "underrepresented_exposure_share": 0.7859,
+        "exposure_ratio": 3.6711,
+        "exposure_difference": -0.5718
+      }
+    },
+    {
+      "query": "explainability and interpretability in neural networks",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.505,
+        "underrepresented_exposure": 3.0386,
+        "privileged_exposure_share": 0.3312,
+        "underrepresented_exposure_share": 0.6688,
+        "exposure_ratio": 2.019,
+        "exposure_difference": -0.3375
+      }
+    },
+    {
+      "query": "transfer learning for low resource languages",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.7375,
+        "underrepresented_exposure": 1.806,
+        "privileged_exposure_share": 0.6025,
+        "underrepresented_exposure_share": 0.3975,
+        "exposure_ratio": 0.6597,
+        "exposure_difference": 0.205
+      }
+    },
+    {
+      "query": "multimodal learning combining vision and language",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 7,
+        "underrepresented": 3
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.7,
+        "underrepresented_selection_rate": 0.3,
+        "selection_rate_ratio": 0.4286,
+        "statistical_parity_difference": 0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.8719,
+        "underrepresented_exposure": 1.6717,
+        "privileged_exposure_share": 0.6321,
+        "underrepresented_exposure_share": 0.3679,
+        "exposure_ratio": 0.5821,
+        "exposure_difference": 0.2642
+      }
+    },
+    {
+      "query": "graph transformer architectures",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.2533,
+        "underrepresented_exposure": 3.2902,
+        "privileged_exposure_share": 0.2758,
+        "underrepresented_exposure_share": 0.7242,
+        "exposure_ratio": 2.6252,
+        "exposure_difference": -0.4483
+      }
+    },
+    {
+      "query": "automated code generation with language models",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.306,
+        "underrepresented_exposure": 2.2375,
+        "privileged_exposure_share": 0.5075,
+        "underrepresented_exposure_share": 0.4925,
+        "exposure_ratio": 0.9703,
+        "exposure_difference": 0.0151
+      }
+    },
+    {
+      "query": "uncertainty quantification in deep learning",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.7069,
+        "underrepresented_exposure": 2.8367,
+        "privileged_exposure_share": 0.3757,
+        "underrepresented_exposure_share": 0.6243,
+        "exposure_ratio": 1.6619,
+        "exposure_difference": -0.2487
+      }
+    },
+    {
+      "query": "adversarial robustness of neural networks",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 6,
+        "underrepresented": 4
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.6,
+        "underrepresented_selection_rate": 0.4,
+        "selection_rate_ratio": 0.6667,
+        "statistical_parity_difference": 0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.0793,
+        "underrepresented_exposure": 2.4643,
+        "privileged_exposure_share": 0.4576,
+        "underrepresented_exposure_share": 0.5424,
+        "exposure_ratio": 1.1851,
+        "exposure_difference": -0.0847
+      }
+    },
+    {
+      "query": "network pruning and model compression",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 7,
+        "underrepresented": 3
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.7,
+        "underrepresented_selection_rate": 0.3,
+        "selection_rate_ratio": 0.4286,
+        "statistical_parity_difference": 0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 3.3412,
+        "underrepresented_exposure": 1.2023,
+        "privileged_exposure_share": 0.7354,
+        "underrepresented_exposure_share": 0.2646,
+        "exposure_ratio": 0.3598,
+        "exposure_difference": 0.4708
+      }
+    },
+    {
+      "query": "continual learning without catastrophic forgetting",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.1717,
+        "underrepresented_exposure": 3.3719,
+        "privileged_exposure_share": 0.2579,
+        "underrepresented_exposure_share": 0.7421,
+        "exposure_ratio": 2.8778,
+        "exposure_difference": -0.4842
+      }
+    },
+    {
+      "query": "document retrieval with dense representations",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.2355,
+        "underrepresented_exposure": 3.3081,
+        "privileged_exposure_share": 0.2719,
+        "underrepresented_exposure_share": 0.7281,
+        "exposure_ratio": 2.6776,
+        "exposure_difference": -0.4562
+      }
+    },
+    {
+      "query": "protein structure prediction with deep learning",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.8333,
+        "underrepresented_exposure": 3.7102,
+        "privileged_exposure_share": 0.1834,
+        "underrepresented_exposure_share": 0.8166,
+        "exposure_ratio": 4.4523,
+        "exposure_difference": -0.6332
+      }
+    },
+    {
+      "query": "dialogue systems and conversational agents",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.2653,
+        "underrepresented_exposure": 2.2783,
+        "privileged_exposure_share": 0.4986,
+        "underrepresented_exposure_share": 0.5014,
+        "exposure_ratio": 1.0057,
+        "exposure_difference": -0.0029
+      }
+    },
+    {
+      "query": "fairness metrics in machine learning classification",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 6,
+        "underrepresented": 4
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.6,
+        "underrepresented_selection_rate": 0.4,
+        "selection_rate_ratio": 0.6667,
+        "statistical_parity_difference": 0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 3.0522,
+        "underrepresented_exposure": 1.4914,
+        "privileged_exposure_share": 0.6718,
+        "underrepresented_exposure_share": 0.3282,
+        "exposure_ratio": 0.4886,
+        "exposure_difference": 0.3435
+      }
+    },
+    {
+      "query": "vision transformers for medical image analysis",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.764,
+        "underrepresented_exposure": 2.7795,
+        "privileged_exposure_share": 0.3882,
+        "underrepresented_exposure_share": 0.6118,
+        "exposure_ratio": 1.5757,
+        "exposure_difference": -0.2235
+      }
+    },
+    {
+      "query": "text to image generation with diffusion models",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 7,
+        "underrepresented": 3
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.7,
+        "underrepresented_selection_rate": 0.3,
+        "selection_rate_ratio": 0.4286,
+        "statistical_parity_difference": 0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 3.1665,
+        "underrepresented_exposure": 1.3771,
+        "privileged_exposure_share": 0.6969,
+        "underrepresented_exposure_share": 0.3031,
+        "exposure_ratio": 0.4349,
+        "exposure_difference": 0.3938
+      }
+    },
+    {
+      "query": "long document understanding with language models",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.7202,
+        "underrepresented_exposure": 2.8234,
+        "privileged_exposure_share": 0.3786,
+        "underrepresented_exposure_share": 0.6214,
+        "exposure_ratio": 1.6413,
+        "exposure_difference": -0.2428
+      }
+    },
+    {
+      "query": "bias detection in word embeddings",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.8869,
+        "underrepresented_exposure": 3.6567,
+        "privileged_exposure_share": 0.1952,
+        "underrepresented_exposure_share": 0.8048,
+        "exposure_ratio": 4.1232,
+        "exposure_difference": -0.6096
+      }
+    },
+    {
+      "query": "tabular data learning with neural networks",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.3332,
+        "underrepresented_exposure": 3.2103,
+        "privileged_exposure_share": 0.2934,
+        "underrepresented_exposure_share": 0.7066,
+        "exposure_ratio": 2.4079,
+        "exposure_difference": -0.4131
+      }
+    },
+    {
+      "query": "satellite image analysis with deep learning",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.8869,
+        "underrepresented_exposure": 3.6567,
+        "privileged_exposure_share": 0.1952,
+        "underrepresented_exposure_share": 0.8048,
+        "exposure_ratio": 4.1232,
+        "exposure_difference": -0.6096
+      }
+    },
+    {
+      "query": "autonomous driving with deep learning",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 1,
+        "underrepresented": 9
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.1,
+        "underrepresented_selection_rate": 0.9,
+        "selection_rate_ratio": 9.0,
+        "statistical_parity_difference": -0.8
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.4307,
+        "underrepresented_exposure": 4.1129,
+        "privileged_exposure_share": 0.0948,
+        "underrepresented_exposure_share": 0.9052,
+        "exposure_ratio": 9.5498,
+        "exposure_difference": -0.8104
+      }
+    },
+    {
+      "query": "sentiment analysis in social media",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.9906,
+        "underrepresented_exposure": 3.553,
+        "privileged_exposure_share": 0.218,
+        "underrepresented_exposure_share": 0.782,
+        "exposure_ratio": 3.5868,
+        "exposure_difference": -0.564
+      }
+    },
+    {
+      "query": "Is AI going to bring about the end of the world?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.42,
+        "underrepresented_exposure": 3.1236,
+        "privileged_exposure_share": 0.3125,
+        "underrepresented_exposure_share": 0.6875,
+        "exposure_ratio": 2.1997,
+        "exposure_difference": -0.3749
+      }
+    },
+    {
+      "query": "does RAG introduce unfairness in LLMs",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.9357,
+        "underrepresented_exposure": 2.6079,
+        "privileged_exposure_share": 0.426,
+        "underrepresented_exposure_share": 0.574,
+        "exposure_ratio": 1.3473,
+        "exposure_difference": -0.1479
+      }
+    },
+    {
+      "query": "is prompt engineering a passing trend?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.6453,
+        "underrepresented_exposure": 3.8983,
+        "privileged_exposure_share": 0.142,
+        "underrepresented_exposure_share": 0.858,
+        "exposure_ratio": 6.0413,
+        "exposure_difference": -0.716
+      }
+    },
+    {
+      "query": "should large language models be open sourced?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.1202,
+        "underrepresented_exposure": 2.4233,
+        "privileged_exposure_share": 0.4666,
+        "underrepresented_exposure_share": 0.5334,
+        "exposure_ratio": 1.143,
+        "exposure_difference": -0.0667
+      }
+    },
+    {
+      "query": "does scaling laws mean bigger models are always better?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.2762,
+        "underrepresented_exposure": 3.2674,
+        "privileged_exposure_share": 0.2809,
+        "underrepresented_exposure_share": 0.7191,
+        "exposure_ratio": 2.5602,
+        "exposure_difference": -0.4382
+      }
+    },
+    {
+      "query": "is reinforcement learning from human feedback the best alignment approach?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 6,
+        "underrepresented": 4
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.6,
+        "underrepresented_selection_rate": 0.4,
+        "selection_rate_ratio": 0.6667,
+        "statistical_parity_difference": 0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.7638,
+        "underrepresented_exposure": 1.7797,
+        "privileged_exposure_share": 0.6083,
+        "underrepresented_exposure_share": 0.3917,
+        "exposure_ratio": 0.6439,
+        "exposure_difference": 0.2166
+      }
+    },
+    {
+      "query": "can neural networks truly generalize beyond training data?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 6,
+        "underrepresented": 4
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.6,
+        "underrepresented_selection_rate": 0.4,
+        "selection_rate_ratio": 0.6667,
+        "statistical_parity_difference": 0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 3.3047,
+        "underrepresented_exposure": 1.2389,
+        "privileged_exposure_share": 0.7273,
+        "underrepresented_exposure_share": 0.2727,
+        "exposure_ratio": 0.3749,
+        "exposure_difference": 0.4547
+      }
+    },
+    {
+      "query": "is attention all you need or are other architectures underexplored?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.9463,
+        "underrepresented_exposure": 2.5973,
+        "privileged_exposure_share": 0.4284,
+        "underrepresented_exposure_share": 0.5716,
+        "exposure_ratio": 1.3345,
+        "exposure_difference": -0.1433
+      }
+    },
+    {
+      "query": "are transformers replacing convolutional networks for vision tasks?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.3774,
+        "underrepresented_exposure": 2.1661,
+        "privileged_exposure_share": 0.5233,
+        "underrepresented_exposure_share": 0.4767,
+        "exposure_ratio": 0.9111,
+        "exposure_difference": 0.0465
+      }
+    },
+    {
+      "query": "does explainable AI actually help users make better decisions?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.92,
+        "underrepresented_exposure": 3.6236,
+        "privileged_exposure_share": 0.2025,
+        "underrepresented_exposure_share": 0.7975,
+        "exposure_ratio": 3.9387,
+        "exposure_difference": -0.595
+      }
+    },
+    {
+      "query": "is federated learning practical for real world deployment?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.8155,
+        "underrepresented_exposure": 2.7281,
+        "privileged_exposure_share": 0.3996,
+        "underrepresented_exposure_share": 0.6004,
+        "exposure_ratio": 1.5027,
+        "exposure_difference": -0.2009
+      }
+    },
+    {
+      "query": "are graph neural networks overrated for relational learning?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.7231,
+        "underrepresented_exposure": 2.8205,
+        "privileged_exposure_share": 0.3792,
+        "underrepresented_exposure_share": 0.6208,
+        "exposure_ratio": 1.6369,
+        "exposure_difference": -0.2415
+      }
+    },
+    {
+      "query": "can self-supervised learning replace supervised pretraining?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.184,
+        "underrepresented_exposure": 2.3596,
+        "privileged_exposure_share": 0.4807,
+        "underrepresented_exposure_share": 0.5193,
+        "exposure_ratio": 1.0804,
+        "exposure_difference": -0.0386
+      }
+    },
+    {
+      "query": "is algorithmic fairness compatible with predictive accuracy?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.7375,
+        "underrepresented_exposure": 1.806,
+        "privileged_exposure_share": 0.6025,
+        "underrepresented_exposure_share": 0.3975,
+        "exposure_ratio": 0.6597,
+        "exposure_difference": 0.205
+      }
+    },
+    {
+      "query": "does differential privacy make machine learning useless in practice?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.764,
+        "underrepresented_exposure": 3.7795,
+        "privileged_exposure_share": 0.1682,
+        "underrepresented_exposure_share": 0.8318,
+        "exposure_ratio": 4.947,
+        "exposure_difference": -0.6637
+      }
+    },
+    {
+      "query": "is meta-learning the path to artificial general intelligence?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 6,
+        "underrepresented": 4
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.6,
+        "underrepresented_selection_rate": 0.4,
+        "selection_rate_ratio": 0.6667,
+        "statistical_parity_difference": 0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.7902,
+        "underrepresented_exposure": 1.7533,
+        "privileged_exposure_share": 0.6141,
+        "underrepresented_exposure_share": 0.3859,
+        "exposure_ratio": 0.6284,
+        "exposure_difference": 0.2282
+      }
+    },
+    {
+      "query": "are large language models actually reasoning or just pattern matching?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.9643,
+        "underrepresented_exposure": 3.5793,
+        "privileged_exposure_share": 0.2122,
+        "underrepresented_exposure_share": 0.7878,
+        "exposure_ratio": 3.7119,
+        "exposure_difference": -0.5755
+      }
+    },
+    {
+      "query": "is ChatGPT making software engineers obsolete?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.6045,
+        "underrepresented_exposure": 3.939,
+        "privileged_exposure_share": 0.1331,
+        "underrepresented_exposure_share": 0.8669,
+        "exposure_ratio": 6.5159,
+        "exposure_difference": -0.7339
+      }
+    },
+    {
+      "query": "should AI systems be regulated by governments?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 6,
+        "underrepresented": 4
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.6,
+        "underrepresented_selection_rate": 0.4,
+        "selection_rate_ratio": 0.6667,
+        "statistical_parity_difference": 0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.3081,
+        "underrepresented_exposure": 2.2355,
+        "privileged_exposure_share": 0.508,
+        "underrepresented_exposure_share": 0.492,
+        "exposure_ratio": 0.9685,
+        "exposure_difference": 0.016
+      }
+    },
+    {
+      "query": "does AI perpetuate racial and gender bias in hiring?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.8047,
+        "underrepresented_exposure": 2.7389,
+        "privileged_exposure_share": 0.3972,
+        "underrepresented_exposure_share": 0.6028,
+        "exposure_ratio": 1.5177,
+        "exposure_difference": -0.2056
+      }
+    },
+    {
+      "query": "is deep learning a black box that cannot be trusted in healthcare?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 1,
+        "underrepresented": 9
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.1,
+        "underrepresented_selection_rate": 0.9,
+        "selection_rate_ratio": 9.0,
+        "statistical_parity_difference": -0.8
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.301,
+        "underrepresented_exposure": 4.2425,
+        "privileged_exposure_share": 0.0663,
+        "underrepresented_exposure_share": 0.9337,
+        "exposure_ratio": 14.0934,
+        "exposure_difference": -0.8675
+      }
+    },
+    {
+      "query": "can AI be creative or is it just remixing existing work?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.2474,
+        "underrepresented_exposure": 2.2961,
+        "privileged_exposure_share": 0.4946,
+        "underrepresented_exposure_share": 0.5054,
+        "exposure_ratio": 1.0217,
+        "exposure_difference": -0.0107
+      }
+    },
+    {
+      "query": "is transfer learning making domain expertise obsolete?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.9463,
+        "underrepresented_exposure": 2.5973,
+        "privileged_exposure_share": 0.4284,
+        "underrepresented_exposure_share": 0.5716,
+        "exposure_ratio": 1.3345,
+        "exposure_difference": -0.1433
+      }
+    },
+    {
+      "query": "does AI research have a reproducibility crisis?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 6,
+        "underrepresented": 4
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.6,
+        "underrepresented_selection_rate": 0.4,
+        "selection_rate_ratio": 0.6667,
+        "statistical_parity_difference": 0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 3.2495,
+        "underrepresented_exposure": 1.2941,
+        "privileged_exposure_share": 0.7152,
+        "underrepresented_exposure_share": 0.2848,
+        "exposure_ratio": 0.3982,
+        "exposure_difference": 0.4304
+      }
+    },
+    {
+      "query": "is the environmental cost of training large models justified?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.1453,
+        "underrepresented_exposure": 2.3983,
+        "privileged_exposure_share": 0.4722,
+        "underrepresented_exposure_share": 0.5278,
+        "exposure_ratio": 1.1179,
+        "exposure_difference": -0.0557
+      }
+    },
+    {
+      "query": "are benchmark datasets misleading progress in NLP?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 6,
+        "underrepresented": 4
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.6,
+        "underrepresented_selection_rate": 0.4,
+        "selection_rate_ratio": 0.6667,
+        "statistical_parity_difference": 0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.2231,
+        "underrepresented_exposure": 2.3205,
+        "privileged_exposure_share": 0.4893,
+        "underrepresented_exposure_share": 0.5107,
+        "exposure_ratio": 1.0438,
+        "exposure_difference": -0.0214
+      }
+    },
+    {
+      "query": "can machine learning models be truly unbiased?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.3919,
+        "underrepresented_exposure": 2.1517,
+        "privileged_exposure_share": 0.5264,
+        "underrepresented_exposure_share": 0.4736,
+        "exposure_ratio": 0.8996,
+        "exposure_difference": 0.0529
+      }
+    },
+    {
+      "query": "is peer review in AI conferences broken?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.7762,
+        "underrepresented_exposure": 2.7674,
+        "privileged_exposure_share": 0.3909,
+        "underrepresented_exposure_share": 0.6091,
+        "exposure_ratio": 1.558,
+        "exposure_difference": -0.2181
+      }
+    },
+    {
+      "query": "does data augmentation actually improve generalization?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 7,
+        "underrepresented": 3
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.7,
+        "underrepresented_selection_rate": 0.3,
+        "selection_rate_ratio": 0.4286,
+        "statistical_parity_difference": 0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 3.437,
+        "underrepresented_exposure": 1.1066,
+        "privileged_exposure_share": 0.7564,
+        "underrepresented_exposure_share": 0.2436,
+        "exposure_ratio": 0.322,
+        "exposure_difference": 0.5129
+      }
+    },
+    {
+      "query": "should foundation models be considered a public good?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 6,
+        "underrepresented": 4
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.6,
+        "underrepresented_selection_rate": 0.4,
+        "selection_rate_ratio": 0.6667,
+        "statistical_parity_difference": 0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.741,
+        "underrepresented_exposure": 1.8026,
+        "privileged_exposure_share": 0.6033,
+        "underrepresented_exposure_share": 0.3967,
+        "exposure_ratio": 0.6577,
+        "exposure_difference": 0.2065
+      }
+    },
+    {
+      "query": "does academic AI research lag too far behind industry?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.8333,
+        "underrepresented_exposure": 3.7102,
+        "privileged_exposure_share": 0.1834,
+        "underrepresented_exposure_share": 0.8166,
+        "exposure_ratio": 4.4523,
+        "exposure_difference": -0.6332
+      }
+    },
+    {
+      "query": "is quantum machine learning practical or just theoretical?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.1895,
+        "underrepresented_exposure": 3.354,
+        "privileged_exposure_share": 0.2618,
+        "underrepresented_exposure_share": 0.7382,
+        "exposure_ratio": 2.8196,
+        "exposure_difference": -0.4764
+      }
+    },
+    {
+      "query": "are knowledge graphs still relevant in the age of LLMs?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.1066,
+        "underrepresented_exposure": 3.437,
+        "privileged_exposure_share": 0.2436,
+        "underrepresented_exposure_share": 0.7564,
+        "exposure_ratio": 3.1059,
+        "exposure_difference": -0.5129
+      }
+    },
+    {
+      "query": "does AI widen the gap between wealthy and developing nations?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.9643,
+        "underrepresented_exposure": 2.5793,
+        "privileged_exposure_share": 0.4323,
+        "underrepresented_exposure_share": 0.5677,
+        "exposure_ratio": 1.3131,
+        "exposure_difference": -0.1354
+      }
+    },
+    {
+      "query": "is AutoML making human machine learning engineers unnecessary?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.1879,
+        "underrepresented_exposure": 3.3557,
+        "privileged_exposure_share": 0.2614,
+        "underrepresented_exposure_share": 0.7386,
+        "exposure_ratio": 2.8249,
+        "exposure_difference": -0.4771
+      }
+    },
+    {
+      "query": "is diffusion model the end of GANs for image generation?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.4357,
+        "underrepresented_exposure": 3.1079,
+        "privileged_exposure_share": 0.316,
+        "underrepresented_exposure_share": 0.684,
+        "exposure_ratio": 2.1647,
+        "exposure_difference": -0.368
+      }
+    },
+    {
+      "query": "does peer institution collaboration reinforce academic inequality?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.7317,
+        "underrepresented_exposure": 3.8119,
+        "privileged_exposure_share": 0.161,
+        "underrepresented_exposure_share": 0.839,
+        "exposure_ratio": 5.2095,
+        "exposure_difference": -0.6779
+      }
+    },
+    {
+      "query": "are citation metrics a fair measure of research impact?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.6453,
+        "underrepresented_exposure": 3.8983,
+        "privileged_exposure_share": 0.142,
+        "underrepresented_exposure_share": 0.858,
+        "exposure_ratio": 6.0413,
+        "exposure_difference": -0.716
+      }
+    },
+    {
+      "query": "is Western AI research agenda ignoring global south problems?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.3626,
+        "underrepresented_exposure": 3.1809,
+        "privileged_exposure_share": 0.2999,
+        "underrepresented_exposure_share": 0.7001,
+        "exposure_ratio": 2.3344,
+        "exposure_difference": -0.4002
+      }
+    },
+    {
+      "query": "does open access publishing level the playing field in academia?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 1,
+        "underrepresented": 9
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.1,
+        "underrepresented_selection_rate": 0.9,
+        "selection_rate_ratio": 9.0,
+        "statistical_parity_difference": -0.8
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.301,
+        "underrepresented_exposure": 4.2425,
+        "privileged_exposure_share": 0.0663,
+        "underrepresented_exposure_share": 0.9337,
+        "exposure_ratio": 14.0934,
+        "exposure_difference": -0.8675
+      }
+    },
+    {
+      "query": "is institutional prestige a proxy for research quality?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 0,
+        "underrepresented": 10
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.0,
+        "underrepresented_selection_rate": 1.0,
+        "selection_rate_ratio": null,
+        "statistical_parity_difference": -1.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.0,
+        "underrepresented_exposure": 4.5436,
+        "privileged_exposure_share": 0.0,
+        "underrepresented_exposure_share": 1.0,
+        "exposure_ratio": null,
+        "exposure_difference": -1.0
+      }
+    },
+    {
+      "query": "is multi-modal AI the future of human computer interaction?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 7,
+        "underrepresented": 3
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.7,
+        "underrepresented_selection_rate": 0.3,
+        "selection_rate_ratio": 0.4286,
+        "statistical_parity_difference": 0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 3.1665,
+        "underrepresented_exposure": 1.3771,
+        "privileged_exposure_share": 0.6969,
+        "underrepresented_exposure_share": 0.3031,
+        "exposure_ratio": 0.4349,
+        "exposure_difference": 0.3938
+      }
+    },
+    {
+      "query": "are foundation models making traditional NLP pipelines obsolete?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.6929,
+        "underrepresented_exposure": 2.8507,
+        "privileged_exposure_share": 0.3726,
+        "underrepresented_exposure_share": 0.6274,
+        "exposure_ratio": 1.6839,
+        "exposure_difference": -0.2548
+      }
+    },
+    {
+      "query": "does retrieval augmented generation actually improve factual accuracy?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.1165,
+        "underrepresented_exposure": 3.4271,
+        "privileged_exposure_share": 0.2457,
+        "underrepresented_exposure_share": 0.7543,
+        "exposure_ratio": 3.0695,
+        "exposure_difference": -0.5085
+      }
+    },
+    {
+      "query": "is zero-shot prompting sufficient or do we always need fine-tuning?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.6759,
+        "underrepresented_exposure": 2.8676,
+        "privileged_exposure_share": 0.3689,
+        "underrepresented_exposure_share": 0.6311,
+        "exposure_ratio": 1.7111,
+        "exposure_difference": -0.2623
+      }
+    },
+    {
+      "query": "does increasing model size always improve fairness?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 4,
+        "underrepresented": 6
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.4,
+        "underrepresented_selection_rate": 0.6,
+        "selection_rate_ratio": 1.5,
+        "statistical_parity_difference": -0.2
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.133,
+        "underrepresented_exposure": 2.4106,
+        "privileged_exposure_share": 0.4695,
+        "underrepresented_exposure_share": 0.5305,
+        "exposure_ratio": 1.1301,
+        "exposure_difference": -0.0611
+      }
+    },
+    {
+      "query": "is supervised learning still relevant in the age of self-supervision?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.9076,
+        "underrepresented_exposure": 2.6359,
+        "privileged_exposure_share": 0.4199,
+        "underrepresented_exposure_share": 0.5801,
+        "exposure_ratio": 1.3818,
+        "exposure_difference": -0.1603
+      }
+    },
+    {
+      "query": "do leaderboards actually reflect real world model performance?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 2,
+        "underrepresented": 8
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.2,
+        "underrepresented_selection_rate": 0.8,
+        "selection_rate_ratio": 4.0,
+        "statistical_parity_difference": -0.6
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 0.6572,
+        "underrepresented_exposure": 3.8863,
+        "privileged_exposure_share": 0.1447,
+        "underrepresented_exposure_share": 0.8553,
+        "exposure_ratio": 5.9131,
+        "exposure_difference": -0.7107
+      }
+    },
+    {
+      "query": "is explainability at odds with model performance?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 3,
+        "underrepresented": 7
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.3,
+        "underrepresented_selection_rate": 0.7,
+        "selection_rate_ratio": 2.3333,
+        "statistical_parity_difference": -0.4
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 1.0585,
+        "underrepresented_exposure": 3.485,
+        "privileged_exposure_share": 0.233,
+        "underrepresented_exposure_share": 0.767,
+        "exposure_ratio": 3.2924,
+        "exposure_difference": -0.5341
+      }
+    },
+    {
+      "query": "should AI researchers be held liable for harmful model outputs?",
+      "top_k": 10,
+      "labeled_results": 10,
+      "counts": {
+        "privileged": 5,
+        "underrepresented": 5
+      },
+      "demographic_parity": {
+        "privileged_selection_rate": 0.5,
+        "underrepresented_selection_rate": 0.5,
+        "selection_rate_ratio": 1.0,
+        "statistical_parity_difference": 0.0
+      },
+      "exposure_diversity": {
+        "privileged_exposure": 2.1095,
+        "underrepresented_exposure": 2.434,
+        "privileged_exposure_share": 0.4643,
+        "underrepresented_exposure_share": 0.5357,
+        "exposure_ratio": 1.1538,
+        "exposure_difference": -0.0714
+      }
+    }
+  ]
+}
