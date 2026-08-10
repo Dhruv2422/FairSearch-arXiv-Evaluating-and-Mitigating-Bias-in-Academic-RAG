@@ -1,0 +1,3638 @@
+{
+  "queries_file": "/Users/jamesceal/PycharmProjects/FairSearch-arXiv-Evaluating-and-Mitigating-Bias-in-Academic-RAG/data/eval/retrieval_eval_queries.json",
+  "qrels_file": "/Users/jamesceal/PycharmProjects/FairSearch-arXiv-Evaluating-and-Mitigating-Bias-in-Academic-RAG/data/eval/qrels_auto.json",
+  "baseline": {
+    "input_file": "/Users/jamesceal/PycharmProjects/FairSearch-arXiv-Evaluating-and-Mitigating-Bias-in-Academic-RAG/data/results/experiment_a_results.json",
+    "queries_total_in_canonical_list": 100,
+    "queries_scored": 100,
+    "queries_missing_from_run_or_qrels": 0,
+    "queries_with_no_judgments": 0,
+    "mean_ndcg@10": 0.7312,
+    "mean_mrr": 0.9633,
+    "per_query": [
+      {
+        "query": "existential risk from artificial intelligence",
+        "relevances": [
+          3,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.5575,
+        "mrr": 1.0
+      },
+      {
+        "query": "fair RAG methods for mitigating demographic bias",
+        "relevances": [
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.5155,
+        "mrr": 1.0
+      },
+      {
+        "query": "transformative AI and catastrophic risk",
+        "relevances": [
+          3,
+          1,
+          2,
+          2,
+          1,
+          1,
+          1,
+          2,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.6181,
+        "mrr": 1.0
+      },
+      {
+        "query": "recent advances in graph neural networks",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 51,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "transformer models for natural language processing",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          1,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.9432,
+        "mrr": 1.0
+      },
+      {
+        "query": "federated learning for privacy preserving machine learning",
+        "relevances": [
+          3,
+          2,
+          3,
+          3,
+          3,
+          3,
+          2,
+          3,
+          3,
+          2
+        ],
+        "num_judged_docs_for_query": 43,
+        "ndcg@10": 0.9081,
+        "mrr": 1.0
+      },
+      {
+        "query": "convolutional neural networks for image classification",
+        "relevances": [
+          3,
+          2,
+          3,
+          3,
+          2,
+          2,
+          3,
+          2,
+          2,
+          3
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.854,
+        "mrr": 1.0
+      },
+      {
+        "query": "reinforcement learning in robotics",
+        "relevances": [
+          3,
+          2,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.9061,
+        "mrr": 1.0
+      },
+      {
+        "query": "generative adversarial networks for image synthesis",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "attention mechanisms in deep learning",
+        "relevances": [
+          3,
+          3,
+          2,
+          3,
+          3,
+          1,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 40,
+        "ndcg@10": 0.9111,
+        "mrr": 1.0
+      },
+      {
+        "query": "self-supervised learning for representation learning",
+        "relevances": [
+          3,
+          3,
+          3,
+          1,
+          3,
+          3,
+          3,
+          3,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.8944,
+        "mrr": 1.0
+      },
+      {
+        "query": "knowledge graph embedding methods",
+        "relevances": [
+          3,
+          3,
+          3,
+          2,
+          2,
+          3,
+          2,
+          2,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.934,
+        "mrr": 1.0
+      },
+      {
+        "query": "object detection in computer vision",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          0,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.9216,
+        "mrr": 1.0
+      },
+      {
+        "query": "neural machine translation",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.9716,
+        "mrr": 1.0
+      },
+      {
+        "query": "anomaly detection in time series data",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.9716,
+        "mrr": 1.0
+      },
+      {
+        "query": "multi-task learning for natural language understanding",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          1,
+          3,
+          1,
+          1,
+          1,
+          3
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.8039,
+        "mrr": 1.0
+      },
+      {
+        "query": "contrastive learning for visual representations",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          0
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.9364,
+        "mrr": 1.0
+      },
+      {
+        "query": "semantic segmentation with deep learning",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "question answering with large language models",
+        "relevances": [
+          2,
+          3,
+          1,
+          1,
+          1,
+          3,
+          3,
+          3,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.6909,
+        "mrr": 1.0
+      },
+      {
+        "query": "drug discovery using machine learning",
+        "relevances": [
+          3,
+          1,
+          3,
+          3,
+          2,
+          3,
+          3,
+          3,
+          0,
+          3
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.8128,
+        "mrr": 1.0
+      },
+      {
+        "query": "speech recognition with neural networks",
+        "relevances": [
+          0,
+          2,
+          0,
+          2,
+          3,
+          3,
+          3,
+          3,
+          0,
+          3
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.5257,
+        "mrr": 0.5
+      },
+      {
+        "query": "meta-learning for few-shot classification",
+        "relevances": [
+          3,
+          3,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          2
+        ],
+        "num_judged_docs_for_query": 37,
+        "ndcg@10": 0.9421,
+        "mrr": 1.0
+      },
+      {
+        "query": "neural architecture search",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "differential privacy in machine learning",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "causal inference in observational data",
+        "relevances": [
+          2,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 42,
+        "ndcg@10": 0.8529,
+        "mrr": 1.0
+      },
+      {
+        "query": "text summarization with sequence to sequence models",
+        "relevances": [
+          3,
+          1,
+          1,
+          1,
+          1,
+          1,
+          3,
+          1,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.5654,
+        "mrr": 1.0
+      },
+      {
+        "query": "recommender systems using collaborative filtering",
+        "relevances": [
+          3,
+          1,
+          1,
+          3,
+          3,
+          1,
+          1,
+          1,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.6866,
+        "mrr": 1.0
+      },
+      {
+        "query": "named entity recognition in clinical text",
+        "relevances": [
+          3,
+          2,
+          0,
+          1,
+          1,
+          2,
+          0,
+          1,
+          1,
+          0
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.6156,
+        "mrr": 1.0
+      },
+      {
+        "query": "link prediction in social networks",
+        "relevances": [
+          3,
+          3,
+          2,
+          3,
+          2,
+          3,
+          3,
+          3,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 42,
+        "ndcg@10": 0.8925,
+        "mrr": 1.0
+      },
+      {
+        "query": "explainability and interpretability in neural networks",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 43,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "transfer learning for low resource languages",
+        "relevances": [
+          2,
+          2,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          1,
+          2
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.7002,
+        "mrr": 1.0
+      },
+      {
+        "query": "multimodal learning combining vision and language",
+        "relevances": [
+          1,
+          3,
+          1,
+          2,
+          2,
+          2,
+          2,
+          3,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.6261,
+        "mrr": 1.0
+      },
+      {
+        "query": "graph transformer architectures",
+        "relevances": [
+          0,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          0
+        ],
+        "num_judged_docs_for_query": 50,
+        "ndcg@10": 0.2243,
+        "mrr": 0.5
+      },
+      {
+        "query": "automated code generation with language models",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 43,
+        "ndcg@10": 0.9576,
+        "mrr": 1.0
+      },
+      {
+        "query": "uncertainty quantification in deep learning",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "adversarial robustness of neural networks",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 39,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "network pruning and model compression",
+        "relevances": [
+          3,
+          3,
+          1,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.9266,
+        "mrr": 1.0
+      },
+      {
+        "query": "continual learning without catastrophic forgetting",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 41,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "document retrieval with dense representations",
+        "relevances": [
+          3,
+          3,
+          3,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.5163,
+        "mrr": 1.0
+      },
+      {
+        "query": "protein structure prediction with deep learning",
+        "relevances": [
+          2,
+          2,
+          2,
+          2,
+          1,
+          1,
+          1,
+          3,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 40,
+        "ndcg@10": 0.7218,
+        "mrr": 1.0
+      },
+      {
+        "query": "dialogue systems and conversational agents",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "fairness metrics in machine learning classification",
+        "relevances": [
+          3,
+          3,
+          1,
+          1,
+          2,
+          1,
+          3,
+          2,
+          1,
+          3
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.8103,
+        "mrr": 1.0
+      },
+      {
+        "query": "vision transformers for medical image analysis",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 51,
+        "ndcg@10": 0.5638,
+        "mrr": 1.0
+      },
+      {
+        "query": "text to image generation with diffusion models",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          2,
+          3,
+          3,
+          3,
+          0,
+          3
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.9054,
+        "mrr": 1.0
+      },
+      {
+        "query": "long document understanding with language models",
+        "relevances": [
+          3,
+          3,
+          0,
+          0,
+          0,
+          0,
+          3,
+          3,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.5017,
+        "mrr": 1.0
+      },
+      {
+        "query": "bias detection in word embeddings",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "num_judged_docs_for_query": 39,
+        "ndcg@10": 0.702,
+        "mrr": 1.0
+      },
+      {
+        "query": "tabular data learning with neural networks",
+        "relevances": [
+          2,
+          1,
+          2,
+          3,
+          2,
+          1,
+          2,
+          2,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 50,
+        "ndcg@10": 0.7604,
+        "mrr": 1.0
+      },
+      {
+        "query": "satellite image analysis with deep learning",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          0,
+          3,
+          2
+        ],
+        "num_judged_docs_for_query": 41,
+        "ndcg@10": 0.9094,
+        "mrr": 1.0
+      },
+      {
+        "query": "autonomous driving with deep learning",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "sentiment analysis in social media",
+        "relevances": [
+          3,
+          3,
+          1,
+          3,
+          1,
+          3,
+          3,
+          2,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 41,
+        "ndcg@10": 0.8467,
+        "mrr": 1.0
+      },
+      {
+        "query": "Is AI going to bring about the end of the world?",
+        "relevances": [
+          0,
+          0,
+          2,
+          0,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.2297,
+        "mrr": 0.3333
+      },
+      {
+        "query": "does RAG introduce unfairness in LLMs",
+        "relevances": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.0,
+        "mrr": 0.0
+      },
+      {
+        "query": "is prompt engineering a passing trend?",
+        "relevances": [
+          1,
+          3,
+          3,
+          1,
+          1,
+          3,
+          1,
+          0,
+          0,
+          2
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.5803,
+        "mrr": 1.0
+      },
+      {
+        "query": "should large language models be open sourced?",
+        "relevances": [
+          2,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.3677,
+        "mrr": 1.0
+      },
+      {
+        "query": "does scaling laws mean bigger models are always better?",
+        "relevances": [
+          2,
+          2,
+          0,
+          3,
+          1,
+          1,
+          1,
+          2,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.6398,
+        "mrr": 1.0
+      },
+      {
+        "query": "is reinforcement learning from human feedback the best alignment approach?",
+        "relevances": [
+          2,
+          2,
+          1,
+          1,
+          1,
+          1,
+          2,
+          0,
+          1,
+          2
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.6047,
+        "mrr": 1.0
+      },
+      {
+        "query": "can neural networks truly generalize beyond training data?",
+        "relevances": [
+          3,
+          1,
+          3,
+          3,
+          3,
+          1,
+          2,
+          3,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.7883,
+        "mrr": 1.0
+      },
+      {
+        "query": "is attention all you need or are other architectures underexplored?",
+        "relevances": [
+          3,
+          1,
+          1,
+          1,
+          0,
+          2,
+          0,
+          0,
+          2,
+          0
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.5802,
+        "mrr": 1.0
+      },
+      {
+        "query": "are transformers replacing convolutional networks for vision tasks?",
+        "relevances": [
+          2,
+          2,
+          3,
+          0,
+          2,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.6771,
+        "mrr": 1.0
+      },
+      {
+        "query": "does explainable AI actually help users make better decisions?",
+        "relevances": [
+          2,
+          1,
+          1,
+          1,
+          2,
+          1,
+          1,
+          2,
+          1,
+          2
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.6479,
+        "mrr": 1.0
+      },
+      {
+        "query": "is federated learning practical for real world deployment?",
+        "relevances": [
+          2,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 41,
+        "ndcg@10": 0.7587,
+        "mrr": 1.0
+      },
+      {
+        "query": "are graph neural networks overrated for relational learning?",
+        "relevances": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          1,
+          2,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.9633,
+        "mrr": 1.0
+      },
+      {
+        "query": "can self-supervised learning replace supervised pretraining?",
+        "relevances": [
+          2,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.8106,
+        "mrr": 1.0
+      },
+      {
+        "query": "is algorithmic fairness compatible with predictive accuracy?",
+        "relevances": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2
+        ],
+        "num_judged_docs_for_query": 42,
+        "ndcg@10": 0.5691,
+        "mrr": 1.0
+      },
+      {
+        "query": "does differential privacy make machine learning useless in practice?",
+        "relevances": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "is meta-learning the path to artificial general intelligence?",
+        "relevances": [
+          2,
+          2,
+          1,
+          1,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.722,
+        "mrr": 1.0
+      },
+      {
+        "query": "are large language models actually reasoning or just pattern matching?",
+        "relevances": [
+          2,
+          3,
+          3,
+          0,
+          1,
+          3,
+          1,
+          3,
+          0,
+          2
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.6387,
+        "mrr": 1.0
+      },
+      {
+        "query": "is ChatGPT making software engineers obsolete?",
+        "relevances": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          0,
+          2,
+          0,
+          2
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.6712,
+        "mrr": 1.0
+      },
+      {
+        "query": "should AI systems be regulated by governments?",
+        "relevances": [
+          3,
+          1,
+          3,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1,
+          2
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.6633,
+        "mrr": 1.0
+      },
+      {
+        "query": "does AI perpetuate racial and gender bias in hiring?",
+        "relevances": [
+          2,
+          2,
+          3,
+          1,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.6978,
+        "mrr": 1.0
+      },
+      {
+        "query": "is deep learning a black box that cannot be trusted in healthcare?",
+        "relevances": [
+          3,
+          2,
+          1,
+          1,
+          3,
+          1,
+          2,
+          1,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.6881,
+        "mrr": 1.0
+      },
+      {
+        "query": "can AI be creative or is it just remixing existing work?",
+        "relevances": [
+          3,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.7685,
+        "mrr": 1.0
+      },
+      {
+        "query": "is transfer learning making domain expertise obsolete?",
+        "relevances": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "does AI research have a reproducibility crisis?",
+        "relevances": [
+          2,
+          3,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.4984,
+        "mrr": 1.0
+      },
+      {
+        "query": "is the environmental cost of training large models justified?",
+        "relevances": [
+          3,
+          3,
+          1,
+          2,
+          3,
+          0,
+          1,
+          3,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.6517,
+        "mrr": 1.0
+      },
+      {
+        "query": "are benchmark datasets misleading progress in NLP?",
+        "relevances": [
+          2,
+          3,
+          2,
+          2,
+          3,
+          2,
+          1,
+          2,
+          2,
+          1
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.7879,
+        "mrr": 1.0
+      },
+      {
+        "query": "can machine learning models be truly unbiased?",
+        "relevances": [
+          3,
+          1,
+          3,
+          3,
+          0,
+          1,
+          1,
+          2,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.6555,
+        "mrr": 1.0
+      },
+      {
+        "query": "is peer review in AI conferences broken?",
+        "relevances": [
+          2,
+          2,
+          2,
+          2,
+          1,
+          3,
+          3,
+          1,
+          1,
+          0
+        ],
+        "num_judged_docs_for_query": 50,
+        "ndcg@10": 0.6613,
+        "mrr": 1.0
+      },
+      {
+        "query": "does data augmentation actually improve generalization?",
+        "relevances": [
+          1,
+          3,
+          3,
+          2,
+          0,
+          2,
+          3,
+          3,
+          2,
+          0
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.6247,
+        "mrr": 1.0
+      },
+      {
+        "query": "should foundation models be considered a public good?",
+        "relevances": [
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.3909,
+        "mrr": 0.5
+      },
+      {
+        "query": "does academic AI research lag too far behind industry?",
+        "relevances": [
+          1,
+          1,
+          2,
+          1,
+          0,
+          1,
+          2,
+          0,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 50,
+        "ndcg@10": 0.7004,
+        "mrr": 1.0
+      },
+      {
+        "query": "is quantum machine learning practical or just theoretical?",
+        "relevances": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          1,
+          2,
+          2,
+          1
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.9315,
+        "mrr": 1.0
+      },
+      {
+        "query": "are knowledge graphs still relevant in the age of LLMs?",
+        "relevances": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          2,
+          1,
+          0
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.3637,
+        "mrr": 1.0
+      },
+      {
+        "query": "does AI widen the gap between wealthy and developing nations?",
+        "relevances": [
+          0,
+          2,
+          0,
+          2,
+          0,
+          2,
+          0,
+          2,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.4764,
+        "mrr": 0.5
+      },
+      {
+        "query": "is AutoML making human machine learning engineers unnecessary?",
+        "relevances": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.762,
+        "mrr": 1.0
+      },
+      {
+        "query": "is diffusion model the end of GANs for image generation?",
+        "relevances": [
+          2,
+          1,
+          0,
+          2,
+          2,
+          0,
+          2,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.5428,
+        "mrr": 1.0
+      },
+      {
+        "query": "does peer institution collaboration reinforce academic inequality?",
+        "relevances": [
+          1,
+          2,
+          1,
+          0,
+          1,
+          0,
+          2,
+          1,
+          0,
+          1
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.6622,
+        "mrr": 1.0
+      },
+      {
+        "query": "are citation metrics a fair measure of research impact?",
+        "relevances": [
+          1,
+          2,
+          1,
+          2,
+          0,
+          1,
+          1,
+          2,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.5257,
+        "mrr": 1.0
+      },
+      {
+        "query": "is Western AI research agenda ignoring global south problems?",
+        "relevances": [
+          3,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.4491,
+        "mrr": 1.0
+      },
+      {
+        "query": "does open access publishing level the playing field in academia?",
+        "relevances": [
+          2,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.5349,
+        "mrr": 1.0
+      },
+      {
+        "query": "is institutional prestige a proxy for research quality?",
+        "relevances": [
+          1,
+          2,
+          2,
+          1,
+          2,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.6779,
+        "mrr": 1.0
+      },
+      {
+        "query": "is multi-modal AI the future of human computer interaction?",
+        "relevances": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          2,
+          1,
+          1,
+          0
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.424,
+        "mrr": 1.0
+      },
+      {
+        "query": "are foundation models making traditional NLP pipelines obsolete?",
+        "relevances": [
+          1,
+          0,
+          1,
+          1,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.5478,
+        "mrr": 1.0
+      },
+      {
+        "query": "does retrieval augmented generation actually improve factual accuracy?",
+        "relevances": [
+          3,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.74,
+        "mrr": 1.0
+      },
+      {
+        "query": "is zero-shot prompting sufficient or do we always need fine-tuning?",
+        "relevances": [
+          3,
+          2,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          2,
+          3
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.7558,
+        "mrr": 1.0
+      },
+      {
+        "query": "does increasing model size always improve fairness?",
+        "relevances": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 50,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "is supervised learning still relevant in the age of self-supervision?",
+        "relevances": [
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.8306,
+        "mrr": 1.0
+      },
+      {
+        "query": "do leaderboards actually reflect real world model performance?",
+        "relevances": [
+          2,
+          2,
+          2,
+          0,
+          2,
+          0,
+          0,
+          2,
+          3,
+          2
+        ],
+        "num_judged_docs_for_query": 50,
+        "ndcg@10": 0.5481,
+        "mrr": 1.0
+      },
+      {
+        "query": "is explainability at odds with model performance?",
+        "relevances": [
+          1,
+          1,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.7556,
+        "mrr": 1.0
+      },
+      {
+        "query": "should AI researchers be held liable for harmful model outputs?",
+        "relevances": [
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          0,
+          0,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.6534,
+        "mrr": 1.0
+      }
+    ],
+    "debug": {
+      "missing_queries_sample": [],
+      "no_judgments_sample": []
+    }
+  },
+  "mmr": {
+    "input_file": "/Users/jamesceal/PycharmProjects/FairSearch-arXiv-Evaluating-and-Mitigating-Bias-in-Academic-RAG/data/results/experiment_a_mmr_results.json",
+    "queries_total_in_canonical_list": 100,
+    "queries_scored": 100,
+    "queries_missing_from_run_or_qrels": 0,
+    "queries_with_no_judgments": 0,
+    "mean_ndcg@10": 0.5526,
+    "mean_mrr": 0.8798,
+    "per_query": [
+      {
+        "query": "existential risk from artificial intelligence",
+        "relevances": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.3229,
+        "mrr": 1.0
+      },
+      {
+        "query": "fair RAG methods for mitigating demographic bias",
+        "relevances": [
+          1,
+          1,
+          0,
+          1,
+          0,
+          2,
+          1,
+          0,
+          1,
+          0
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.5107,
+        "mrr": 1.0
+      },
+      {
+        "query": "transformative AI and catastrophic risk",
+        "relevances": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          0
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.1217,
+        "mrr": 0.3333
+      },
+      {
+        "query": "recent advances in graph neural networks",
+        "relevances": [
+          3,
+          0,
+          3,
+          3,
+          3,
+          3,
+          0,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 51,
+        "ndcg@10": 0.7878,
+        "mrr": 1.0
+      },
+      {
+        "query": "transformer models for natural language processing",
+        "relevances": [
+          3,
+          1,
+          3,
+          3,
+          3,
+          0,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.829,
+        "mrr": 1.0
+      },
+      {
+        "query": "federated learning for privacy preserving machine learning",
+        "relevances": [
+          2,
+          2,
+          3,
+          2,
+          2,
+          3,
+          2,
+          2,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 43,
+        "ndcg@10": 0.7295,
+        "mrr": 1.0
+      },
+      {
+        "query": "convolutional neural networks for image classification",
+        "relevances": [
+          3,
+          3,
+          2,
+          2,
+          3,
+          2,
+          2,
+          3,
+          3,
+          2
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.8599,
+        "mrr": 1.0
+      },
+      {
+        "query": "reinforcement learning in robotics",
+        "relevances": [
+          3,
+          3,
+          1,
+          1,
+          2,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.7253,
+        "mrr": 1.0
+      },
+      {
+        "query": "generative adversarial networks for image synthesis",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          0,
+          0,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.8482,
+        "mrr": 1.0
+      },
+      {
+        "query": "attention mechanisms in deep learning",
+        "relevances": [
+          3,
+          3,
+          3,
+          1,
+          1,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 40,
+        "ndcg@10": 0.88,
+        "mrr": 1.0
+      },
+      {
+        "query": "self-supervised learning for representation learning",
+        "relevances": [
+          1,
+          3,
+          3,
+          1,
+          3,
+          1,
+          3,
+          3,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.6954,
+        "mrr": 1.0
+      },
+      {
+        "query": "knowledge graph embedding methods",
+        "relevances": [
+          3,
+          2,
+          2,
+          2,
+          2,
+          1,
+          2,
+          2,
+          2,
+          3
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.8086,
+        "mrr": 1.0
+      },
+      {
+        "query": "object detection in computer vision",
+        "relevances": [
+          3,
+          1,
+          3,
+          3,
+          0,
+          3,
+          1,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.7734,
+        "mrr": 1.0
+      },
+      {
+        "query": "neural machine translation",
+        "relevances": [
+          3,
+          3,
+          3,
+          2,
+          2,
+          3,
+          2,
+          3,
+          3,
+          2
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.8944,
+        "mrr": 1.0
+      },
+      {
+        "query": "anomaly detection in time series data",
+        "relevances": [
+          3,
+          1,
+          1,
+          1,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.7276,
+        "mrr": 1.0
+      },
+      {
+        "query": "multi-task learning for natural language understanding",
+        "relevances": [
+          1,
+          0,
+          1,
+          1,
+          3,
+          1,
+          3,
+          1,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.3927,
+        "mrr": 1.0
+      },
+      {
+        "query": "contrastive learning for visual representations",
+        "relevances": [
+          0,
+          3,
+          3,
+          3,
+          3,
+          3,
+          0,
+          3,
+          0,
+          3
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.6403,
+        "mrr": 0.5
+      },
+      {
+        "query": "semantic segmentation with deep learning",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "question answering with large language models",
+        "relevances": [
+          2,
+          0,
+          1,
+          1,
+          3,
+          3,
+          3,
+          1,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.6049,
+        "mrr": 1.0
+      },
+      {
+        "query": "drug discovery using machine learning",
+        "relevances": [
+          3,
+          0,
+          1,
+          3,
+          1,
+          3,
+          1,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.6821,
+        "mrr": 1.0
+      },
+      {
+        "query": "speech recognition with neural networks",
+        "relevances": [
+          0,
+          3,
+          0,
+          0,
+          2,
+          0,
+          2,
+          0,
+          3,
+          0
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.3108,
+        "mrr": 0.5
+      },
+      {
+        "query": "meta-learning for few-shot classification",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          3,
+          3,
+          2
+        ],
+        "num_judged_docs_for_query": 37,
+        "ndcg@10": 0.8998,
+        "mrr": 1.0
+      },
+      {
+        "query": "neural architecture search",
+        "relevances": [
+          3,
+          3,
+          3,
+          2,
+          3,
+          2,
+          3,
+          3,
+          0,
+          3
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.876,
+        "mrr": 1.0
+      },
+      {
+        "query": "differential privacy in machine learning",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "causal inference in observational data",
+        "relevances": [
+          1,
+          1,
+          2,
+          3,
+          1,
+          0,
+          2,
+          3,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 42,
+        "ndcg@10": 0.522,
+        "mrr": 1.0
+      },
+      {
+        "query": "text summarization with sequence to sequence models",
+        "relevances": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.4035,
+        "mrr": 1.0
+      },
+      {
+        "query": "recommender systems using collaborative filtering",
+        "relevances": [
+          3,
+          1,
+          3,
+          1,
+          1,
+          1,
+          1,
+          3,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.5997,
+        "mrr": 1.0
+      },
+      {
+        "query": "named entity recognition in clinical text",
+        "relevances": [
+          2,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.3936,
+        "mrr": 1.0
+      },
+      {
+        "query": "link prediction in social networks",
+        "relevances": [
+          3,
+          1,
+          2,
+          1,
+          1,
+          3,
+          1,
+          1,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 42,
+        "ndcg@10": 0.6132,
+        "mrr": 1.0
+      },
+      {
+        "query": "explainability and interpretability in neural networks",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 43,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "transfer learning for low resource languages",
+        "relevances": [
+          1,
+          1,
+          1,
+          2,
+          1,
+          1,
+          1,
+          2,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.4715,
+        "mrr": 1.0
+      },
+      {
+        "query": "multimodal learning combining vision and language",
+        "relevances": [
+          1,
+          1,
+          2,
+          2,
+          2,
+          1,
+          2,
+          3,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.5449,
+        "mrr": 1.0
+      },
+      {
+        "query": "graph transformer architectures",
+        "relevances": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 50,
+        "ndcg@10": 0.0,
+        "mrr": 0.0
+      },
+      {
+        "query": "automated code generation with language models",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          1,
+          3,
+          3,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 43,
+        "ndcg@10": 0.9053,
+        "mrr": 1.0
+      },
+      {
+        "query": "uncertainty quantification in deep learning",
+        "relevances": [
+          3,
+          3,
+          2,
+          3,
+          3,
+          0,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.8849,
+        "mrr": 1.0
+      },
+      {
+        "query": "adversarial robustness of neural networks",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 39,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "network pruning and model compression",
+        "relevances": [
+          3,
+          1,
+          1,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1,
+          3
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.6424,
+        "mrr": 1.0
+      },
+      {
+        "query": "continual learning without catastrophic forgetting",
+        "relevances": [
+          3,
+          3,
+          1,
+          3,
+          3,
+          3,
+          3,
+          3,
+          2,
+          3
+        ],
+        "num_judged_docs_for_query": 41,
+        "ndcg@10": 0.9046,
+        "mrr": 1.0
+      },
+      {
+        "query": "document retrieval with dense representations",
+        "relevances": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          3,
+          0
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.3558,
+        "mrr": 1.0
+      },
+      {
+        "query": "protein structure prediction with deep learning",
+        "relevances": [
+          2,
+          1,
+          1,
+          2,
+          2,
+          1,
+          0,
+          1,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 40,
+        "ndcg@10": 0.6186,
+        "mrr": 1.0
+      },
+      {
+        "query": "dialogue systems and conversational agents",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "fairness metrics in machine learning classification",
+        "relevances": [
+          3,
+          1,
+          1,
+          1,
+          3,
+          1,
+          2,
+          2,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.7119,
+        "mrr": 1.0
+      },
+      {
+        "query": "vision transformers for medical image analysis",
+        "relevances": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 51,
+        "ndcg@10": 0.2201,
+        "mrr": 1.0
+      },
+      {
+        "query": "text to image generation with diffusion models",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          2,
+          3,
+          3,
+          1,
+          0,
+          3
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.8591,
+        "mrr": 1.0
+      },
+      {
+        "query": "long document understanding with language models",
+        "relevances": [
+          3,
+          0,
+          0,
+          3,
+          3,
+          0,
+          3,
+          0,
+          0,
+          3
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.537,
+        "mrr": 1.0
+      },
+      {
+        "query": "bias detection in word embeddings",
+        "relevances": [
+          3,
+          1,
+          1,
+          1,
+          1,
+          1,
+          3,
+          1,
+          1,
+          3
+        ],
+        "num_judged_docs_for_query": 39,
+        "ndcg@10": 0.5838,
+        "mrr": 1.0
+      },
+      {
+        "query": "tabular data learning with neural networks",
+        "relevances": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        "num_judged_docs_for_query": 50,
+        "ndcg@10": 0.2298,
+        "mrr": 1.0
+      },
+      {
+        "query": "satellite image analysis with deep learning",
+        "relevances": [
+          3,
+          3,
+          3,
+          3,
+          2,
+          0,
+          0,
+          3,
+          3,
+          3
+        ],
+        "num_judged_docs_for_query": 41,
+        "ndcg@10": 0.8199,
+        "mrr": 1.0
+      },
+      {
+        "query": "autonomous driving with deep learning",
+        "relevances": [
+          3,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          0,
+          3
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.8875,
+        "mrr": 1.0
+      },
+      {
+        "query": "sentiment analysis in social media",
+        "relevances": [
+          3,
+          3,
+          1,
+          3,
+          3,
+          3,
+          3,
+          1,
+          2,
+          1
+        ],
+        "num_judged_docs_for_query": 41,
+        "ndcg@10": 0.8158,
+        "mrr": 1.0
+      },
+      {
+        "query": "Is AI going to bring about the end of the world?",
+        "relevances": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.0,
+        "mrr": 0.0
+      },
+      {
+        "query": "does RAG introduce unfairness in LLMs",
+        "relevances": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.0,
+        "mrr": 0.0
+      },
+      {
+        "query": "is prompt engineering a passing trend?",
+        "relevances": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.2631,
+        "mrr": 1.0
+      },
+      {
+        "query": "should large language models be open sourced?",
+        "relevances": [
+          2,
+          1,
+          0,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.3846,
+        "mrr": 1.0
+      },
+      {
+        "query": "does scaling laws mean bigger models are always better?",
+        "relevances": [
+          2,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          3
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.4427,
+        "mrr": 1.0
+      },
+      {
+        "query": "is reinforcement learning from human feedback the best alignment approach?",
+        "relevances": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.1026,
+        "mrr": 0.2
+      },
+      {
+        "query": "can neural networks truly generalize beyond training data?",
+        "relevances": [
+          3,
+          3,
+          1,
+          1,
+          2,
+          2,
+          1,
+          3,
+          1,
+          2
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.6946,
+        "mrr": 1.0
+      },
+      {
+        "query": "is attention all you need or are other architectures underexplored?",
+        "relevances": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.383,
+        "mrr": 1.0
+      },
+      {
+        "query": "are transformers replacing convolutional networks for vision tasks?",
+        "relevances": [
+          2,
+          0,
+          0,
+          1,
+          0,
+          2,
+          0,
+          1,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.4014,
+        "mrr": 1.0
+      },
+      {
+        "query": "does explainable AI actually help users make better decisions?",
+        "relevances": [
+          1,
+          1,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.5427,
+        "mrr": 1.0
+      },
+      {
+        "query": "is federated learning practical for real world deployment?",
+        "relevances": [
+          3,
+          2,
+          3,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 41,
+        "ndcg@10": 0.7795,
+        "mrr": 1.0
+      },
+      {
+        "query": "are graph neural networks overrated for relational learning?",
+        "relevances": [
+          2,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          1,
+          2
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.8974,
+        "mrr": 1.0
+      },
+      {
+        "query": "can self-supervised learning replace supervised pretraining?",
+        "relevances": [
+          2,
+          1,
+          0,
+          2,
+          2,
+          1,
+          1,
+          2,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.6148,
+        "mrr": 1.0
+      },
+      {
+        "query": "is algorithmic fairness compatible with predictive accuracy?",
+        "relevances": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 42,
+        "ndcg@10": 0.5722,
+        "mrr": 1.0
+      },
+      {
+        "query": "does differential privacy make machine learning useless in practice?",
+        "relevances": [
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.7181,
+        "mrr": 1.0
+      },
+      {
+        "query": "is meta-learning the path to artificial general intelligence?",
+        "relevances": [
+          0,
+          1,
+          1,
+          0,
+          2,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.352,
+        "mrr": 0.5
+      },
+      {
+        "query": "are large language models actually reasoning or just pattern matching?",
+        "relevances": [
+          2,
+          1,
+          0,
+          1,
+          0,
+          2,
+          0,
+          2,
+          1,
+          3
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.4089,
+        "mrr": 1.0
+      },
+      {
+        "query": "is ChatGPT making software engineers obsolete?",
+        "relevances": [
+          0,
+          0,
+          0,
+          1,
+          2,
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.153,
+        "mrr": 0.25
+      },
+      {
+        "query": "should AI systems be regulated by governments?",
+        "relevances": [
+          1,
+          1,
+          3,
+          1,
+          3,
+          0,
+          1,
+          1,
+          0,
+          3
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.4784,
+        "mrr": 1.0
+      },
+      {
+        "query": "does AI perpetuate racial and gender bias in hiring?",
+        "relevances": [
+          2,
+          2,
+          1,
+          2,
+          2,
+          2,
+          1,
+          0,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.516,
+        "mrr": 1.0
+      },
+      {
+        "query": "is deep learning a black box that cannot be trusted in healthcare?",
+        "relevances": [
+          3,
+          0,
+          1,
+          0,
+          2,
+          1,
+          2,
+          1,
+          2,
+          1
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.5403,
+        "mrr": 1.0
+      },
+      {
+        "query": "can AI be creative or is it just remixing existing work?",
+        "relevances": [
+          1,
+          2,
+          2,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          3
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.4841,
+        "mrr": 1.0
+      },
+      {
+        "query": "is transfer learning making domain expertise obsolete?",
+        "relevances": [
+          2,
+          0,
+          0,
+          0,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.6563,
+        "mrr": 1.0
+      },
+      {
+        "query": "does AI research have a reproducibility crisis?",
+        "relevances": [
+          2,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.3145,
+        "mrr": 1.0
+      },
+      {
+        "query": "is the environmental cost of training large models justified?",
+        "relevances": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          1
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.3142,
+        "mrr": 1.0
+      },
+      {
+        "query": "are benchmark datasets misleading progress in NLP?",
+        "relevances": [
+          2,
+          2,
+          2,
+          3,
+          2,
+          1,
+          2,
+          2,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.7612,
+        "mrr": 1.0
+      },
+      {
+        "query": "can machine learning models be truly unbiased?",
+        "relevances": [
+          3,
+          1,
+          1,
+          0,
+          0,
+          0,
+          2,
+          3,
+          0,
+          1
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.4426,
+        "mrr": 1.0
+      },
+      {
+        "query": "is peer review in AI conferences broken?",
+        "relevances": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          1,
+          0,
+          1
+        ],
+        "num_judged_docs_for_query": 50,
+        "ndcg@10": 0.2677,
+        "mrr": 1.0
+      },
+      {
+        "query": "does data augmentation actually improve generalization?",
+        "relevances": [
+          0,
+          0,
+          0,
+          2,
+          2,
+          0,
+          3,
+          3,
+          2,
+          3
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.3705,
+        "mrr": 0.25
+      },
+      {
+        "query": "should foundation models be considered a public good?",
+        "relevances": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 48,
+        "ndcg@10": 0.3278,
+        "mrr": 0.25
+      },
+      {
+        "query": "does academic AI research lag too far behind industry?",
+        "relevances": [
+          1,
+          1,
+          1,
+          2,
+          2,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        "num_judged_docs_for_query": 50,
+        "ndcg@10": 0.7048,
+        "mrr": 1.0
+      },
+      {
+        "query": "is quantum machine learning practical or just theoretical?",
+        "relevances": [
+          0,
+          1,
+          2,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.5446,
+        "mrr": 0.5
+      },
+      {
+        "query": "are knowledge graphs still relevant in the age of LLMs?",
+        "relevances": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          2,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.1217,
+        "mrr": 0.25
+      },
+      {
+        "query": "does AI widen the gap between wealthy and developing nations?",
+        "relevances": [
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.1734,
+        "mrr": 0.5
+      },
+      {
+        "query": "is AutoML making human machine learning engineers unnecessary?",
+        "relevances": [
+          2,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.3263,
+        "mrr": 1.0
+      },
+      {
+        "query": "is diffusion model the end of GANs for image generation?",
+        "relevances": [
+          2,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          2,
+          0
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.4627,
+        "mrr": 1.0
+      },
+      {
+        "query": "does peer institution collaboration reinforce academic inequality?",
+        "relevances": [
+          1,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.324,
+        "mrr": 1.0
+      },
+      {
+        "query": "are citation metrics a fair measure of research impact?",
+        "relevances": [
+          1,
+          0,
+          2,
+          0,
+          2,
+          1,
+          2,
+          1,
+          0,
+          1
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.3778,
+        "mrr": 1.0
+      },
+      {
+        "query": "is Western AI research agenda ignoring global south problems?",
+        "relevances": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.4117,
+        "mrr": 1.0
+      },
+      {
+        "query": "does open access publishing level the playing field in academia?",
+        "relevances": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 44,
+        "ndcg@10": 0.0627,
+        "mrr": 0.2
+      },
+      {
+        "query": "is institutional prestige a proxy for research quality?",
+        "relevances": [
+          1,
+          0,
+          1,
+          2,
+          0,
+          2,
+          1,
+          1,
+          1,
+          2
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.5416,
+        "mrr": 1.0
+      },
+      {
+        "query": "is multi-modal AI the future of human computer interaction?",
+        "relevances": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.3578,
+        "mrr": 1.0
+      },
+      {
+        "query": "are foundation models making traditional NLP pipelines obsolete?",
+        "relevances": [
+          1,
+          1,
+          0,
+          2,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 45,
+        "ndcg@10": 0.4874,
+        "mrr": 1.0
+      },
+      {
+        "query": "does retrieval augmented generation actually improve factual accuracy?",
+        "relevances": [
+          3,
+          0,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.6475,
+        "mrr": 1.0
+      },
+      {
+        "query": "is zero-shot prompting sufficient or do we always need fine-tuning?",
+        "relevances": [
+          0,
+          2,
+          1,
+          3,
+          1,
+          1,
+          1,
+          1,
+          2,
+          3
+        ],
+        "num_judged_docs_for_query": 49,
+        "ndcg@10": 0.4339,
+        "mrr": 0.5
+      },
+      {
+        "query": "does increasing model size always improve fairness?",
+        "relevances": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 50,
+        "ndcg@10": 1.0,
+        "mrr": 1.0
+      },
+      {
+        "query": "is supervised learning still relevant in the age of self-supervision?",
+        "relevances": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          2,
+          1,
+          1
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.2974,
+        "mrr": 0.25
+      },
+      {
+        "query": "do leaderboards actually reflect real world model performance?",
+        "relevances": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 50,
+        "ndcg@10": 0.208,
+        "mrr": 1.0
+      },
+      {
+        "query": "is explainability at odds with model performance?",
+        "relevances": [
+          1,
+          0,
+          1,
+          0,
+          1,
+          2,
+          1,
+          1,
+          2,
+          1
+        ],
+        "num_judged_docs_for_query": 47,
+        "ndcg@10": 0.6202,
+        "mrr": 1.0
+      },
+      {
+        "query": "should AI researchers be held liable for harmful model outputs?",
+        "relevances": [
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "num_judged_docs_for_query": 46,
+        "ndcg@10": 0.5222,
+        "mrr": 1.0
+      }
+    ],
+    "debug": {
+      "missing_queries_sample": [],
+      "no_judgments_sample": []
+    }
+  },
+  "comparison": {
+    "ndcg@10_delta": -0.1786,
+    "mrr_delta": -0.0835
+  }
+}
