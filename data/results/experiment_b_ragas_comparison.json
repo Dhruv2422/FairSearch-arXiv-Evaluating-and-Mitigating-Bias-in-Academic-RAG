@@ -1,0 +1,852 @@
+[
+    {
+        "id": 1,
+        "category": "Autonomous Systems",
+        "query": "Safety of autonomous vehicle deployment",
+        "baseline": {
+            "answer_relevancy": 0.8400989295663249,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.7016305588408526,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8195750412498116,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 2,
+        "category": "Autonomous Systems",
+        "query": "Reliability of autonomous drones in public environments",
+        "baseline": {
+            "answer_relevancy": 0.8536429081653285,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.8566285144078386,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7950912388897198,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 3,
+        "category": "Autonomous Systems",
+        "query": "Use of reinforcement learning for real-world robotics",
+        "baseline": {
+            "answer_relevancy": 0.8410305873540697,
+            "faithfulness": 0.9411764705882353
+        },
+        "mmr": {
+            "answer_relevancy": 0.8518088045505227,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.818260083595589,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 4,
+        "category": "Autonomous Systems",
+        "query": "Explainability of autonomous decision-making systems",
+        "baseline": {
+            "answer_relevancy": 0.8666041339408536,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.8618752914395268,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8638373217897869,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 5,
+        "category": "Autonomous Systems",
+        "query": "Human trust in autonomous robots",
+        "baseline": {
+            "answer_relevancy": 0.8482110807015945,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.8045887185398665,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8114936223179265,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 6,
+        "category": "Autonomous Systems",
+        "query": "Autonomous navigation in safety-critical applications",
+        "baseline": {
+            "answer_relevancy": 0.8415523844404902,
+            "faithfulness": 0.9333333333333333
+        },
+        "mmr": {
+            "answer_relevancy": 0.8500673144401558,
+            "faithfulness": 0.875
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8338152965865467,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 7,
+        "category": "Autonomous Systems",
+        "query": "AI-based medical diagnosis versus clinician decision-making",
+        "baseline": {
+            "answer_relevancy": 0.6789891963457652,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.889616446152334,
+            "faithfulness": 0.96
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.6745559179692276,
+            "faithfulness": 0.967741935483871
+        }
+    },
+    {
+        "id": 8,
+        "category": "Autonomous Systems",
+        "query": "Safety of AI-assisted surgical systems",
+        "baseline": {
+            "answer_relevancy": 0.8372002196021135,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.8638528459808769,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8328675300017966,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 9,
+        "category": "Autonomous Systems",
+        "query": "Reliability of autonomous industrial robots",
+        "baseline": {
+            "answer_relevancy": 0.8021761960556258,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.8219189568971556,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8450191797176534,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 10,
+        "category": "Autonomous Systems",
+        "query": "Human oversight in autonomous systems",
+        "baseline": {
+            "answer_relevancy": 0.7974859560698165,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.7645013152241505,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.758361438986262,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 11,
+        "category": "Large Language Models & NLP",
+        "query": "Long-term effectiveness of prompt engineering",
+        "baseline": {
+            "answer_relevancy": 0.9032408042535036,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.903202666083652,
+            "faithfulness": 0.9090909090909091
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.0,
+            "faithfulness": 0.9130434782608695
+        }
+    },
+    {
+        "id": 12,
+        "category": "Large Language Models & NLP",
+        "query": "Reliability of retrieval-augmented generation systems",
+        "baseline": {
+            "answer_relevancy": 0.7708842283229579,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.7762321990365565,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7647966864125836,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 13,
+        "category": "Large Language Models & NLP",
+        "query": "Hallucination mitigation in large language models",
+        "baseline": {
+            "answer_relevancy": 0.8319858057122423,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.7845700041616257,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8079402020107721,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 14,
+        "category": "Large Language Models & NLP",
+        "query": "Impact of large language models on scientific research",
+        "baseline": {
+            "answer_relevancy": 0.9327635522119754,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.8427231992866929,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.9444245064824771,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 15,
+        "category": "Large Language Models & NLP",
+        "query": "Effectiveness of instruction tuning in language models",
+        "baseline": {
+            "answer_relevancy": 0.7952719661645707,
+            "faithfulness": 0.875
+        },
+        "mmr": {
+            "answer_relevancy": 0.8675651426187833,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8790549044354825,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 16,
+        "category": "Large Language Models & NLP",
+        "query": "Benefits and limitations of chain-of-thought prompting",
+        "baseline": {
+            "answer_relevancy": 0.8418447469641439,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.7556344407164296,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7307157638604763,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 17,
+        "category": "Large Language Models & NLP",
+        "query": "Fine-tuning versus prompt engineering for downstream tasks",
+        "baseline": {
+            "answer_relevancy": 0.7253277119881533,
+            "faithfulness": 0.9642857142857143
+        },
+        "mmr": {
+            "answer_relevancy": 0.7323034362994983,
+            "faithfulness": 0.9565217391304348
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7215741920650472,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 18,
+        "category": "Large Language Models & NLP",
+        "query": "Open-source versus proprietary language models",
+        "baseline": {
+            "answer_relevancy": 0.8377566008023779,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.8264620901703484,
+            "faithfulness": 0.85
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8273361541807355,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 19,
+        "category": "Large Language Models & NLP",
+        "query": "Use of synthetic data for language model training",
+        "baseline": {
+            "answer_relevancy": 0.7651238043173603,
+            "faithfulness": 0.9642857142857143
+        },
+        "mmr": {
+            "answer_relevancy": 0.8372059175325347,
+            "faithfulness": 0.9444444444444444
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8275669288940133,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 20,
+        "category": "Large Language Models & NLP",
+        "query": "Risks of AI-generated scientific writing",
+        "baseline": {
+            "answer_relevancy": 0.8133417135375808,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.8133417135375808,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8387029377983031,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 21,
+        "category": "Machine Learning",
+        "query": "Fairness versus predictive accuracy in machine learning",
+        "baseline": {
+            "answer_relevancy": 0.7273731684045329,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.8607188346587985,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8471953195704605,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 22,
+        "category": "Machine Learning",
+        "query": "Interpretability versus performance in deep learning",
+        "baseline": {
+            "answer_relevancy": 0.8767162290134628,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.8290069532602459,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8767065583432068,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 23,
+        "category": "Machine Learning",
+        "query": "Federated learning for privacy preservation",
+        "baseline": {
+            "answer_relevancy": 0.6030668121079896,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.5880683670938441,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8257695268182109,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 24,
+        "category": "Machine Learning",
+        "query": "Differential privacy in machine learning",
+        "baseline": {
+            "answer_relevancy": 0.7689652302968408,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.660159316974472,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8003581480037784,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 25,
+        "category": "Machine Learning",
+        "query": "Synthetic data versus real-world datasets",
+        "baseline": {
+            "answer_relevancy": 0.8618248395263345,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.8275216755607625,
+            "faithfulness": 0.972972972972973
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7159717792269742,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 26,
+        "category": "Machine Learning",
+        "query": "Self-supervised learning versus supervised learning",
+        "baseline": {
+            "answer_relevancy": 0.8030342226982518,
+            "faithfulness": 0.8846153846153846
+        },
+        "mmr": {
+            "answer_relevancy": 0.7442799167470363,
+            "faithfulness": 0.9393939393939394
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7223280734805703,
+            "faithfulness": 0.9642857142857143
+        }
+    },
+    {
+        "id": 27,
+        "category": "Machine Learning",
+        "query": "Generalization ability of foundation models",
+        "baseline": {
+            "answer_relevancy": 0.0,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.0,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7426815463014572,
+            "faithfulness": 0.8888888888888888
+        }
+    },
+    {
+        "id": 28,
+        "category": "Machine Learning",
+        "query": "Robustness of adversarially trained neural networks",
+        "baseline": {
+            "answer_relevancy": 0.9061682701403679,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.7409224515856955,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.681330131480479,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 29,
+        "category": "Machine Learning",
+        "query": "Deep learning versus traditional machine learning methods",
+        "baseline": {
+            "answer_relevancy": 0.7097298572676213,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.7097300342287172,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7653662672753265,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 30,
+        "category": "Machine Learning",
+        "query": "Bias mitigation in machine learning models",
+        "baseline": {
+            "answer_relevancy": 0.6918459083850638,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.7967566096242581,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.5377379723142022,
+            "faithfulness": 0.9696969696969697
+        }
+    },
+    {
+        "id": 31,
+        "category": "Software Engineering",
+        "query": "AI-assisted software development productivity",
+        "baseline": {
+            "answer_relevancy": 0.5944518936303081,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.770063259136981,
+            "faithfulness": 0.9696969696969697
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7309000454389882,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 32,
+        "category": "Software Engineering",
+        "query": "Reliability of AI-generated source code",
+        "baseline": {
+            "answer_relevancy": 0.9040365628393725,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.9016911072859056,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.9040327875532115,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 33,
+        "category": "Software Engineering",
+        "query": "Automated program repair effectiveness",
+        "baseline": {
+            "answer_relevancy": 0.6939524383757982,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.7191976462513555,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8527931136775014,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 34,
+        "category": "Software Engineering",
+        "query": "AI-assisted code review quality",
+        "baseline": {
+            "answer_relevancy": 0.7522732201947783,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.7986375054260412,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7060474554848609,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 35,
+        "category": "Software Engineering",
+        "query": "Impact of code generation tools on software quality",
+        "baseline": {
+            "answer_relevancy": 0.8782064229210573,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.9527819144749886,
+            "faithfulness": 0.9583333333333334
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.9527746102908018,
+            "faithfulness": 0.967741935483871
+        }
+    },
+    {
+        "id": 36,
+        "category": "Software Engineering",
+        "query": "Test generation using large language models",
+        "baseline": {
+            "answer_relevancy": 0.7742295189962386,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.797622368038906,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.6987567565725202,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 37,
+        "category": "Software Engineering",
+        "query": "Continuous integration with AI-assisted development",
+        "baseline": {
+            "answer_relevancy": 0.65436119734068,
+            "faithfulness": 0.92
+        },
+        "mmr": {
+            "answer_relevancy": 0.6679623476025992,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.6033792948457174,
+            "faithfulness": 0.84375
+        }
+    },
+    {
+        "id": 38,
+        "category": "Software Engineering",
+        "query": "Static analysis versus AI-assisted bug detection",
+        "baseline": {
+            "answer_relevancy": 0.7776669589454858,
+            "faithfulness": 0.8648648648648649
+        },
+        "mmr": {
+            "answer_relevancy": 0.6511611929150235,
+            "faithfulness": 0.9705882352941176
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7844773826774771,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 39,
+        "category": "Software Engineering",
+        "query": "AI pair programming effectiveness",
+        "baseline": {
+            "answer_relevancy": 0.6549512967513118,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.6689150453440403,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.6911441166256954,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 40,
+        "category": "Software Engineering",
+        "query": "Maintainability of AI-generated software",
+        "baseline": {
+            "answer_relevancy": 0.7793728988046197,
+            "faithfulness": 0.9545454545454546
+        },
+        "mmr": {
+            "answer_relevancy": 0.881677175204226,
+            "faithfulness": 0.9565217391304348
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8420658509291564,
+            "faithfulness": 0.90625
+        }
+    },
+    {
+        "id": 41,
+        "category": "AI Ethics, Security & Society",
+        "query": "Algorithmic fairness in recommendation systems",
+        "baseline": {
+            "answer_relevancy": 0.8226655853070435,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.8364373180461825,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7690732174093936,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 42,
+        "category": "AI Ethics, Security & Society",
+        "query": "Fairness-aware ranking in information retrieval",
+        "baseline": {
+            "answer_relevancy": 0.8671685752209957,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.841340682113977,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7612783841458252,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 43,
+        "category": "AI Ethics, Security & Society",
+        "query": "Ethical implications of facial recognition systems",
+        "baseline": {
+            "answer_relevancy": 0.9556507663778234,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.9556547613430948,
+            "faithfulness": 0.9655172413793104
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.9556547613430948,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 44,
+        "category": "AI Ethics, Security & Society",
+        "query": "Privacy implications of biometric authentication",
+        "baseline": {
+            "answer_relevancy": 0.7947340529458904,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.89900465331079,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8990179741495504,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 45,
+        "category": "AI Ethics, Security & Society",
+        "query": "Effectiveness of explainable artificial intelligence",
+        "baseline": {
+            "answer_relevancy": 0.7300157339164715,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.7547126475836063,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7248892404876063,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 46,
+        "category": "AI Ethics, Security & Society",
+        "query": "AI governance for foundation models",
+        "baseline": {
+            "answer_relevancy": 0.7150734334530314,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.7285916240442086,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.6889249201940196,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 47,
+        "category": "AI Ethics, Security & Society",
+        "query": "Open-source AI versus closed-source AI",
+        "baseline": {
+            "answer_relevancy": 0.7459842233718379,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.8237108102488948,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8196488600057504,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 48,
+        "category": "AI Ethics, Security & Society",
+        "query": "Content moderation using large language models",
+        "baseline": {
+            "answer_relevancy": 0.8039814849787986,
+            "faithfulness": 0.9615384615384616
+        },
+        "mmr": {
+            "answer_relevancy": 0.533316287959968,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.8174620763444144,
+            "faithfulness": 0.8620689655172413
+        }
+    },
+    {
+        "id": 49,
+        "category": "AI Ethics, Security & Society",
+        "query": "Security risks of generative AI systems",
+        "baseline": {
+            "answer_relevancy": 0.944974963471484,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.9450152075147144,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.9407084172141089,
+            "faithfulness": 1.0
+        }
+    },
+    {
+        "id": 50,
+        "category": "AI Ethics, Security & Society",
+        "query": "Bias in retrieval-augmented generation systems",
+        "baseline": {
+            "answer_relevancy": 0.7752372631082625,
+            "faithfulness": 1.0
+        },
+        "mmr": {
+            "answer_relevancy": 0.7439091225007708,
+            "faithfulness": 1.0
+        },
+        "mmr_prompt": {
+            "answer_relevancy": 0.7245940754742529,
+            "faithfulness": 0.8888888888888888
+        }
+    }
+]
