@@ -1,7 +1,12 @@
 from collections import Counter
+from pathlib import Path
+
 from qdrant_client import QdrantClient
 
-client = QdrantClient(path="../data/indices/qdrant")
+# Anchored to the file, not the working directory, so this runs from anywhere.
+QDRANT_PATH = Path(__file__).resolve().parent.parent / "data" / "indices" / "qdrant"
+
+client = QdrantClient(path=str(QDRANT_PATH))
 
 counts, offset = Counter(), None
 while True:

@@ -1,1 +1,0 @@
-This directory is reserved for experiment outputs and evaluation results

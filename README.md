@@ -2,389 +2,521 @@
 
 **Evaluating and Mitigating Bias in Academic RAG**
 
-FairSearch-arXiv is a retrieval-augmented search system built over a sample of the
-arXiv computer science (`cs.*`) corpus. It preprocesses raw arXiv metadata, embeds
-papers with a sentence-transformer model, indexes them in a local
-[Qdrant](https://qdrant.tech/) vector database, retrieves semantically similar papers
-for a given query, and synthesizes answers using the Gemini API. On top of that
-baseline pipeline, it enriches papers with author institutional affiliations, audits
-the retriever for institutional bias, implements a fairness-aware MMR re-ranker, and
-measures the fairness–utility tradeoff between the two.
+FairSearch-arXiv is a retrieval-augmented generation system built over a 50,000-paper
+sample of the arXiv computer science (`cs.*`) corpus, together with the instrumentation
+needed to measure whether it is fair. It embeds papers with a sentence-transformer,
+indexes them in a local [Qdrant](https://qdrant.tech/) database, retrieves semantically
+similar papers for a query, and synthesizes an answer with the Gemini API.
 
-## Reproducibility note: the shared corpus
+## Research questions
 
-The 50,000-paper sample used for all experiments is committed at
-`data/processed/papers.parquet`, along with its OpenAlex affiliation lookups in
-`data/processed/affiliation_cache.json`. All results in this project are keyed to
-that specific sample.
+The project investigates three questions, addressed by two experiments:
 
-You can rebuild a corpus from scratch by downloading the raw arXiv snapshot from
-Kaggle and running `preprocess.py` (see Setup) — but note that the Kaggle snapshot
-is updated regularly, so a fresh download produces a **different** 50,000-paper
-sample even with the same fixed seed. The seed makes sampling reproducible only for
-an identical input file. To reproduce or extend this project's results, build from
-the committed `papers.parquet` instead.
+- **RQ1 — Retrieval Parity.** Does semantic vector search exhibit *institutional
+  homophily*, systematically ranking papers from elite institutions higher than
+  relevant work from regional or emerging research hubs?
+- **RQ2 — Synthesis Neutrality.** To what extent does the LLM generator prioritize
+  consensus views over dissenting evidence when synthesizing context from multiple
+  retrieved documents?
+- **RQ3 — The Fairness–Utility Tradeoff.** What is the quantitative impact on NDCG@10
+  and MRR when re-ranking strategies are applied to improve demographic parity?
 
-To confirm your index matches the shared corpus and labels, run from `src/`:
+| | RQ1 | RQ2 | RQ3 |
+|---|:-:|:-:|:-:|
+| **Experiment A** — retrieval bias audit + MMR re-ranking | ● | | ● |
+| **Experiment B** — synthesis neutrality across three conditions | | ● | ● |
 
-```bash
-python check_labels.py
+**Experiment A** answers RQ1 by measuring whether the baseline retriever over-selects
+elite institutions relative to their corpus share, then answers RQ3 on the retrieval
+side by sweeping the MMR λ parameter to trace what each increment of fairness costs in
+ranking quality.
+
+**Experiment B** answers RQ2 by measuring how much more one-sided a generated summary
+is than the evidence it was given, and contributes the generation-side half of RQ3:
+whether the intervention that fixes synthesis neutrality carries a comparable utility
+penalty, measured with RAGAS. It does not — which is the more interesting half of the
+answer.
+
+The two experiments are deliberately separable. A operates on institutional metadata and
+never looks at generated text; B operates on generated text and never looks at
+institution labels. They share the corpus, the index, and the retrievers, and nothing
+else.
+
+## Headline results
+
+**Experiment A** — 100 queries, top-10 labeled results per query. Privileged
+institutions hold 28.6% of the labeled corpus but take 38.8% of baseline top-10 slots.
+
+| Metric | Baseline | MMR (λ=0.5) | Direction |
+|---|---:|---:|---|
+| Privileged share of top-10 | 38.8% | 35.2% | lower is fairer |
+| Selection rate ratio (corpus-normalized) | 1.5864 | 1.3593 | 1.0 is parity |
+| Equalized Odds difference | 0.0579 | 0.0402 | 0.0 is parity |
+| NDCG@10 | 0.7312 | 0.5526 | higher is better |
+| MRR | 0.9633 | 0.8798 | higher is better |
+
+A λ sweep (`sweep_mmr_lambda.py`) shows the tradeoff is **not monotonic** and that the
+two fairness metrics disagree about the best operating point: the selection rate ratio
+is best at λ=0.5, while Equalized Odds is best at λ=0.8 — which costs only 0.05 NDCG
+instead of 0.18.
+
+| λ | Selection ratio | Equalized Odds | NDCG@10 |
+|---:|---:|---:|---:|
+| 0.5 | **1.3593** | 0.0402 | 0.5526 |
+| 0.6 | 1.3833 | 0.0357 | 0.5847 |
+| 0.7 | 1.4445 | 0.0302 | 0.6375 |
+| 0.8 | 1.5272 | **0.0286** | 0.6807 |
+| 0.9 | 1.5014 | 0.0348 | 0.7146 |
+| 1.0 (= baseline) | 1.5864 | 0.0579 | **0.7312** |
+
+**Experiment B** — 50 contradictory queries, three conditions. Consensus amplification
+is the generated consensus ratio minus the retrieved consensus ratio: how much more
+one-sided the summary is than the evidence it was given.
+
+| Condition | Consensus amplification | Absolute gap | Answer relevancy | Faithfulness |
+|---|---:|---:|---:|---:|
+| Baseline retrieval + standard prompt | 0.2000 | 0.2920 | 0.7798 | 0.9853 |
+| MMR retrieval + standard prompt | 0.1950 | 0.2930 | 0.7807 | 0.9846 |
+| MMR + balanced prompt | **0.1230** | **0.2090** | 0.7756 | 0.9834 |
+
+The two experiments reach complementary conclusions. **Diversifying retrieval barely
+moves synthesis neutrality** (0.2000 → 0.1950), but **changing the prompt cuts
+consensus amplification by 38.5%** (0.2000 → 0.1230) at essentially no cost in RAGAS
+answer relevancy or faithfulness. Retrieval-side and generation-side bias are distinct
+failure modes and need distinct interventions.
+
+## Repository layout
+
+```
+.
+├── data/
+│   ├── raw/          # Raw arXiv JSON snapshot (gitignored; only to rebuild from scratch)
+│   ├── processed/    # papers.parquet + affiliation/judgment caches — committed
+│   ├── indices/      # Generated Qdrant index (gitignored, regenerated locally)
+│   ├── eval/         # Query sets and relevance judgments — committed
+│   └── results/      # Metric outputs — committed (except results/sweep/)
+├── src/                            # The RAG system: reusable components
+│   ├── preprocess.py               # Filter cs.*, sample, clean → papers.parquet
+│   ├── index_builder.py            # Embed papers and build the Qdrant index
+│   ├── retriever.py                # Baseline dense retrieval
+│   ├── retriever_mmr.py            # MMR (Maximal Marginal Relevance) re-ranked retrieval
+│   ├── generator.py                # Gemini synthesis + BALANCED_SYSTEM_PROMPT
+│   ├── enrich_metadata.py          # Fetch affiliations, assign institution labels
+│   ├── audit_labels.py             # Offline audit of label-matching quality
+│   ├── check_labels.py             # Print the institution-label census
+│   ├── generate_queries.py         # Build the 100-query retrieval eval set
+│   ├── build_eval_queries.py       # Interactive hand-labeling of relevant_ids
+│   ├── build_qrels.py              # Score-threshold auto-judged relevance labels
+│   ├── metrics.py                  # Precision@k / Recall@k over hand-labeled queries
+│   └── test_pipeline.py            # End-to-end smoke test
+├── experiments/                    # Both experiments and all evaluators
+│   ├── build_qrels_llm.py                  # A: LLM-judged pooled relevance labels
+│   ├── experiment_a.py                     # A: bias audit, baseline retriever
+│   ├── experiment_a_mmr.py                 # A: bias audit, MMR retriever
+│   ├── evaluate_equalized_odds.py          # A: Equalized Odds (TPR/FPR gaps)
+│   ├── evaluate_ndcg_mrr.py                # A: NDCG@10 / MRR
+│   ├── evaluate_DP_ED.py                   # A: Demographic Parity + Exposure Diversity
+│   ├── sweep_mmr_lambda.py                 # A: fairness–utility tradeoff across λ
+│   ├── experiment_b_collect.py             # B: baseline retrieval + standard prompt
+│   ├── experiment_b_mmr_collect.py         # B: MMR retrieval + standard prompt
+│   ├── experiment_b_mmr_prompt_collect.py  # B: MMR + balanced prompt
+│   ├── experiment_b_analyze.py             # B: LLM-as-judge consensus/dissent labeling
+│   ├── experiment_b_ragas.py               # B: RAGAS relevancy + faithfulness
+│   └── experiment_b_results.py             # B: aggregate the three conditions
+├── app/
+│   └── app.py        # Streamlit UI for exploring the retrievers interactively
+├── LICENSE
+└── requirements.txt
 ```
 
-Expected output:
+`src/` holds things you would import; `experiments/` holds things you would run once
+to produce a number. Every script in `experiments/` resolves its paths from the
+repository root, so all of them run from anywhere — the commands below use the repo
+root for consistency.
+
+## Prerequisites
+
+- **Python 3.10+** (the codebase uses `X | None` type syntax).
+- **A [Google AI Studio](https://aistudio.google.com/) API key** — for generation, the
+  LLM-judged relevance labels in Experiment A, and the consensus/dissent judge in
+  Experiment B. Enable billing: the free tier's daily quota is too low for a full
+  100-query judging pass. Total cost is a few dollars.
+- **An [OpenAI](https://platform.openai.com/) API key** — only for
+  `experiment_b_ragas.py`, which uses `text-embedding-3-small` for answer relevancy.
+- **A [Kaggle](https://www.kaggle.com/) account** — only if rebuilding the corpus from
+  scratch, which is not recommended (see below).
+
+## Setup
+
+```bash
+git clone <repo-url>
+cd FairSearch-arXiv-Evaluating-and-Mitigating-Bias-in-Academic-RAG
+
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Create a `.env` file in the repository root (gitignored, never committed):
+
+```
+GEMINI_API_KEY=your-key-here
+CONTACT_EMAIL=your-email-here    # OpenAlex polite-pool "mailto" parameter
+OPENAI_API_KEY=your-key-here     # only needed for experiment_b_ragas.py
+```
+
+Then build the index from the committed corpus:
+
+```bash
+python src/index_builder.py      # → data/indices/qdrant/
+python src/enrich_metadata.py    # adds institution_label to each point
+python src/check_labels.py       # verify
+```
+
+`check_labels.py` must print exactly:
 
 ```
 Counter({'unknown': 24181, 'underrepresented': 18447, 'privileged': 7372})
 ```
 
-## Project structure
+If it does, your index matches the one every number in this README was computed from.
+`enrich_metadata.py` reads the committed affiliation cache and makes no API calls
+unless it encounters papers the cache does not cover.
 
-```
-.
-├── data/
-│   ├── raw/          # Raw arXiv JSON snapshot (gitignored; only needed to rebuild
-│   │                 # the corpus from scratch)
-│   ├── processed/    # papers.parquet + affiliation caches — committed, shared
-│   ├── indices/      # Generated Qdrant index files (qdrant/, gitignored, generated)
-│   ├── eval/         # retrieval_eval_queries.json, qrels_auto.json — committed
-│   └── results/      # Metric outputs (gitignored, regenerated by each script)
-├── src/
-│   ├── preprocess.py            # Filter cs.* papers, sample, clean → papers.parquet
-│   ├── index_builder.py         # Embed papers and build the Qdrant index
-│   ├── retriever.py             # Baseline semantic search against the index
-│   ├── retriever_mmr.py         # MMR (Maximal Marginal Relevance) re-ranked search
-│   ├── generator.py             # Synthesize answers from retrieved papers via Gemini
-│   ├── enrich_metadata.py       # Fetch affiliations (OpenAlex/S2/Crossref), label institutions
-│   ├── audit_labels.py          # Offline audit of institution-label matching quality
-│   ├── check_labels.py          # Print the institution-label census for the index
-│   ├── build_eval_queries.py    # Interactive tool for hand-labeling relevant_ids
-│   ├── generate_queries.py      # Builds the 100 standardized neutral/contradictory queries
-│   ├── build_qrels.py           # Score-threshold auto-judged relevance labels
-│   ├── build_qrels_llm.py       # LLM-judged (Gemini) pooled relevance labels
-│   ├── metrics.py               # Precision@k / Recall@k over hand-labeled eval queries
-│   ├── experiment_a.py          # Retrieval bias audit — baseline retriever
-│   ├── experiment_a_mmr.py      # Retrieval bias audit — MMR retriever
-│   ├── evaluate_equalized_odds.py  # Equalized Odds (TPR/FPR gap) for both retrievers
-│   ├── evaluate_ndcg_mrr.py     # NDCG@10 / MRR, baseline vs. MMR
-│   ├── evaluate_DP_ED.py        # Demographic Parity + rank-weighted Exposure Diversity
-│   └── test_pipeline.py         # End-to-end smoke test across multiple queries
-├── app/              # (Reserved) Streamlit application
-├── experiments/      # Experiment B — generative faithfulness / synthesis neutrality
-│   ├── experiment_b_collect.py             # Baseline RAG condition
-│   ├── experiment_b_mmr_collect.py         # MMR retrieval condition
-│   ├── experiment_b_mmr_prompt_collect.py  # MMR + perspective-balancing prompt
-│   ├── experiment_b_analyze.py             # LLM-as-judge consensus/dissent labelling
-│   ├── experiment_b_ragas.py               # RAGAS answer relevancy + faithfulness
-│   └── experiment_b_results.py             # Aggregate the three conditions
-└── requirements.txt
-```
+### Reproducibility: use the committed corpus
 
-## Prerequisites
+The 50,000-paper sample is committed at `data/processed/papers.parquet`, with its
+affiliation lookups in `data/processed/affiliation_cache.json`. **All results are keyed
+to that specific sample.**
 
-- Python 3.9+
-- A [Google AI Studio](https://aistudio.google.com/) API key (for generation and
-  LLM-judged relevance labeling). For `build_qrels_llm.py`, enable billing on the
-  key — the free tier's daily request quota is too low for a full 100-query judging
-  pass. Total cost is a few cents.
-- An [OpenAI](https://platform.openai.com/) API key, only for
-  `experiment_b_ragas.py` — RAGAS uses OpenAI's `text-embedding-3-small` for its
-  answer-relevancy metric. The rest of the project needs only the Gemini key.
-- A [Kaggle](https://www.kaggle.com/) account, only if rebuilding the corpus from
-  scratch (see the reproducibility note above).
+You *can* rebuild from scratch by downloading the raw arXiv snapshot from the
+[arXiv Dataset on Kaggle](https://www.kaggle.com/datasets/Cornell-University/arxiv) to
+`data/raw/arxiv-metadata-oai-snapshot.json` and running `python src/preprocess.py`. But
+the Kaggle snapshot is refreshed regularly, so a fresh download produces a *different*
+50,000-paper sample even with the same seed — the seed makes sampling reproducible only
+for an identical input file. Rebuilt corpora will not reproduce the numbers here.
 
-## Setup
+## Trying it interactively
 
-1. **Clone the repository and enter it**
-
-   ```bash
-   git clone <repo-url>
-   cd FairSearch-arXiv-Evaluating-and-Mitigating-Bias-in-Academic-RAG
-   ```
-
-2. **Create and activate a virtual environment** (recommended)
-
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate      # Windows: .venv\Scripts\activate
-   ```
-
-3. **Install dependencies**
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Add your Gemini API key**
-
-   Create a `.env` file in the repo root:
-
-   ```
-   GEMINI_API_KEY=your-key-here
-   CONTACT_EMAIL=your-email-here   # used as OpenAlex's polite-pool "mailto" param
-   OPENAI_API_KEY=your-key-here    # only needed for experiment_b_ragas.py
-   ```
-
-   This file is gitignored and will never be committed.
-
-5. **(Optional) Download the raw dataset** — only needed to rebuild the corpus
-   from scratch rather than using the committed `papers.parquet`.
-
-   Download the raw arXiv metadata JSON from the
-   [arXiv Dataset on Kaggle](https://www.kaggle.com/datasets/Cornell-University/arxiv).
-   Unzip it and place the file at:
-
-   ```
-   data/raw/arxiv-metadata-oai-snapshot.json
-   ```
-
-   > Reminder: the Kaggle snapshot changes over time, so a fresh download plus
-   > `preprocess.py` yields a different sample than the committed corpus, and
-   > results will not be directly comparable.
-
-## Running the pipeline
-
-The scripts use paths relative to the `src/` directory, so **run them from inside
-`src/`**.
+The fastest way to see the system work is the Streamlit app:
 
 ```bash
-cd src
-
-# 0. (Only if rebuilding from scratch — otherwise skip)
-python preprocess.py
-#    → writes data/processed/papers.parquet
-
-# 1. Build the index from the committed corpus
-python index_builder.py
-#    → writes data/indices/qdrant/
-
-# 2. Enrich the index with institution labels (reads the committed affiliation
-#    cache — makes no API calls unless new papers need lookups)
-python enrich_metadata.py
-
-# 3. Verify the index matches the shared corpus
-python check_labels.py
-
-# 4. Retrieve: run a semantic search query against the index
-python retriever.py
-
-# 5. Generate: retrieve + synthesize an answer via Gemini
-python generator.py
+streamlit run app/app.py
 ```
 
-### What each step does
+It runs a query through either retriever, shows the institution-label mix of the
+results, and optionally synthesizes an answer with Gemini. The sidebar exposes `k`,
+the MMR candidate pool (`fetch_k`), and λ.
 
-| Step | Script | Input | Output |
-|------|--------|-------|--------|
-| 1 | `index_builder.py` | `data/processed/papers.parquet` | `data/indices/qdrant/` (Qdrant collection `fairsearch_arxiv`) |
-| 2 | `enrich_metadata.py` | `data/processed/affiliation_cache.json` + OpenAlex | `institution_label` / `affiliations` payload fields in Qdrant |
-| 3 | `check_labels.py` | `data/indices/qdrant/` | Label census printed to console |
-| 4 | `retriever.py` | `data/indices/qdrant/` | Top-k search results printed to the console |
-| 5 | `generator.py` | `data/indices/qdrant/` + Gemini API | Synthesized answer with citations printed to the console |
+> **Reading the app against this README.** By default the app shows the raw top-k,
+> *including* `unknown`-labeled papers — which are 48.4% of the corpus and so dominate
+> any unfiltered slice. The experiments exclude them. Tick **"Exclude unknown-labeled
+> papers"** to make the app's mix comparable to the numbers above.
 
-### Customizing the search query
-
-`retriever.py` and `generator.py` each run a hardcoded example query. To search for
-something else, edit the `query` variable in the `__main__` block at the bottom of
-the respective file:
-
-```python
-query = "Recent advances in graph neural networks"
-```
-
-### Running the end-to-end test
-
-`test_pipeline.py` runs five diverse queries through the full retrieval and generation
-pipeline and prints retrieved papers and synthesized answers for each:
+Or from the command line:
 
 ```bash
-python test_pipeline.py
+python src/retriever.py       # baseline retrieval, prints top-k
+python src/retriever_mmr.py   # baseline and MMR side by side
+python src/generator.py       # retrieve + synthesize an answer
+python src/test_pipeline.py   # five queries end to end
 ```
 
-## Institutional bias audit
+Each runs a hardcoded example query; edit the `query` variable in the `__main__` block
+at the bottom of the file to try your own.
 
-### Metadata enrichment
+## How institution labels are assigned
 
-`enrich_metadata.py` fetches author affiliations and labels each paper
-`privileged`, `underrepresented` (otherwise), or `unknown` (no affiliation data
-found). Institution names are matched on word boundaries after normalization
-(punctuation/diacritics stripped) with explicit safeguards against lookalike
-institutions (e.g. City University of Hong Kong must not match University of Hong
-Kong, and "Universidade Federal do Amazonas" must not match Amazon). Responses are
-cached in `data/processed/affiliation_cache.json`, so re-running the script
-without new papers makes no API calls.
+Everything in Experiment A rests on this step, so it is worth understanding before
+trusting any fairness number.
 
-**What counts as privileged.** The corpus is entirely `cs.*`, and a global
-all-disciplines university ranking is a poor instrument for prestige *within*
-computer science — under QS Top 20 alone, Carnegie Mellon, Princeton, UIUC,
-Georgia Tech and Google Research were all classified `underrepresented`. The
-privileged group is therefore the union of four tiers:
+`enrich_metadata.py` fetches author affiliations and labels each paper `privileged`,
+`underrepresented`, or `unknown` (no affiliation data found anywhere). Institution
+names are matched on word boundaries after normalization, with explicit guards against
+lookalikes — City University of Hong Kong must not match University of Hong Kong, and
+"Universidade Federal do Amazonas" must not match Amazon.
 
-| Tier | Definition | Papers |
-|------|------------|-------:|
-| 1 | QS World University Rankings 2027, Top 20 (incl. ties) | 3,775 |
-| 2 | [CSRankings](https://csrankings.org) all-areas world Top 20 ∪ US Top 20, retrieved 2026-08-09 | 2,225 |
-| 3 | Ivy League (those not already in Tier 1) | 326 |
-| 4 | Major industry research labs | 1,053 |
+**What counts as privileged.** The corpus is entirely `cs.*`, and an all-disciplines
+university ranking is a poor instrument for prestige *within* computer science: under
+QS Top 20 alone, Carnegie Mellon, Princeton, UIUC, Georgia Tech and Google Research all
+came out `underrepresented`. The privileged set is therefore the union of four groups
+of institutions, each capturing a different kind of research prestige:
 
-Tier 2 takes the union of the world and US top-20 lists rather than the world
-list alone, so that strong US departments the global ranking pushes past rank 20
-(UT Austin, Wisconsin, UCLA) are still included; the cutoff is CSRankings' own
-top-20 boundary rather than an arbitrary depth. National research agencies
-(CNRS, the Chinese Academy of Sciences, INRIA) are deliberately *excluded* —
-they are umbrella organizations spanning labs of widely varying prestige, so
-labeling them uniformly elite is not defensible.
+| Group | Definition | Papers |
+|---|---|---:|
+| Global universities | QS World University Rankings 2027, Top 20 (incl. ties) | 3,775 |
+| CS departments | [CSRankings](https://csrankings.org) all-areas world Top 20 ∪ US Top 20 (retrieved 2026-08-09) | 2,225 |
+| Ivy League | Ivy League institutions not already captured by the QS group | 326 |
+| Industry labs | Major corporate research labs | 1,053 |
 
-Two limitations of this operationalization are worth stating explicitly.
-Including industry labs means "privileged" covers global corporate research
-(Tencent, Huawei, Alibaba and Baidu among them), not only Western academia.
-And CSRankings' "Northeastern University" is the Boston institution, while
-Northeastern University (Shenyang, China) is a distinct university whose name
-normalizes identically — both currently match this tier.
+The CS-departments group unions the world and US lists so that strong US departments
+the global ranking pushes past rank 20 (UT Austin, Wisconsin, UCLA) are still captured,
+with CSRankings' own top-20 boundary as the cutoff rather than an arbitrary depth.
+National research agencies (CNRS, the Chinese Academy of Sciences, INRIA) are
+deliberately **excluded** — they are umbrella organizations spanning labs of widely
+varying prestige, so labeling them uniformly elite is indefensible.
 
-**Affiliation coverage.** Lookup runs in five stages: OpenAlex batch URL lookup,
-a re-lookup with wider extraction, a free Semantic Scholar batch pass (500 arXiv
-IDs per request, ~16% recovery on what OpenAlex missed), a free Crossref pass by
-DOI (~44% recovery, but only for the papers that carry one — see
-`data/processed/arxiv_dois.json`), and an optional per-paper OpenAlex title
-search. Stages 3-5 record what they have already tried, so a re-run resumes
-rather than repeating a completed pass. The last stage is **off by default**: OpenAlex
-meters it by spend rather than request rate (~$0.001/paper, against a free daily
-budget of roughly $0.10), so a full pass over this corpus costs about $25 and
-will otherwise fail partway with HTTP 429 "Insufficient budget". Enable it
-deliberately, with funded credit:
+The four groups are not ranked against one another; membership in any one of them is
+sufficient, and a paper counted once regardless of how many it matches. Two limitations
+of this operationalization are worth stating outright. Including industry labs means
+"privileged" spans global corporate research (Tencent, Huawei, Alibaba, Baidu among
+them), not only Western academia. And CSRankings' "Northeastern University" is the
+Boston institution, while Northeastern University (Shenyang) is a distinct university
+whose name normalizes identically — both currently match the CS-departments group.
+
+**Coverage.** Lookup runs in five stages: an OpenAlex batch pass, a re-lookup with
+wider extraction, a free Semantic Scholar batch pass (500 arXiv IDs per request, ~16%
+recovery on OpenAlex's misses), a free Crossref pass by DOI (~44% recovery, but only
+for papers that have one), and an optional per-paper OpenAlex title search. Stages 3–5
+record what they have already attempted, so a re-run resumes rather than repeating a
+finished pass.
+
+The last stage is **off by default**. OpenAlex meters it by spend rather than request
+rate (~$0.001/paper against a free daily budget of roughly $0.10), so a full pass over
+this corpus costs about $25 and will otherwise die partway with HTTP 429 "Insufficient
+budget". Enable it deliberately, with funded credit:
 
 ```bash
-python enrich_metadata.py --title-search
+python src/enrich_metadata.py --title-search
 ```
 
-Coverage currently stands at 51.6% of the corpus (25,819 of 50,000 papers), and
-the free sources are effectively exhausted: 92.9% of the remaining unlabeled
-papers carry no DOI, journal reference or report number, so there is no
-identifier left to look them up by.
+Coverage stands at **51.6%** (25,819 of 50,000 papers). The free sources are
+effectively exhausted: roughly 92% of the remaining unlabeled papers carry no DOI,
+journal reference or report number, so there is no identifier left to look them up by.
 
-**Missingness is not random, and this bounds the audit.** Affiliation data comes
-from *published* versions of papers, so coverage splits sharply on publication
-status: papers with a DOI or journal reference are 83.7% labeled, while
-preprint-only papers are 36.8% labeled. Among preprint-only papers, those that
-*are* labeled skew more privileged (35.5%) than published ones (26.9%),
-suggesting the unlabeled remainder skews underrepresented. All fairness metrics
-in this project are therefore computed over a subsample that over-represents
-published work and, likely, elite institutions — a limitation that no additional
-lookup source can remove, since the upstream data does not exist.
+**Missingness is not random, and this bounds the audit.** Affiliation data comes from
+*published* versions, so coverage splits sharply on publication status:
 
-`audit_labels.py` is an offline diagnostic (no API calls) that reports which
-institution triggered each `privileged` label and flags `underrepresented`
-institution names that closely resemble a privileged-list entry — useful for
-validating the matching before the labels feed into bias metrics.
+| | Papers | Labeled | Privileged share of labeled |
+|---|---:|---:|---:|
+| Has DOI / journal-ref / report-no | 14,782 | 87.1% | 24.1% |
+| Preprint-only | 35,218 | 36.8% | 33.0% |
 
-### Standardized query set and relevance judgments
+Among preprint-only papers, the ones that *are* labeled skew more privileged (33.0%)
+than published ones (24.1%), which suggests the unlabeled remainder skews
+underrepresented. Every fairness metric here is therefore computed over a subsample
+that over-represents published work and, probably, elite institutions. No additional
+lookup source can fix this: the upstream data does not exist.
 
-`generate_queries.py` produced the 100 standardized queries in
-`data/eval/retrieval_eval_queries.json` (50 neutral, 50 contradictory), used by every
-experiment below.
-
-`build_qrels_llm.py` builds `data/eval/qrels_auto.json`: for each query, candidates
-are pooled from the baseline and MMR retrievers' top 30 results (TREC-style pooling,
-so neither retriever's misses are invisible), and Gemini grades each candidate 0–3
-for relevance using only its title and abstract — independent of the retrieval score
-being evaluated. Judgments are cached in
-`data/processed/llm_judgment_cache.json` and safe to interrupt/resume.
+`audit_labels.py` is an offline diagnostic (no API calls) that reports which institution
+triggered each `privileged` label and flags `underrepresented` names that closely
+resemble a privileged-list entry — useful for validating matching before the labels
+feed into metrics.
 
 ```bash
-python build_qrels_llm.py
+python src/audit_labels.py
 ```
 
-### Running the bias experiments
+---
+
+# Experiment A — retrieval bias
+
+*Addresses **RQ1** (retrieval parity) and the retrieval half of **RQ3** (fairness–utility
+tradeoff).*
+
+**Question.** Does dense retrieval over-select papers from elite institutions relative
+to their share of the corpus, and does MMR re-ranking reduce that bias at an acceptable
+cost in ranking quality?
+
+**Design.** 100 standardized queries (50 neutral, 50 contradictory), generated by
+`generate_queries.py` into `data/eval/retrieval_eval_queries.json`. Each retriever is
+run over all 100, and the **top-10 labeled** results are scored — both arms oversample
+to depth 100 and discard `unknown` papers before taking ten, so neither is scored over
+a smaller result set than the other.
+
+> This symmetry matters. An earlier version filtered MMR's top-10 *after* retrieval
+> rather than oversampling first, leaving a mean of 5.2 labeled results against the
+> baseline's 10. Every MMR metric was then computed over half as many results as the
+> baseline it was compared to, mechanically depressing NDCG and both groups' true
+> positive rates. `λ=1.0` now reproduces the baseline exactly, which is the check that
+> this is wired up correctly.
+
+**Relevance judgments.** `build_qrels_llm.py` builds `data/eval/qrels_auto.json`. For
+each query, candidates are pooled from the baseline and MMR top-30 (TREC-style pooling,
+so neither retriever's misses are invisible to the other), and Gemini grades each
+candidate 0–3 using only title and abstract — independent of the retrieval score being
+evaluated. Judgments are cached in `data/processed/llm_judgment_cache.json` and the run
+is safe to interrupt and resume.
+
+### Running it
+
+Order matters: the evaluators read the two audit files, so run those first.
 
 ```bash
-# Baseline retrieval bias audit
-python experiment_a.py
-#    → data/results/experiment_a_results.json
+# 1. Build relevance judgments (only needed once; qrels_auto.json is committed)
+python experiments/build_qrels_llm.py
 
-# MMR retrieval bias audit
-python experiment_a_mmr.py
-#    → data/results/experiment_a_mmr_results.json
+# 2. The two retrieval audits
+python experiments/experiment_a.py           # → data/results/experiment_a_results.json
+python experiments/experiment_a_mmr.py       # → data/results/experiment_a_mmr_results.json
 
-# Equalized Odds (TPR/FPR gap) for both retrievers
-python evaluate_equalized_odds.py
-#    → data/results/equalized_odds_results.json
+# 3. The evaluators (each reads the two files above)
+python experiments/evaluate_equalized_odds.py   # → equalized_odds_results.json
+python experiments/evaluate_ndcg_mrr.py         # → ndcg_mrr_results.json
+python experiments/evaluate_DP_ED.py            # → fairness_metrics_from_results.json
+python experiments/evaluate_DP_ED.py \
+    --input data/results/experiment_a_mmr_results.json \
+    --output data/results/fairness_metrics_mmr.json
 
-# NDCG@10 / MRR, baseline vs. MMR
-python evaluate_ndcg_mrr.py
-#    → data/results/ndcg_mrr_results.json
-
-# Demographic Parity + Exposure Diversity
-python evaluate_DP_ED.py
-#    → data/results/fairness_metrics_from_results.json
+# 4. The fairness–utility tradeoff curve
+python experiments/sweep_mmr_lambda.py
 ```
 
-Each experiment retrieves the top-10 *labeled* results per query (over-sampling to
-depth 100 so `unknown`-labeled papers never occupy a scored slot), then computes:
+Steps 2–4 need only the local index — no API keys, no network. Step 1 calls Gemini.
 
-| Metric | Description |
-|--------|-------------|
-| Selection rate ratio | Corpus-normalized (Fairlearn): probability a labeled corpus paper appears in a top-10 result, by group |
-| Statistical Parity Difference | Raw gap in top-10 selection rates between groups (dominated by corpus base rates — report alongside the ratio, not alone) |
-| Equalized Odds difference | Larger of the TPR gap / FPR gap between groups, treating retrieval as a classifier over judged-relevant papers |
-| NDCG@10 / MRR | Standard ranking-quality metrics against the LLM-judged qrels |
-| Exposure Diversity | Rank-weighted (log-discounted) share of attention each group receives among retrieved results |
+### Metrics
 
-## Experiment B: generative faithfulness and synthesis neutrality
+| Metric | What it measures |
+|---|---|
+| **Selection rate ratio** | Corpus-normalized (Fairlearn): the chance a labeled corpus paper reaches a top-10, privileged over underrepresented. 1.0 is parity. |
+| **Statistical Parity Difference** | Raw gap in top-10 shares. Dominated by corpus base rates — report alongside the ratio, never alone. |
+| **Equalized Odds difference** | Larger of the TPR / FPR gaps, treating retrieval as a classifier over judged-relevant papers. This is the only metric here *conditioned on relevance*. |
+| **NDCG@10 / MRR** | Ranking quality against the LLM-judged qrels. |
+| **Exposure Diversity** | Rank-weighted (log-discounted) share of attention each group receives. |
 
-Experiment B asks whether the generator over-weights consensus evidence when
-synthesizing contradictory sources, and whether MMR retrieval or a
-perspective-balancing prompt reduces that. It uses its own 50 contradictory
-queries in `data/eval/contradictory_queries.json` — deliberately separate from
-the 100-query retrieval audit set, since the two are tuned for different
-questions — and never touches `institution_label`.
+> **Two different ratios, pointing opposite ways.** In the result JSONs,
+> `fairlearn_aggregate.selection_rate_ratio` is **privileged / underrepresented,
+> corpus-normalized** (baseline 1.5864) — this is the bias figure. The separate
+> `mean_selection_rate_ratio` field is **underrepresented / privileged** as a raw
+> per-query share (baseline 2.1281). They are not comparable, and a value above 1 means
+> opposite things in each. Quote the first.
 
-Three conditions: baseline retrieval + standard prompt, MMR retrieval +
-standard prompt, and MMR retrieval + `BALANCED_SYSTEM_PROMPT` (defined in
-`generator.py`), isolating the effect of the prompt from the effect of
-retrieval.
+The relevance-conditioned picture is worth separating from the raw one. Baseline TPR is
+0.5659 for privileged versus 0.5080 for underrepresented — a ratio of **1.11**, well
+below the unconditioned 1.59. Most of the 1.59× is that elite papers are judged relevant
+more often in the first place (52.7% vs 47.7% of judged candidates); the residual
+ranking preference among equally relevant papers is much smaller. Under MMR the TPR
+ratio is 0.959, i.e. slightly favoring underrepresented papers — though both TPRs fall,
+so MMR closes the gap partly by retrieving fewer relevant papers overall.
 
-These scripts use package-style imports, so run them **from the repository
-root**, not from inside `experiments/`:
+### The λ sweep
+
+`sweep_mmr_lambda.py` re-runs the whole audit across λ. It guards against a subtle
+evaluation artifact: `qrels_auto.json` was pooled from the baseline and MMR(λ=0.5)
+top-30, so a λ whose results fall outside that pool is penalized by the *evaluation*
+rather than by its own ranking quality. The script measures judged-pool coverage at
+each point and refuses to report utility below λ=0.5 unless `--allow-unjudged` is
+passed. Coverage across the reported range is 96.8–99.6%, so those numbers are sound.
 
 ```bash
-python experiments/experiment_b_collect.py             # baseline condition
-python experiments/experiment_b_mmr_collect.py         # MMR condition
-python experiments/experiment_b_mmr_prompt_collect.py  # MMR + balanced prompt
-python experiments/experiment_b_analyze.py             # consensus/dissent labelling
-python experiments/experiment_b_ragas.py               # RAGAS (needs OPENAI_API_KEY)
-python experiments/experiment_b_results.py             # aggregate
+python experiments/sweep_mmr_lambda.py
+python experiments/sweep_mmr_lambda.py --lambdas 0.1,0.3,0.5,0.7,0.9 --allow-unjudged
 ```
 
-None of these cache their LLM calls, so an interrupted run restarts from the
-beginning — a full pass is roughly 2,400 requests. Run them detached rather
-than in a foreground shell.
+---
 
-## Evaluation (human-labeled)
+# Experiment B — synthesis neutrality
 
-`build_eval_queries.py` is an interactive command-line tool for hand-labeling
-`relevant_ids` on eval queries (used for `metrics.py`'s Precision@k/Recall@k, and
-optionally to supplement the LLM-judged qrels with a small human-labeled check).
+*Addresses **RQ2** (synthesis neutrality) and the generation half of **RQ3** (fairness–utility
+tradeoff).*
+
+**Question.** When retrieved evidence genuinely conflicts, does the generator report
+the consensus position more strongly than its sources warrant, and can that be
+corrected on the retrieval side or the prompt side?
+
+**Design.** 50 contradictory queries in `data/eval/contradictory_queries.json`, spanning
+five areas: AI Ethics/Security/Society, Autonomous Systems, Large Language Models & NLP,
+Machine Learning, and Software Engineering. This set is deliberately separate from
+Experiment A's 100-query set — the two are tuned for different questions. Experiment B
+never touches `institution_label`.
+
+Three conditions isolate the prompt's effect from retrieval's:
+
+| Condition | Retrieval | Prompt |
+|---|---|---|
+| `experiment_b_collect.py` | baseline dense | standard |
+| `experiment_b_mmr_collect.py` | MMR (λ=0.5) | standard |
+| `experiment_b_mmr_prompt_collect.py` | MMR (λ=0.5) | `BALANCED_SYSTEM_PROMPT` |
+
+**Measurement.** `experiment_b_analyze.py` uses an LLM judge to classify each retrieved
+abstract and each claim in the generated summary as `PRO-CONSENSUS`, `DISSENTING`, or
+`NEUTRAL`. Two quantities follow:
+
+- **Consensus amplification** = generated consensus ratio − retrieved consensus ratio.
+  Positive means the summary is more one-sided than the evidence it was handed. This is
+  the primary measure; it is a *difference*, so it isolates the generator's contribution
+  from whatever skew retrieval already introduced.
+- **Absolute gap** = total divergence between the retrieved and generated distributions.
+
+`experiment_b_ragas.py` then scores every condition on RAGAS **answer relevancy** and
+**faithfulness**, so that any neutrality gain can be checked against a possible quality
+loss.
+
+### Running it
 
 ```bash
-python build_eval_queries.py
-python metrics.py
+# 1. Collect — each calls Gemini once per query
+python experiments/experiment_b_collect.py             # → experiment_b_raw_results.json
+python experiments/experiment_b_mmr_collect.py         # → experiment_b_raw_mmr_results.json
+python experiments/experiment_b_mmr_prompt_collect.py  # → experiment_b_raw_mmr_prompt_results.json
+
+# 2. Judge each condition (--condition selects which raw file to read)
+python experiments/experiment_b_analyze.py --condition baseline
+python experiments/experiment_b_analyze.py --condition mmr
+python experiments/experiment_b_analyze.py --condition mmr_prompt
+
+# 3. RAGAS across all three (needs OPENAI_API_KEY)
+python experiments/experiment_b_ragas.py               # → experiment_b_ragas_comparison.json
+
+# 4. Aggregate into the summary table
+python experiments/experiment_b_results.py             # → experiment_b_summary_table.csv
 ```
 
-Results are printed to the console as a per-query table and also saved to
-`data/results/retrieval_metrics.json`.
+The three collection scripts **resume**: each writes after every successful query and
+skips queries already present in its output file, so a run interrupted by a Gemini 503
+picks up where it stopped. `experiment_b_analyze.py` and `experiment_b_ragas.py` do
+**not** cache — an interrupted run restarts from the beginning. A full pass across all
+stages is roughly 2,400 API requests, so run these detached rather than in a foreground
+shell.
+
+`experiment_b_analyze.py` defaults to the judge model Experiment B's published results
+used; override with `FAIRSEARCH_JUDGE_MODEL` rather than editing the file.
+
+---
+
+## Evaluation against hand-labeled data
+
+Separately from the LLM-judged qrels, `build_eval_queries.py` is an interactive tool for
+hand-labeling `relevant_ids`, which `metrics.py` scores for Precision@k / Recall@k. This
+gives a small human-labeled check on the automated judgments.
+
+```bash
+python src/build_eval_queries.py
+python src/metrics.py
+```
+
+## Limitations
+
+Stated plainly, because several of them bound what the numbers can support:
+
+1. **Relevance judgments are LLM-generated**, not human. Pooling and score-independent
+   grading reduce the obvious failure modes, but this is not human ground truth, and
+   Experiment B's consensus/dissent labels are LLM-generated too.
+2. **48.4% of the corpus is unlabeled**, and the missingness is non-random in a
+   direction that likely understates bias (see the coverage table above).
+3. **"Privileged" is a constructed category.** Four ranking sources, one snapshot in
+   time, and the Northeastern collision above are all judgment calls that a different
+   defensible choice would change.
+4. **The fairness metrics disagree with each other**, which is a finding rather than a
+   defect — but it means "MMR is fairer" is only meaningful once you say which metric.
+5. **NDCG falls materially at low λ.** MMR buys fairness with relevance; the sweep
+   quantifies the exchange rate rather than pretending it is free.
+6. **50,000 papers is a sample** of `cs.*`, not the full arXiv corpus.
 
 ## Notes
 
-- **Embedding model:** Indexing and retrieval use
-  `sentence-transformers/all-MiniLM-L6-v2`.
-- **GPU acceleration:** `index_builder.py` automatically uses CUDA if a compatible
-  GPU is available; otherwise it falls back to CPU.
-- **Gemini model:** `generator.py` and `build_qrels_llm.py` use
-  `gemini-2.5-flash-lite`. `gemini-1.5-flash` (originally specified) is no longer
-  available via the Google AI API.
-- **`data/results/` is gitignored** — every script above regenerates its own output
-  from the committed corpus, labels, and qrels, so results are reproducible without
-  being committed.
-- **Relevance judgments are LLM-generated (Gemini)**, aside from the small
-  hand-labeled subset from `build_eval_queries.py`. This is reported as a
-  methodological limitation rather than treated as human ground truth.
+- **Embedding model:** `sentence-transformers/all-MiniLM-L6-v2` (384-dim) for both
+  indexing and retrieval. `index_builder.py` uses CUDA when available, else CPU.
+- **Generation model:** `gemini-2.5-flash-lite`. Override with `FAIRSEARCH_GEN_MODEL`.
+  (`gemini-1.5-flash`, originally specified, is no longer available via the API.)
+- **Collection name:** `fairsearch_arxiv`. Override with `FAIRSEARCH_COLLECTION` to
+  point the retrievers at a different index.
+- **Committed outputs:** `data/results/` is committed so results can be inspected
+  without re-running anything; only `data/results/sweep/` (per-λ intermediates) is
+  gitignored.
+
+## License
+
+MIT — see [LICENSE](LICENSE). The licence covers the code. Paper metadata under `data/`
+derives from the arXiv dataset (CC0 1.0) and from affiliation records retrieved via the
+OpenAlex, Semantic Scholar, and Crossref APIs, each carrying its own terms.

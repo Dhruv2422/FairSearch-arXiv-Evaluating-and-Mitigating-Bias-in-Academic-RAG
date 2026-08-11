@@ -21,20 +21,23 @@ frozen inside qrels_auto.json, so results always reflect current labels.
 Caveat (report this alongside any numbers): judgments are LLM-generated
 (Gemini), not human relevance labels.
 
-Run from inside src/:
-    python evaluate_equalized_odds.py
+Run from the repository root:
+    python experiments/evaluate_equalized_odds.py
 """
 
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
 from fairlearn.metrics import MetricFrame, true_positive_rate, false_positive_rate
 
-from retriever import connect_qdrant
-
+# Resolve src/ imports from the repo root so this runs from any working directory.
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.retriever import connect_qdrant  # noqa: E402
 
 QRELS_FILE = PROJECT_ROOT / "data" / "eval" / "qrels_auto.json"
 RESULTS_FILE = PROJECT_ROOT / "data" / "results" / "experiment_a_results.json"

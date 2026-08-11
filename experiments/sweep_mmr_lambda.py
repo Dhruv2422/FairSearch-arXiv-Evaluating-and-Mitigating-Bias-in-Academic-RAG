@@ -28,25 +28,29 @@ the pool is topped up first (re-run build_qrels_llm.py over the new runs).
 This script therefore refuses to report utility for out-of-pool lambdas unless
 --allow-unjudged is passed, and always reports the coverage it measured.
 
-Run from inside src/:
-    python sweep_mmr_lambda.py
-    python sweep_mmr_lambda.py --lambdas 0.1,0.3,0.5,0.7,0.9 --allow-unjudged
+Run from the repository root:
+    python experiments/sweep_mmr_lambda.py
+    python experiments/sweep_mmr_lambda.py --lambdas 0.1,0.3,0.5,0.7,0.9 --allow-unjudged
 """
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from statistics import mean
 
 import numpy as np
 from fairlearn.metrics import MetricFrame, selection_rate
 
-import experiment_a_mmr as exp_mmr
-import evaluate_equalized_odds as eo_mod
-import evaluate_ndcg_mrr as ndcg_mod
-from retriever import load_model, connect_qdrant
-
+# Resolve src/ imports from the repo root so this runs from any working directory.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+import experiment_a_mmr as exp_mmr  # noqa: E402
+import evaluate_equalized_odds as eo_mod  # noqa: E402
+import evaluate_ndcg_mrr as ndcg_mod  # noqa: E402
+from src.retriever import load_model, connect_qdrant  # noqa: E402
+
 RESULTS_DIR = PROJECT_ROOT / "data" / "results"
 SWEEP_DIR = RESULTS_DIR / "sweep"
 OUTPUT_JSON = RESULTS_DIR / "mmr_lambda_sweep.json"

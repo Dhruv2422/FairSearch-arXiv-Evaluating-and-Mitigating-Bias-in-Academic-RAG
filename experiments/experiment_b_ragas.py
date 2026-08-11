@@ -7,12 +7,6 @@ from ragas.llms import llm_factory
 from ragas.embeddings.base import embedding_factory
 from ragas.metrics.collections import AnswerRelevancy, Faithfulness
 
-# Input files
-INPUT_FILE_1 = "../data/results/experiment_b_raw_results.json"
-INPUT_FILE_2 = "../data/results/experiment_b_raw_mmr_results.json"
-INPUT_FILE_3 = "../data/results/experiment_b_raw_mmr_prompt_results.json"
-
-# Combined output
 import sys
 from pathlib import Path
 
@@ -22,7 +16,15 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-OUTPUT_FILE = PROJECT_ROOT / "data" / "results" / "experiment_b_ragas_comparison.json"
+RESULTS_DIR = PROJECT_ROOT / "data" / "results"
+
+# One input per condition: baseline, MMR, and MMR + balanced prompt.
+INPUT_FILE_1 = RESULTS_DIR / "experiment_b_raw_results.json"
+INPUT_FILE_2 = RESULTS_DIR / "experiment_b_raw_mmr_results.json"
+INPUT_FILE_3 = RESULTS_DIR / "experiment_b_raw_mmr_prompt_results.json"
+
+# Combined output
+OUTPUT_FILE = RESULTS_DIR / "experiment_b_ragas_comparison.json"
 
 load_dotenv()
 client = AsyncOpenAI(api_key=os.environ["OPENAI_API_KEY"])
