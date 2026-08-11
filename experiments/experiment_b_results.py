@@ -2,12 +2,21 @@ import json
 import pandas as pd
 
 # Input files for the three Experiment B conditions.
-BASELINE_FILE = "../data/results/experiment_b_analysis_results.json"
-MMR_FILE = "../data/results/experiment_b_mmr_analysis_results.json"
-MMR_PROMPT_FILE = "../data/results/experiment_b_mmr_prompt_analysis_results.json"
+import sys
+from pathlib import Path
+
+# Resolve paths and imports from the repo root so these run from any working
+# directory. Without this the module imports below need cwd=repo root while the
+# data paths need cwd=experiments/, which only lined up under PyCharm.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+BASELINE_FILE = PROJECT_ROOT / "data" / "results" / "experiment_b_analysis_results.json"
+MMR_FILE = PROJECT_ROOT / "data" / "results" / "experiment_b_mmr_analysis_results.json"
+MMR_PROMPT_FILE = PROJECT_ROOT / "data" / "results" / "experiment_b_mmr_prompt_analysis_results.json"
 
 # Output comparison table.
-OUTPUT_FILE = "../data/results/experiment_b_summary_table.csv"
+OUTPUT_FILE = PROJECT_ROOT / "data" / "results" / "experiment_b_summary_table.csv"
 
 
 def load_metrics(filepath):

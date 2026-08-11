@@ -13,8 +13,16 @@ INPUT_FILE_2 = "../data/results/experiment_b_raw_mmr_results.json"
 INPUT_FILE_3 = "../data/results/experiment_b_raw_mmr_prompt_results.json"
 
 # Combined output
-OUTPUT_FILE = "../data/results/experiment_b_ragas_comparison.json"
-SUMMARY_CSV = "../data/results/experiment_b_ragas_summary.csv"
+import sys
+from pathlib import Path
+
+# Resolve paths and imports from the repo root so these run from any working
+# directory. Without this the module imports below need cwd=repo root while the
+# data paths need cwd=experiments/, which only lined up under PyCharm.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+OUTPUT_FILE = PROJECT_ROOT / "data" / "results" / "experiment_b_ragas_comparison.json"
 
 load_dotenv()
 client = AsyncOpenAI(api_key=os.environ["OPENAI_API_KEY"])
@@ -60,8 +68,6 @@ def print_aggregate_results(results):
         "Faithfulness": "faithfulness"
     }
 
-    summary_rows = []
-
     print("\n" + "=" * 80)
     print("AGGREGATE RESULTS")
     print("=" * 80)
@@ -85,29 +91,9 @@ def print_aggregate_results(results):
             f"{prompt:>18.4f}"
         )
 
-        summary_rows.append({
-            "Metric": name,
-            "Baseline": round(baseline, 4),
-            "MMR": round(mmr, 4),
-            "MMR + Prompt": round(prompt, 4)
-        })
-
     print("-" * 80)
     print(f"Queries scored: {n}")
     print("=" * 80)
-
-    # Save aggregate results to CSV
-    import csv
-
-    with open(SUMMARY_CSV, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(
-            f,
-            fieldnames=["Metric", "Baseline", "MMR", "MMR + Prompt"]
-        )
-        writer.writeheader()
-        writer.writerows(summary_rows)
-
-    print(f"Aggregate CSV saved to: {SUMMARY_CSV}")
 
 
 async def main():

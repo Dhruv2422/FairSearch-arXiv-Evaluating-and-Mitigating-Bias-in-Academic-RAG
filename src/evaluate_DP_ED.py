@@ -6,8 +6,17 @@ from statistics import mean
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent
 
-INPUT_FILE = PROJECT_ROOT / "data" / "results" / "experiment_a_results.json"
-OUTPUT_FILE = PROJECT_ROOT / "data" / "results" / "fairness_metrics_from_results.json"
+RESULTS_DIR = PROJECT_ROOT / "data" / "results"
+
+# Defaults reproduce the original baseline-only behaviour. Both are overridable
+# so the MMR run can be scored without hand-editing this file and clobbering
+# the baseline output — the report cites exposure figures for both arms, and
+# previously only one could exist on disk at a time.
+DEFAULT_INPUT = RESULTS_DIR / "experiment_a_results.json"
+DEFAULT_OUTPUT = RESULTS_DIR / "fairness_metrics_from_results.json"
+
+INPUT_FILE = DEFAULT_INPUT
+OUTPUT_FILE = DEFAULT_OUTPUT
 
 
 def exposure_at_rank(rank: int) -> float:
@@ -164,4 +173,21 @@ def main():
 
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Demographic Parity and rank-weighted Exposure Diversity "
+                    "for one Experiment A retrieval run."
+    )
+    parser.add_argument(
+        "--input", type=Path, default=DEFAULT_INPUT,
+        help=f"Retrieval run to score (default: {DEFAULT_INPUT.name})",
+    )
+    parser.add_argument(
+        "--output", type=Path, default=DEFAULT_OUTPUT,
+        help=f"Where to write metrics (default: {DEFAULT_OUTPUT.name})",
+    )
+    args = parser.parse_args()
+    INPUT_FILE = args.input
+    OUTPUT_FILE = args.output
     main()

@@ -5,7 +5,10 @@ from google.genai import types
 
 load_dotenv()
 
-_MODEL_NAME = "gemini-3.1-flash-lite"
+# Experiment B's published results were generated with gemini-3.1-flash-lite.
+# Override per-run rather than editing this file:
+#     FAIRSEARCH_GEN_MODEL=gemini-3.1-flash-lite python experiments/...
+_MODEL_NAME = os.environ.get("FAIRSEARCH_GEN_MODEL", "gemini-2.5-flash-lite")
 
 SYSTEM_PROMPT = (
     "You are a research assistant synthesizing findings from retrieved academic papers. "
@@ -16,6 +19,11 @@ SYSTEM_PROMPT = (
     "the question."
 )
 
+# Perspective-balancing variant used by Experiment B's mitigation condition.
+# Where SYSTEM_PROMPT leaves the framing of conflicting evidence to the model,
+# this instructs it to represent dissenting and minority positions in
+# proportion to the retrieved context, to test whether consensus amplification
+# can be reduced at the generation stage.
 BALANCED_SYSTEM_PROMPT = (
     "You are a neutral research assistant synthesizing findings from retrieved academic papers. "
     "Answer the user's question by drawing on the provided abstracts. "
@@ -28,20 +36,42 @@ BALANCED_SYSTEM_PROMPT = (
     "If the evidence is incomplete or mixed, state that clearly."
 )
 
+
 def build_context(hits: list) -> str:
+    """Format Qdrant result points into a numbered context block."""
     parts = []
     for i, hit in enumerate(hits, start=1):
         p = hit.payload
-        parts.append(f"[{i}] Title: {p.get('title', 'N/A')}\n    Abstract: {p.get('abstract', '')}")
+        parts.append(
+            f"[{i}] Title: {p.get('title', 'N/A')}\n"
+            f"    Abstract: {p.get('abstract', '')}"
+        )
     return "\n\n".join(parts)
 
-def generate(query: str, hits: list, api_key: str | None = None,
-             system_prompt: str = SYSTEM_PROMPT) -> str:
+
+def generate(
+    query: str,
+    hits: list,
+    api_key: str | None = None,
+    system_prompt: str = SYSTEM_PROMPT,
+) -> str:
+    """
+    Call Gemini with RAG context and return the response text.
+
+    Args:
+        query:         The user's research question.
+        hits:          List of ScoredPoint objects from retriever.search().
+        api_key:       Gemini API key. Falls back to GEMINI_API_KEY env var.
+        system_prompt: System instruction. Defaults to SYSTEM_PROMPT; pass
+                       BALANCED_SYSTEM_PROMPT for Experiment B's
+                       perspective-balancing condition.
+    """
     key = api_key or os.environ.get("GEMINI_API_KEY")
     if not key:
         raise ValueError("Gemini API key required — set GEMINI_API_KEY or pass api_key=")
 
     client = genai.Client(api_key=key)
+
     context = build_context(hits)
     user_message = f"Context:\n{context}\n\nQuestion: {query}"
 
@@ -52,13 +82,15 @@ def generate(query: str, hits: list, api_key: str | None = None,
     )
     return response.text
 
+
 if __name__ == "__main__":
     import os
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     from retriever import load_model, connect_qdrant, search
 
     query = "Recent advances in graph neural networks"
-    print(f"\nQuery: {query}\n")
+
+    print(f"Query: {query}\n")
 
     embedding_model = load_model()
     client = connect_qdrant()

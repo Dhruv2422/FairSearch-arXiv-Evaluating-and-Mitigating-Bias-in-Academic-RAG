@@ -1,30 +1,49 @@
 import json
 import os
+import re
 import time
 from dotenv import load_dotenv
 from google import genai
 
-# Change these paths depending on the experiment being analyzed.
-#
-# Baseline retriever + regular prompt:
-#
-# INPUT_FILE = "../data/results/experiment_b_raw_results.json"
-# OUTPUT_FILE = "../data/results/experiment_b_analysis_results.json"
-#
-# MMR retriever + regular prompt:
-#
-# INPUT_FILE = "../data/results/experiment_b_raw_mmr_results.json"
-# OUTPUT_FILE = "../data/results/experiment_b_mmr_analysis_results.json"
-#
-# MMR retriever + balanced/perspective-aware prompt:
-#
-# INPUT_FILE = "../data/results/experiment_b_raw_mmr_prompt_results.json"
-# OUTPUT_FILE = "../data/results/experiment_b_mmr_prompt_analysis_results.json"
+import argparse
 
-INPUT_FILE = "../data/results/experiment_b_raw_mmr_prompt_results.json"
-OUTPUT_FILE = "../data/results/experiment_b_mmr_prompt_analysis_results.json"
+import sys
+from pathlib import Path
 
-MODEL = "gemini-3.1-flash-lite"
+# Resolve paths and imports from the repo root so these run from any working
+# directory. Without this the module imports below need cwd=repo root while the
+# data paths need cwd=experiments/, which only lined up under PyCharm.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+RESULTS_DIR = PROJECT_ROOT / "data" / "results"
+
+# Each condition's raw collection file and the analysis file it produces.
+# Previously these were set by commenting/uncommenting one of three pairs at
+# the top of this file, so a full run meant editing the source twice between
+# invocations. Select with --condition instead.
+CONDITIONS = {
+    "baseline": (
+        RESULTS_DIR / "experiment_b_raw_results.json",
+        RESULTS_DIR / "experiment_b_analysis_results.json",
+    ),
+    "mmr": (
+        RESULTS_DIR / "experiment_b_raw_mmr_results.json",
+        RESULTS_DIR / "experiment_b_mmr_analysis_results.json",
+    ),
+    "mmr_prompt": (
+        RESULTS_DIR / "experiment_b_raw_mmr_prompt_results.json",
+        RESULTS_DIR / "experiment_b_mmr_prompt_analysis_results.json",
+    ),
+}
+
+# Overwritten from --condition in __main__; defaults preserve prior behaviour.
+INPUT_FILE, OUTPUT_FILE = CONDITIONS["mmr_prompt"]
+
+# Judge model for the consensus/dissent classification. Experiment B's
+# published results used gemini-3.1-flash-lite; override with
+# FAIRSEARCH_JUDGE_MODEL rather than editing this file.
+MODEL = os.environ.get("FAIRSEARCH_JUDGE_MODEL", "gemini-3.1-flash-lite")
 
 load_dotenv()
 client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
@@ -65,7 +84,20 @@ def parse_json(text):
     # Fix Gemini Python-style escaping
     json_text = json_text.replace("\\'", "'")
 
-    return json.loads(json_text)
+    try:
+        return json.loads(json_text)
+    except json.JSONDecodeError:
+        # Paper titles routinely contain LaTeX ("$\alpha$-approximation",
+        # "\ell_1 regularization"), and Gemini echoes those backslashes
+        # verbatim into its JSON, producing escapes that are not legal JSON.
+        # Escape any backslash that does not begin a valid JSON escape
+        # sequence, then retry once.
+        repaired = re.sub(
+            r'\\(?:u(?![0-9a-fA-F]{4})|(?!["\\/bfnrtu]))',
+            r'\\\\',
+            json_text,
+        )
+        return json.loads(repaired)
 
 
 def classify_documents(query, docs):
@@ -147,17 +179,26 @@ def main():
 
         docs = r["retrieved_documents"]
 
-        labels = classify_documents(r["query"], docs)
+        # A malformed judge response should cost one query, not the whole run.
+        # The query stays out of the output file, so a later invocation
+        # retries it rather than silently dropping it from the condition.
+        try:
+            labels = classify_documents(r["query"], docs)
 
-        for d, label in zip(docs, labels):
-            d["stance"] = label["stance"]
+            for d, label in zip(docs, labels):
+                d["stance"] = label["stance"]
 
-        retrieved = distribution(docs)
+            retrieved = distribution(docs)
 
-        summary = classify_summary(
-            r["query"],
-            r["generated_summary"]
-        )
+            summary = classify_summary(
+                r["query"],
+                r["generated_summary"]
+            )
+        except Exception as e:
+            print(f"  ERROR on query {i} ({type(e).__name__}: {e}) — "
+                  f"skipping, will retry on next run")
+            time.sleep(15)
+            continue
 
         r["retrieved_distribution"] = retrieved
         r["summary_distribution"] = summary
@@ -183,4 +224,12 @@ def main():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Classify consensus/dissent for one Experiment B condition."
+    )
+    parser.add_argument(
+        "--condition", choices=sorted(CONDITIONS), default="mmr_prompt",
+        help="Which collection run to analyze (default: mmr_prompt).",
+    )
+    INPUT_FILE, OUTPUT_FILE = CONDITIONS[parser.parse_args().condition]
     main()

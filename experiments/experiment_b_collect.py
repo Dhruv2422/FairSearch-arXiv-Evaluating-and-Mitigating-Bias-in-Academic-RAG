@@ -27,12 +27,21 @@ Note:
 import json
 import time
 
+import sys
+from pathlib import Path
+
+# Resolve paths and imports from the repo root so these run from any working
+# directory. Without this the module imports below need cwd=repo root while the
+# data paths need cwd=experiments/, which only lined up under PyCharm.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
 from src.retriever import load_model, connect_qdrant, search
 from src.generator import generate
 
 
-QUERY_FILE = "../data/eval/contradictory_queries.json"
-OUTPUT_FILE = "../data/results/experiment_b_raw_results.json"
+QUERY_FILE = PROJECT_ROOT / "data" / "eval" / "contradictory_queries.json"
+OUTPUT_FILE = PROJECT_ROOT / "data" / "results" / "experiment_b_raw_results.json"
 
 
 def load_queries(filepath):
@@ -58,9 +67,22 @@ def main():
     print("Connecting to Qdrant...")
     client = connect_qdrant()
 
+    # Resume support: a 503 from Gemini is caught per-query and skipped, so an
+    # interrupted or partially-failed run leaves gaps. Re-running picks up only
+    # the queries still missing, keeping all three conditions on the same set.
     experiment_results = []
+    if OUTPUT_FILE.exists():
+        with open(OUTPUT_FILE, encoding="utf-8") as f:
+            experiment_results = json.load(f)
+
+    completed = {r["id"] for r in experiment_results}
+    if completed:
+        print(f"Resuming: {len(completed)} queries already collected, "
+              f"{len(queries) - len(completed)} remaining")
 
     for q in queries:
+        if q["id"] in completed:
+            continue
 
         print("\n==============================")
         print(f"Query {q['id']}: {q['query']}")
