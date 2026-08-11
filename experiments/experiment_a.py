@@ -14,22 +14,24 @@ Output:
 - Console table
 - data/results/experiment_a_results.json
 
-Run from inside src/:
-python experiment_a.py
+Run from the repository root:
+python experiments/experiment_a.py
 """
 
 import json
+import sys
 from pathlib import Path
 from statistics import mean
 
 import numpy as np
 from fairlearn.metrics import MetricFrame, selection_rate
 
-from retriever import load_model, connect_qdrant, search
-
-
+# Resolve src/ imports from the repo root so this runs from any working directory.
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.retriever import load_model, connect_qdrant, search  # noqa: E402
 EVAL_FILE = PROJECT_ROOT / "data" / "eval" / "retrieval_eval_queries.json"
 RESULTS_DIR = PROJECT_ROOT / "data" / "results"
 OUTPUT_JSON = RESULTS_DIR / "experiment_a_results.json"

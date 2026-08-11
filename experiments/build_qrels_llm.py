@@ -10,12 +10,13 @@ API call, so the script is safe to interrupt and re-run.
 
 Output: data/eval/qrels_auto.json
 
-Run from inside src/:
-    python build_qrels_llm.py
+Run from the repository root:
+    python experiments/build_qrels_llm.py
 """
 
 import json
 import os
+import sys
 import time
 from pathlib import Path
 
@@ -23,8 +24,11 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
-from retriever import load_model, connect_qdrant, search
-from retriever_mmr import search_mmr
+# Resolve src/ imports from the repo root so this runs from any working directory.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from src.retriever import load_model, connect_qdrant, search  # noqa: E402
+from src.retriever_mmr import search_mmr  # noqa: E402
 
 load_dotenv()
 

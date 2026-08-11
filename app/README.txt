@@ -1,1 +1,0 @@
-This directory is reserved for the Streamlit application
