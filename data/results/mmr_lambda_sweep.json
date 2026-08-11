@@ -1,0 +1,97 @@
+{
+  "note": "Fairness-utility tradeoff across MMR lambda. NDCG/MRR are null where the run falls outside the judged pool (lambda < 0.5) unless --allow-unjudged was passed; see judged_pool_coverage.",
+  "qrels_source": "qrels_auto.json",
+  "corpus_base_rates": {
+    "privileged_count": 7372,
+    "underrepresented_count": 18447,
+    "total_labeled": 25819,
+    "privileged_base_rate": 0.2855,
+    "underrepresented_base_rate": 0.7145
+  },
+  "points": [
+    {
+      "mmr_lambda": 0.5,
+      "judged_pool_coverage": 0.989,
+      "utility_trustworthy": true,
+      "selection_rate_ratio": 1.3593,
+      "mean_privileged_rate": 0.352,
+      "spd": 0.000126,
+      "equalized_odds_difference": 0.0402,
+      "tpr_privileged": 0.3795,
+      "tpr_underrepresented": 0.3959,
+      "ndcg@10": 0.5526,
+      "mrr": 0.8798,
+      "run_file": "data/results/sweep/experiment_a_mmr_lambda_0.50.json"
+    },
+    {
+      "mmr_lambda": 0.6,
+      "judged_pool_coverage": 0.968,
+      "utility_trustworthy": true,
+      "selection_rate_ratio": 1.3833,
+      "mean_privileged_rate": 0.356,
+      "spd": 0.000134,
+      "equalized_odds_difference": 0.0357,
+      "tpr_privileged": 0.4091,
+      "tpr_underrepresented": 0.4105,
+      "ndcg@10": 0.5847,
+      "mrr": 0.9077,
+      "run_file": "data/results/sweep/experiment_a_mmr_lambda_0.60.json"
+    },
+    {
+      "mmr_lambda": 0.7,
+      "judged_pool_coverage": 0.977,
+      "utility_trustworthy": true,
+      "selection_rate_ratio": 1.4445,
+      "mean_privileged_rate": 0.366,
+      "spd": 0.000153,
+      "equalized_odds_difference": 0.0302,
+      "tpr_privileged": 0.4659,
+      "tpr_underrepresented": 0.444,
+      "ndcg@10": 0.6375,
+      "mrr": 0.9416,
+      "run_file": "data/results/sweep/experiment_a_mmr_lambda_0.70.json"
+    },
+    {
+      "mmr_lambda": 0.8,
+      "judged_pool_coverage": 0.985,
+      "utility_trustworthy": true,
+      "selection_rate_ratio": 1.5272,
+      "mean_privileged_rate": 0.379,
+      "spd": 0.000177,
+      "equalized_odds_difference": 0.0286,
+      "tpr_privileged": 0.5045,
+      "tpr_underrepresented": 0.476,
+      "ndcg@10": 0.6807,
+      "mrr": 0.9583,
+      "run_file": "data/results/sweep/experiment_a_mmr_lambda_0.80.json"
+    },
+    {
+      "mmr_lambda": 0.9,
+      "judged_pool_coverage": 0.993,
+      "utility_trustworthy": true,
+      "selection_rate_ratio": 1.5014,
+      "mean_privileged_rate": 0.375,
+      "spd": 0.00017,
+      "equalized_odds_difference": 0.0348,
+      "tpr_privileged": 0.5341,
+      "tpr_underrepresented": 0.4993,
+      "ndcg@10": 0.7146,
+      "mrr": 0.9667,
+      "run_file": "data/results/sweep/experiment_a_mmr_lambda_0.90.json"
+    },
+    {
+      "mmr_lambda": 1.0,
+      "judged_pool_coverage": 0.996,
+      "utility_trustworthy": true,
+      "selection_rate_ratio": 1.5864,
+      "mean_privileged_rate": 0.388,
+      "spd": 0.000195,
+      "equalized_odds_difference": 0.0579,
+      "tpr_privileged": 0.5659,
+      "tpr_underrepresented": 0.508,
+      "ndcg@10": 0.7312,
+      "mrr": 0.9633,
+      "run_file": "data/results/sweep/experiment_a_mmr_lambda_1.00.json"
+    }
+  ]
+}
