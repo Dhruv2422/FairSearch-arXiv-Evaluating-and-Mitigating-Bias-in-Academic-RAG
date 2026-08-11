@@ -24,6 +24,17 @@ LABEL_EMOJI = {
     "unknown": "❔ unknown",
 }
 
+# Mirrors OVERSAMPLE_K in experiment_a.py: fetch a deeper candidate pool so
+# filtering out "unknown" labels still leaves enough results to fill k.
+OVERSAMPLE_K = 100
+
+
+def filter_labeled(hits):
+    return [
+        h for h in hits
+        if (h.payload or {}).get("institution_label") in ("privileged", "underrepresented")
+    ]
+
 st.set_page_config(page_title="FairSearch-arXiv", layout="wide")
 
 
@@ -92,6 +103,18 @@ def main():
             )
 
         st.divider()
+        exclude_unknown = st.checkbox(
+            "Exclude unknown-labeled papers (match experiment methodology)",
+            value=False,
+            help=(
+                "Mirrors experiment_a.py / experiment_a_mmr.py: both retrievers "
+                f"oversample to {OVERSAMPLE_K} candidates, drop unknown-labeled papers, "
+                "and then keep the top k, so each arm is scored over the same number "
+                "of results."
+            ),
+        )
+
+        st.divider()
         generate_answer = st.checkbox("Generate answer with Gemini", value=False)
         api_key = None
         if generate_answer:
@@ -116,9 +139,33 @@ def main():
 
     with st.spinner("Searching..."):
         if mode.startswith("MMR"):
-            hits = search_mmr(query, model, client, k=k, fetch_k=fetch_k, lambda_mult=lambda_mult)
+            if exclude_unknown:
+                # Rank the full oversampled pool, then keep the top k labeled — the
+                # same order of operations as the baseline arm above and as
+                # experiment_a_mmr.py. Filtering a k-sized result set instead would
+                # leave roughly half as many results as the baseline it is compared
+                # against, which is the asymmetry the source scripts were fixed to
+                # remove. MMR is greedy, so ranking deeper does not disturb the
+                # ordering of the results that survive.
+                depth = max(fetch_k, OVERSAMPLE_K)
+                hits = filter_labeled(
+                    search_mmr(query, model, client, k=depth, fetch_k=depth,
+                               lambda_mult=lambda_mult)
+                )[:k]
+            else:
+                hits = search_mmr(query, model, client, k=k, fetch_k=fetch_k,
+                                  lambda_mult=lambda_mult)
         else:
-            hits = search(query, model, client, k=k)
+            if exclude_unknown:
+                hits = filter_labeled(search(query, model, client, k=OVERSAMPLE_K))[:k]
+            else:
+                hits = search(query, model, client, k=k)
+
+    if exclude_unknown and len(hits) < k:
+        st.caption(
+            f"Only {len(hits)} labeled (non-unknown) result(s) after filtering — "
+            f"fewer than {OVERSAMPLE_K} candidates carried a known institution label."
+        )
 
     if generate_answer:
         with st.spinner("Generating answer with Gemini..."):
