@@ -53,9 +53,22 @@ def main():
     print("Connecting to Qdrant...")
     client = connect_qdrant()
 
+    # Resume support: a 503 from Gemini is caught per-query and skipped, so an
+    # interrupted or partially-failed run leaves gaps. Re-running picks up only
+    # the queries still missing, keeping all three conditions on the same set.
     experiment_results = []
+    if OUTPUT_FILE.exists():
+        with open(OUTPUT_FILE, encoding="utf-8") as f:
+            experiment_results = json.load(f)
+
+    completed = {r["id"] for r in experiment_results}
+    if completed:
+        print(f"Resuming: {len(completed)} queries already collected, "
+              f"{len(queries) - len(completed)} remaining")
 
     for q in queries:
+        if q["id"] in completed:
+            continue
         print("\n==============================")
         print(f"Query {q['id']}: {q['query']}")
 
