@@ -24,6 +24,17 @@ LABEL_EMOJI = {
     "unknown": "❔ unknown",
 }
 
+# Mirrors OVERSAMPLE_K in experiment_a.py: fetch a deeper candidate pool so
+# filtering out "unknown" labels still leaves enough results to fill k.
+OVERSAMPLE_K = 100
+
+
+def filter_labeled(hits):
+    return [
+        h for h in hits
+        if (h.payload or {}).get("institution_label") in ("privileged", "underrepresented")
+    ]
+
 st.set_page_config(page_title="FairSearch-arXiv", layout="wide")
 
 
@@ -92,6 +103,19 @@ def main():
             )
 
         st.divider()
+        exclude_unknown = st.checkbox(
+            "Exclude unknown-labeled papers (match experiment methodology)",
+            value=False,
+            help=(
+                "Mirrors experiment_a.py / experiment_a_mmr.py: drops unknown-labeled "
+                "papers before scoring. Baseline oversamples to "
+                f"{OVERSAMPLE_K} candidates first so k labeled results can still be "
+                "found; MMR does not backfill after filtering, so it may return fewer "
+                "than k results — that asymmetry matches the source scripts."
+            ),
+        )
+
+        st.divider()
         generate_answer = st.checkbox("Generate answer with Gemini", value=False)
         api_key = None
         if generate_answer:
@@ -117,8 +141,19 @@ def main():
     with st.spinner("Searching..."):
         if mode.startswith("MMR"):
             hits = search_mmr(query, model, client, k=k, fetch_k=fetch_k, lambda_mult=lambda_mult)
+            if exclude_unknown:
+                hits = filter_labeled(hits)[:k]
         else:
-            hits = search(query, model, client, k=k)
+            if exclude_unknown:
+                hits = filter_labeled(search(query, model, client, k=OVERSAMPLE_K))[:k]
+            else:
+                hits = search(query, model, client, k=k)
+
+    if exclude_unknown and len(hits) < k:
+        st.caption(
+            f"Only {len(hits)} labeled (non-unknown) result(s) after filtering "
+            f"— see the sidebar note on why MMR isn't backfilled to k."
+        )
 
     if generate_answer:
         with st.spinner("Generating answer with Gemini..."):
