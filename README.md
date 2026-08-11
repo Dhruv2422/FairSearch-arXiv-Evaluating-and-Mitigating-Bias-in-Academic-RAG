@@ -280,7 +280,7 @@ python src/enrich_metadata.py --title-search
 ```
 
 Coverage stands at **51.6%** (25,819 of 50,000 papers). The free sources are
-effectively exhausted: roughly 92% of the remaining unlabeled papers carry no DOI,
+effectively exhausted: 92.9% of the remaining unlabeled papers carry no DOI,
 journal reference or report number, so there is no identifier left to look them up by.
 
 **Missingness is not random, and this bounds the audit.** Affiliation data comes from
@@ -288,10 +288,10 @@ journal reference or report number, so there is no identifier left to look them 
 
 | | Papers | Labeled | Privileged share of labeled |
 |---|---:|---:|---:|
-| Has DOI / journal-ref / report-no | 14,782 | 87.1% | 24.1% |
-| Preprint-only | 35,218 | 36.8% | 33.0% |
+| Has a DOI or journal reference | 14,288 | 88.2% | 24.1% |
+| Preprint-only | 35,712 | 37.0% | 32.8% |
 
-Among preprint-only papers, the ones that *are* labeled skew more privileged (33.0%)
+Among preprint-only papers, the ones that *are* labeled skew more privileged (32.8%)
 than published ones (24.1%), which suggests the unlabeled remainder skews
 underrepresented. Every fairness metric here is therefore computed over a subsample
 that over-represents published work and, probably, elite institutions. No additional
