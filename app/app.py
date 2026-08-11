@@ -107,11 +107,10 @@ def main():
             "Exclude unknown-labeled papers (match experiment methodology)",
             value=False,
             help=(
-                "Mirrors experiment_a.py / experiment_a_mmr.py: drops unknown-labeled "
-                "papers before scoring. Baseline oversamples to "
-                f"{OVERSAMPLE_K} candidates first so k labeled results can still be "
-                "found; MMR does not backfill after filtering, so it may return fewer "
-                "than k results — that asymmetry matches the source scripts."
+                "Mirrors experiment_a.py / experiment_a_mmr.py: both retrievers "
+                f"oversample to {OVERSAMPLE_K} candidates, drop unknown-labeled papers, "
+                "and then keep the top k, so each arm is scored over the same number "
+                "of results."
             ),
         )
 
@@ -140,9 +139,22 @@ def main():
 
     with st.spinner("Searching..."):
         if mode.startswith("MMR"):
-            hits = search_mmr(query, model, client, k=k, fetch_k=fetch_k, lambda_mult=lambda_mult)
             if exclude_unknown:
-                hits = filter_labeled(hits)[:k]
+                # Rank the full oversampled pool, then keep the top k labeled — the
+                # same order of operations as the baseline arm above and as
+                # experiment_a_mmr.py. Filtering a k-sized result set instead would
+                # leave roughly half as many results as the baseline it is compared
+                # against, which is the asymmetry the source scripts were fixed to
+                # remove. MMR is greedy, so ranking deeper does not disturb the
+                # ordering of the results that survive.
+                depth = max(fetch_k, OVERSAMPLE_K)
+                hits = filter_labeled(
+                    search_mmr(query, model, client, k=depth, fetch_k=depth,
+                               lambda_mult=lambda_mult)
+                )[:k]
+            else:
+                hits = search_mmr(query, model, client, k=k, fetch_k=fetch_k,
+                                  lambda_mult=lambda_mult)
         else:
             if exclude_unknown:
                 hits = filter_labeled(search(query, model, client, k=OVERSAMPLE_K))[:k]
@@ -151,8 +163,8 @@ def main():
 
     if exclude_unknown and len(hits) < k:
         st.caption(
-            f"Only {len(hits)} labeled (non-unknown) result(s) after filtering "
-            f"— see the sidebar note on why MMR isn't backfilled to k."
+            f"Only {len(hits)} labeled (non-unknown) result(s) after filtering — "
+            f"fewer than {OVERSAMPLE_K} candidates carried a known institution label."
         )
 
     if generate_answer:
