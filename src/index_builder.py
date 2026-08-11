@@ -81,4 +81,27 @@ def build_index(
 
 
 if __name__ == "__main__":
-    build_index()
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Embed a paper corpus and build its Qdrant collection."
+    )
+    parser.add_argument(
+        "--parquet", default="../data/processed/papers.parquet",
+        help="Corpus to index (default: the primary papers.parquet).",
+    )
+    parser.add_argument(
+        "--collection", default="fairsearch_arxiv",
+        help="Qdrant collection to create. Use fairsearch_arxiv_expb when "
+             "indexing papers_legacy_expb.parquet.",
+    )
+    parser.add_argument(
+        "--qdrant-path", default="../data/indices/qdrant",
+        help="Local Qdrant storage directory.",
+    )
+    args = parser.parse_args()
+    build_index(
+        parquet_path=args.parquet,
+        qdrant_path=args.qdrant_path,
+        collection_name=args.collection,
+    )

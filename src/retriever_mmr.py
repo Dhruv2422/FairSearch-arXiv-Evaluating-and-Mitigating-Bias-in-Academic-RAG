@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import numpy as np
@@ -5,7 +6,8 @@ from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
 
 
-COLLECTION_NAME = "fairsearch_arxiv"
+# See retriever.py — set FAIRSEARCH_COLLECTION to target Experiment B's corpus.
+COLLECTION_NAME = os.environ.get("FAIRSEARCH_COLLECTION", "fairsearch_arxiv")
 QDRANT_PATH = str(Path(__file__).resolve().parent.parent / "data" / "indices" / "qdrant")
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 

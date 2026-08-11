@@ -5,7 +5,10 @@ from google.genai import types
 
 load_dotenv()
 
-_MODEL_NAME = "gemini-2.5-flash-lite"
+# Experiment B's published results were generated with gemini-3.1-flash-lite.
+# Override per-run rather than editing this file:
+#     FAIRSEARCH_GEN_MODEL=gemini-3.1-flash-lite python experiments/...
+_MODEL_NAME = os.environ.get("FAIRSEARCH_GEN_MODEL", "gemini-2.5-flash-lite")
 
 SYSTEM_PROMPT = (
     "You are a research assistant synthesizing findings from retrieved academic papers. "

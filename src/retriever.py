@@ -1,10 +1,16 @@
+import os
 from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
 
 QDRANT_PATH = str(Path(__file__).resolve().parent.parent / "data" / "indices" / "qdrant")
-COLLECTION_NAME = "fairsearch_arxiv"
+
+# Experiment B was collected against a separate 50,000-paper sample, kept for
+# reproducibility as papers_legacy_expb.parquet / collection fairsearch_arxiv_expb.
+# Override per-run rather than editing this file:
+#     FAIRSEARCH_COLLECTION=fairsearch_arxiv_expb python experiments/...
+COLLECTION_NAME = os.environ.get("FAIRSEARCH_COLLECTION", "fairsearch_arxiv")
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
 
